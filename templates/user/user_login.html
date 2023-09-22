@@ -1,13 +1,28 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>User login</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}
+	Log in
+{% endblock %}
+
+{% block content %}
+    <div class="registration">
+        <h1 class="registration__title">Log in</h1>
+        <form method="post" class="registration__form">
+            {% csrf_token %}
+
+            <!-- Username Input -->
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+
+            <!-- Password Input -->
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+        <p>Username: AmKenny password: 1111 (admin)</p>
+    </div>
+{% endblock %}

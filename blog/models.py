@@ -13,7 +13,7 @@ class Tag(models.Model):
 class Blog(models.Model):
     title = models.CharField(max_length=255)
     text = models.TextField()
-    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    tag = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.title

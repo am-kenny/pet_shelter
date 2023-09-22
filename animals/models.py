@@ -20,7 +20,7 @@ class Animal(models.Model):
     healthy = models.BooleanField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.type})"
 
 
 class AnimalMedia(models.Model):

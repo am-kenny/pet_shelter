@@ -1,13 +1,30 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Animals</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Our Animals{% endblock %}
+
+{% block content %}
+    <section class="animal-list-container">
+        <h1 class="animal-list-title">Our Animals</h1>
+
+        <ul class="animal-items">
+            {% for animal in animals %}
+                <li class="animal-item" onclick="location.href='{% url 'animal' animal_id=animal.id %}'">
+                    <div class="animal-header">
+                        <h2 class="animal-name">{{ animal.name }}</h2>
+                        <p class="animal-type">{{ animal.type }}</p>
+                    </div>
+                    <div class="animal-details">
+                        <p><strong>Sex:</strong> {{ animal.sex }}</p>
+                        <p><strong>Age:</strong> {{ animal.age }}</p>
+                        <p><strong>Breed:</strong> {{ animal.breed }}</p>
+                        <p><strong>Availability:</strong> {% if animal.availability %}Available{% else %}Not Available{% endif %}</p>
+                        <p><strong>Health:</strong> {% if animal.healthy %}Healthy{% else %}Not Healthy{% endif %}</p>
+                    </div>
+                    <p class="animal-description">{{ animal.description }}</p>
+                </li>
+            {% empty %}
+                <li class="no-animals">No animals available.</li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}

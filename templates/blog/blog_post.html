@@ -1,13 +1,18 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Blog post</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+    {{ blog_post.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="blog__post">
+        <a href="{% url 'blog' %}" class="back-link">Back to Blog</a>
+        <h2 class="blog__post-title">{{ blog_post.title }}</h2>
+        <p class="blog__post-text">{{ blog_post.text }}</p>
+        <ul class="blog__post__tags">
+            {% for tag in blog_post.tag.all %}
+                <li class="blog__post__tag">#{{ tag.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

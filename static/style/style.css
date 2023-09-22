@@ -1,0 +1,382 @@
+body, h1, h2, p {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+}
+
+nav {
+  text-align: center;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 15px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #a3d5fa;
+}
+
+nav .login,
+nav .register{
+  background-color: #a3d5fa;
+  color: #3b3b3b;
+  padding: 8px 15px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+nav .login:hover,
+nav .register:hover {
+  background-color: #87add0;
+    color: #333333;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Style the blog section */
+.blog {
+  margin: 60px;
+  padding: 80px;
+}
+
+/* Style the blog title */
+.blog__title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Style individual blog posts */
+.blog__post {
+  margin-bottom: 30px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style blog post titles */
+.blog__post-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Style blog post text content */
+.blog__post-text {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #666;
+  word-wrap: break-word;
+}
+
+/* Style for the blog post tags list */
+.blog__post__tags {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Style for each tag item */
+.blog__post__tag {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+/* Style for the tag when hovered */
+.blog__post__tag:hover {
+    background-color: #0056b3;
+}
+
+/* Style the blog form */
+.blog__form {
+    background-color: #f7f7f7;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style form labels */
+.blog__form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Style form input and textarea fields */
+.blog__form input[type="text"],
+.blog__form textarea {
+    width: 98%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+}
+
+/* Style form select dropdown */
+.blog__form select {
+    width: 20%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #555;
+    background-color: #fff;
+}
+
+/* Style form submit button */
+.blog__form input[type="submit"] {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #0077cc;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.blog__form input[type="submit"]:hover {
+    background-color: #0055aa;
+}
+
+.blog__hover:hover {
+    transform: scale(1.03);
+}
+
+
+
+/* Style the registration section */
+.registration {
+  padding: 40px;
+  max-width: 400px;
+  margin: 50px auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the registration title */
+.registration__title {
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Style form elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+/* Style labels */
+.form-group label {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+/* Style input fields */
+.form-group #username,
+.form-group #email,
+.form-group #password {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Style submit button */
+.registration__form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  background-color: #a3d5fa;
+  color: #3b3b3b;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.registration__form button:hover {
+  background-color: #87add0;
+}
+
+.error__message {
+    color: #d30000;
+    text-align: center;
+}
+
+
+/* Style the animal list container */
+.animal-list-container {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the animal list title */
+.animal-list-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style each animal item */
+.animal-item {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Style animal name */
+.animal-name {
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Style animal type */
+.animal-type {
+    font-size: 16px;
+    color: #666;
+}
+
+/* Style animal details */
+.animal-details p {
+    margin: 5px 0;
+    color: #555;
+}
+
+/* Style availability and health */
+.animal-details strong {
+    color: #333;
+}
+
+/* Style the "No animals available" message */
+.no-animals {
+    font-style: italic;
+    color: #777;
+}
+
+/* Hover effect */
+.animal-item:hover {
+    transform: scale(1.03);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .animal-item {
+        padding: 10px;
+    }
+    .animal-list-title {
+        font-size: 24px;
+    }
+}
+
+/* Style the animal detail container */
+.animal-detail-container {
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style the animal detail title */
+.animal-detail-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Style the animal detail section */
+.animal-detail {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Style the animal image */
+.animal-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Style animal info */
+.animal-info {
+    flex: 1;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style availability and health */
+.animal-info strong {
+    color: #333;
+}
+
+/* Style the animal description */
+.animal-description {
+    margin-top: 10px;
+    color: #555;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .animal-info {
+        padding: 10px;
+    }
+    .animal-detail-title {
+        font-size: 24px;
+    }
+}
+
+/* Style the back link */
+.back-link {
+    display: block;
+    text-decoration: none;
+    color: #0077cc; /* You can choose a color that matches your design */
+    margin-bottom: 20px;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}

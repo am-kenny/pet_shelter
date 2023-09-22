@@ -1,13 +1,37 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Feedbacks</h1>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}
+	Feedbacks
+{% endblock %}
+{% block content %}
+    <div class="blog">
+        <h1 class="blog__title">Feedbacks</h1>
+        <form method="get">
+            <label for="animal_id">Choose an animal:</label>
+            <select name="animal_id" id="animal_id">
+                <option value="">All</option>
+                {% for animal in animals %}
+                    <option value="{{ animal.id }}">{{ animal }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="Submit">
+        </form>
+        <div class="blog__posts">
+            {% for feedback in feedbacks %}
+                <div class="blog__post">
+                    <h2 class="blog__post-title">{{ feedback.title }}</h2>
+                    <p class="blog__post-text">{{ feedback.text }}</p>
+                    <p class="blog__post-text">{{ feedback.media }}</p>
+                    <p class="blog__post-text">{{ feedback.user }}</p>
+                    <p class="blog__post-text">{{ feedback.animal }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% if user.is_authenticated %}
+            <form method="post" class="blog__form">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

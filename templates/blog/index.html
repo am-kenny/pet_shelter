@@ -1,13 +1,24 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Blog</h1>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+    Blog
+{% endblock %}
+
+{% block content %}
+    <div class="blog">
+        <h1 class="blog__title">Welcome to Our Blog</h1>
+        <div class="blog__posts">
+            {% for blog_post in blog_posts %}
+                <div class="blog__post blog__hover" onclick="location.href='{% url 'blog_post' post_id=blog_post.id %}'">
+                    <h2 class="blog__post-title">{{ blog_post.title }}</h2>
+                    <p class="blog__post-text">{{ blog_post.text }}</p>
+                    <ul class="blog__post__tags">
+                        {% for tag in blog_post.tag.all %}
+                            <li class="blog__post__tag">#{{ tag.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
