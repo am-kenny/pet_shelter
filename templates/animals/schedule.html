@@ -1,29 +1,87 @@
 {% extends "base.html" %}
 {% block title %}
-	Schedule
+    Schedule
 {% endblock %}
 {% block content %}
+    <div class="schedule__container">
+        <h1 class="schedule-title">Schedule</h1>
+        {% if animals %}
+            <form class="schedule-form" method="get" onsubmit="return validateForm()">
+                <label for="animal_id" class="schedule-label">Choose an animal:</label>
+                <select name="animal_id" id="animal_id" class="schedule-select">
+                    <option value="">-----</option>
+                    {% for animal in animals %}
+                        <option value="{{ animal.id }}">{{ animal }}</option>
+                    {% endfor %}
+                </select>
+                <label for="date" class="schedule-label">Choose desired date:</label>
+                <input type="date" id="date" name="date" min="" max="" required class="schedule-input">
+                <label for="duration_hours" class="schedule-label">Desired duration hours:</label>
+                <input type="number" id="duration_hours" name="duration_hours" value="0" min="0" class="schedule-input">
+                <label for="duration_minutes" class="schedule-label">Minutes:</label>
+                <input type="number" id="duration_minutes" name="duration_minutes" value="0" min="0" max="59" class="schedule-input">
+                <input type="submit" value="Submit" class="schedule-submit">
+            </form>
+            <script>
+                let today = new Date().toISOString().split("T")[0]
+                document.getElementById("date").setAttribute("min", today)
+                let latestDate = new Date()
+                latestDate.setDate(latestDate.getDate() + 14)
+                latestDate = latestDate.toISOString().split("T")[0]
+                document.getElementById("date").setAttribute("max", latestDate)
 
-        <h1>Schedule</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Animal</th>
-                <th>User</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for schedule in schedules %}
-                <tr>
-                    <td>{{ schedule.start_time }}</td>
-                    <td>{{ schedule.end_time }}</td>
-                    <td>{{ schedule.animal }}</td>
-                    <td>{{ schedule.user }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            function validateForm() {
+                let animalSelect = document.getElementById("animal_id")
+                let hoursField = document.getElementById("duration_hours");
+                let minutesField = document.getElementById("duration_minutes");
 
+                // Check if animal is chosen
+                if (animalSelect.value === ""){
+                    alert("Choose an animal first");
+                    return false
+                }
+                // Check if either hours or minutes field has a value greater than zero
+                if (parseInt(hoursField.value) > 0 || parseInt(minutesField.value) > 0) {
+                    return true; // Form submission proceeds
+                } else {
+                    alert("Either the hours or minutes field must have a value greater than zero.");
+                    return false; // Form submission prevented
+                }
+            }
+
+            </script>
+        {% endif %}
+        {% if schedules %}
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Animal</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for schedule in schedules %}
+                        <tr>
+                            <td>{{ schedule.start_time }}</td>
+                            <td>{{ schedule.end_time }}</td>
+                            <td>{{ schedule.animal }}</td>
+                            <td>{{ schedule.user }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        {% if available_slots %}
+            <div class="timeslots">
+                <p class="schedule-subtitle">Available Time Slots</p>
+                <ul class="schedule-timeslot-list">
+                    {% for available_slot in available_slots %}
+                        <li class="schedule-timeslot">{{ available_slot }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}

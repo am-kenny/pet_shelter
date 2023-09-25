@@ -27,6 +27,7 @@
             {% endfor %}
         </div>
         {% if user.is_authenticated %}
+            <h1 class="blog__title">Leave feedback</h1>
             <form method="post" class="blog__form">
                 {% csrf_token %}
                 {{ form }}

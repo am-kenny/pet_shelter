@@ -1,3 +1,6 @@
+body {
+    background-color: #f5f5f5;
+}
 body, h1, h2, p {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -380,3 +383,105 @@ h1 {
 .back-link:hover {
     text-decoration: underline;
 }
+
+/* Apply styles to the schedule__container */
+.schedule__container {
+    max-width: 800px;
+    margin: 20px auto; /* Center the container vertically and horizontally */
+    padding: 20px;
+    background-color: #fff; /* Background color for the container */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+}
+
+/* Style the Schedule title within the container */
+.schedule__container .schedule-title {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px; /* Add space between title and form */
+}
+
+/* Style the form within the container */
+.schedule__container .schedule-form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Style labels and form elements within the container */
+.schedule__container .schedule-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.schedule__container .schedule-select,
+.schedule__container .schedule-input {
+    width: 100%; /* Make inputs expand to container width */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.schedule__container .schedule-submit {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the table within the container */
+.schedule__container .schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.schedule__container .schedule-table th,
+.schedule__container .schedule-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: left;
+}
+
+.schedule__container .schedule-table thead {
+    background-color: #f2f2f2;
+}
+
+.schedule__container .schedule-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Style the available time slots within the container */
+.schedule__container .timeslots {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+
+.schedule__container .schedule-subtitle {
+    font-weight: bold;
+    margin-bottom: 10px; /* Add space between subtitle and time slots */
+}
+
+.schedule__container .schedule-timeslot-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.schedule__container .schedule-timeslot {
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 5px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+

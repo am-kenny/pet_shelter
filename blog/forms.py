@@ -6,3 +6,9 @@ class FeedbackForm(ModelForm):
     class Meta:
         model = Feedback
         fields = ["title", "text", "media", "animal"]
+
+
+class AnimalFeedbackForm(ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ["title", "text", "media"]

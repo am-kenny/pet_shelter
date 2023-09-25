@@ -1,6 +1,4 @@
-from django.http import HttpResponse
 from django.shortcuts import render
-
 import animals.models
 import blog.models
 from blog.forms import FeedbackForm
@@ -24,8 +22,7 @@ def feedbacks(request):
             feedback_instance = form.save(commit=False)
             feedback_instance.user = user
             feedback_instance.save()
-    else:
-        form = FeedbackForm()
+    form = FeedbackForm()
     all_animals = animals.models.Animal.objects.all()
     animal_id = request.GET.get("animal_id")
     all_feedbacks = blog.models.Feedback.objects

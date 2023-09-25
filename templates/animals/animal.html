@@ -18,6 +18,18 @@
                 <p><strong>Availability:</strong> {% if animal.availability %}Available{% else %}Not Available{% endif %}</p>
                 <p><strong>Health:</strong> {% if animal.healthy %}Healthy{% else %}Not Healthy{% endif %}</p>
                 <p class="animal-description">{{ animal.description }}</p>
+                <form method="get" action="/schedule">
+{#                    <input type="hidden" name="animal_id" value="{{ animal.id }}">#}
+                    <input type="submit" value="Book your walk">
+                </form>
+                {% if user.is_authenticated %}
+                    <h1 class="blog__title">Leave feedback</h1>
+                    <form method="post" class="blog__form">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Submit">
+                    </form>
+                {% endif %}
             </div>
         </div>
     </section>
