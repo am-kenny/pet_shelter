@@ -116,7 +116,7 @@ h1 {
     background-color: #f7f7f7;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Style form labels */
@@ -244,7 +244,7 @@ h1 {
     padding: 20px;
     margin: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Style the animal list title */
@@ -261,7 +261,7 @@ h1 {
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease-in-out;
 }
 
@@ -316,7 +316,7 @@ h1 {
     padding: 20px;
     margin: 20px;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Style the animal detail title */
@@ -348,7 +348,7 @@ h1 {
     background-color: #fff;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Style availability and health */

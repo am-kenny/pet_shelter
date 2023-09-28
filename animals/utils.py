@@ -44,29 +44,3 @@ def available_booking_times(booked_times: list[tuple],
                 available_times.append(current_time.strftime("%H:%M"))
             current_time = current_time + datetime.timedelta(minutes=15)
     return available_times
-
-
-# Tests
-
-# a list of already booked times
-# booked = [(datetime.datetime(2023, 9, 12, 11, 0),
-#            datetime.datetime(2023, 9, 12, 12, 0)),
-#           (datetime.datetime(2023, 9, 12, 14, 0),
-#            datetime.datetime(2023, 9, 12, 16, 0))]
-#
-# booked2 = [(datetime.datetime(2023, 9, 12, 13, 0),
-#            datetime.datetime(2023, 9, 12, 14, 0)),
-#            (datetime.datetime(2023, 9, 12, 11, 0),
-#            datetime.datetime(2023, 9, 12, 12, 0)),
-#            (datetime.datetime(2023, 9, 12, 14, 0),
-#             datetime.datetime(2023, 9, 12, 15, 0)),
-#            (datetime.datetime(2023, 9, 12, 9, 0),
-#             datetime.datetime(2023, 9, 12, 10, 0))]
-
-# booked3 = []
-#
-# # set desired duration
-# input_hours = 0.5
-# input_minutes = 0
-# print(available_booking_times(booked3, input_hours, input_minutes))
-#

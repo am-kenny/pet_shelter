@@ -45,7 +45,7 @@ def user_register(request):
             new_user = User.objects.create_user(username, email, password)
             new_user.save()
             return redirect('/login')
-        except Exception as e:
+        except Exception:
             error_message = "Username already exists"
             return render(request, 'user/user_register.html', {"error_message": error_message})
     return render(request, 'user/user_register.html', {})
