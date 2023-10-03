@@ -48,7 +48,6 @@
                     return false; // Form submission prevented
                 }
             }
-
             </script>
         {% endif %}
         {% if schedules %}
@@ -78,10 +77,73 @@
                 <p class="schedule-subtitle">Available Time Slots</p>
                 <ul class="schedule-timeslot-list">
                     {% for available_slot in available_slots %}
-                        <li class="schedule-timeslot">{{ available_slot }}</li>
+                        <li class="schedule-timeslot" data-slot="{{ available_slot }}">
+                            {{ available_slot }}
+                        </li>
                     {% endfor %}
                 </ul>
             </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const timeSlots = document.querySelectorAll('.schedule-timeslot');
+
+                    timeSlots.forEach(function(slot) {
+                        slot.addEventListener('click', function() {
+                            const selectedSlot = this.getAttribute('data-slot');
+                            const scheduleDate = '{{ selected_date }}';
+                            const desiredHours = {{ desired_hours }};
+                            const desiredMinutes = {{ desired_minutes }};
+                            const animalId = {{ animal_id }};
+
+                            // Create a form element
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+
+                            // Create a CSRF token input field
+                            const csrfInput = document.createElement('input');
+                            csrfInput.type = 'hidden';
+                            csrfInput.name = 'csrfmiddlewaretoken';
+                            csrfInput.value = '{{ csrf_token }}';
+                            form.appendChild(csrfInput);
+
+                            // Create hidden input fields for the data
+                            const slotInput = document.createElement('input');
+                            slotInput.type = 'hidden';
+                            slotInput.name = 'selected_slot';
+                            slotInput.value = selectedSlot;
+                            form.appendChild(slotInput);
+
+                            const dateInput = document.createElement('input');
+                            dateInput.type = 'hidden';
+                            dateInput.name = 'selected_date';
+                            dateInput.value = scheduleDate;
+                            form.appendChild(dateInput);
+
+                            const hoursInput = document.createElement('input');
+                            hoursInput.type = 'hidden';
+                            hoursInput.name = 'duration_hours';
+                            hoursInput.value = desiredHours;
+                            form.appendChild(hoursInput);
+
+                            const minutesInput = document.createElement('input');
+                            minutesInput.type = 'hidden';
+                            minutesInput.name = 'duration_minutes';
+                            minutesInput.value = desiredMinutes;
+                            form.appendChild(minutesInput);
+
+                            const animalIdInput = document.createElement('input');
+                            animalIdInput.type = 'hidden';
+                            animalIdInput.name = 'animal_id';
+                            animalIdInput.value = animalId;
+                            form.appendChild(animalIdInput);
+
+                            // Append the form to the document and submit it
+                            document.body.appendChild(form);
+                            form.submit();
+                        });
+                    });
+                });
+            </script>
         {% endif %}
     </div>
 {% endblock %}

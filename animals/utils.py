@@ -1,5 +1,6 @@
 from typing import List  # imported typing to remove type warnings
 import datetime
+import animals.models
 
 shelter_open_time = datetime.time(8, 0)  # Pet shelter open time
 shelter_close_time = datetime.time(18, 0)  # Pet shelter close time
@@ -44,3 +45,14 @@ def available_booking_times(booked_times: list[tuple],
                 available_times.append(current_time.strftime("%H:%M"))
             current_time = current_time + datetime.timedelta(minutes=15)
     return available_times
+
+
+def create_booked_time(booking_date, time_slot, duration_hours, duration_minutes):
+    booking_date = datetime.datetime.strptime(booking_date, "%Y-%m-%d")
+    booking_time = datetime.datetime.strptime(time_slot, "%H:%M").time()
+    booking_start = datetime.datetime.combine(booking_date, booking_time)
+    duration_hours = float(duration_hours)
+    duration_minutes = float(duration_minutes)
+    duration = datetime.timedelta(hours=duration_hours, minutes=duration_minutes)
+    booking_end = booking_start + duration
+    return booking_start, booking_end

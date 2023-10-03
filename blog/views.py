@@ -1,3 +1,4 @@
+from django.http import HttpResponseNotFound
 from django.shortcuts import render
 import animals.models
 import blog.models
@@ -10,8 +11,10 @@ def index(request):
 
 
 def blog_post(request, post_id):
-    blog_post_obj = blog.models.Blog.objects.get(id=post_id)
-    return render(request, 'blog/blog_post.html', {"blog_post": blog_post_obj})
+    if blog.models.Blog.objects.filter(id=post_id).exists():
+        blog_post_obj = blog.models.Blog.objects.get(id=post_id)
+        return render(request, 'blog/blog_post.html', {"blog_post": blog_post_obj})
+    return HttpResponseNotFound()
 
 
 def feedbacks(request):
