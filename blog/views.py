@@ -19,12 +19,13 @@ def blog_post(request, post_id):
 
 def feedbacks(request):
     if request.method == "POST":
-        form = FeedbackForm(request.POST)
-        if form.is_valid():
-            user = request.user
-            feedback_instance = form.save(commit=False)
-            feedback_instance.user = user
-            feedback_instance.save()
+        if request.user.is_authenticated:
+            form = FeedbackForm(request.POST)
+            if form.is_valid():
+                user = request.user
+                feedback_instance = form.save(commit=False)
+                feedback_instance.user = user
+                feedback_instance.save()
     form = FeedbackForm()
     all_animals = animals.models.Animal.objects.all()
     animal_id = request.GET.get("animal_id")

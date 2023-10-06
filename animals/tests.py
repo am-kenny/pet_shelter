@@ -3,9 +3,10 @@ from django.test import TestCase, Client
 import unittest
 import datetime
 
+from django.urls import reverse
+
 import animals.models
 from animals.utils import available_booking_times
-from animals import models as animal_models
 
 
 # Schedule testing
@@ -190,144 +191,11 @@ class TestScheduleEmpty(unittest.TestCase):
 
 
 # Endpoints testing
-class TestAnimalSchedule(TestCase):
-    def setUp(self):
-        new_sex = animal_models.Sex.objects.create(name='test')
-
-        self.test_animal = animal_models.Animal.objects.create(name='test', type='test', sex=new_sex, age=2,
-                                                               breed='test',
-                                                               availability=1, description='test', healthy=1)
-        self.test_user = User.objects.create_user(username='test', password='test')
-        self.test_user2 = User.objects.create_user(username='test2', password='test2')
-        animal_models.Schedule.objects.create(start_time=datetime.datetime(2023, 10, 13, 15, 0),
-                                              end_time=datetime.datetime(2023, 10, 13, 16, 0),
-                                              animal_id=self.test_animal.id,
-                                              user_id=self.test_user2.id)
-
-    def test_schedule_get1(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.get('/schedule')
-        status_code = response.status_code
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_get2(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.get('/schedule', data={'animal_id': self.test_animal.id,
-                                                      "date": "2023-10-13",
-                                                      "duration_hours": 1,
-                                                      "duration_minutes": 0})
-        status_code = response.status_code
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_get3(self):
-        test_client = Client()
-        response = test_client.get('/schedule')
-        status_code = response.status_code
-        self.assertEqual(status_code, 302)
-
-    def test_schedule_post(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '10:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 1,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.get(animal_id=self.test_animal.id, user_id=self.test_user)
-
-        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 10, 13, 10, 0))
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 10, 13, 11, 0))
-        self.assertEqual(test_schedule.user_id, self.test_user.id)
-        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_post_2(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '04:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 1,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.filter(animal_id=self.test_animal.id, user_id=self.test_user).exists()
-
-        self.assertEqual(test_schedule, False)
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_post_3(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '20:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 1,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.filter(animal_id=self.test_animal.id, user_id=self.test_user).exists()
-
-        self.assertEqual(test_schedule, False)
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_post_4(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '08:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 3,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.get(animal_id=self.test_animal.id, user_id=self.test_user)
-
-        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 10, 13, 8, 0))
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 10, 13, 11, 0))
-        self.assertEqual(test_schedule.user_id, self.test_user.id)
-        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_post_5(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '16:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 2,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.get(animal_id=self.test_animal.id, user_id=self.test_user)
-
-        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 10, 13, 16, 0))
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 10, 13, 18, 0))
-        self.assertEqual(test_schedule.user_id, self.test_user.id)
-        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
-        self.assertEqual(status_code, 200)
-
-    def test_schedule_post_6(self):
-        test_client = Client()
-        test_client.login(username='test', password='test')
-        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
-                                                       'selected_slot': '15:00',
-                                                       'selected_date': '2023-10-13',
-                                                       'duration_hours': 2,
-                                                       'duration_minutes': 0})
-        status_code = response.status_code
-        test_schedule = animals.models.Schedule.objects.filter(animal_id=self.test_animal.id, user_id=self.test_user).exists()
-
-        self.assertEqual(test_schedule, False)
-        self.assertEqual(status_code, 200)
-
-
 class TestAnimals(TestCase):
-    def setUp(self):
-        new_sex = animal_models.Sex.objects.create(name='test')
+    fixtures = ['test_data.json']
 
-        self.test_animal = animal_models.Animal.objects.create(name='test', type='test', sex=new_sex, age=2,
-                                                               breed='test',
-                                                               availability=1, description='test', healthy=1)
+    def setUp(self):
+        self.test_animal = animals.models.Animal.objects.filter(id=3).first()
 
     def test_animals_page(self):
         test_client = Client()
@@ -337,12 +205,171 @@ class TestAnimals(TestCase):
 
     def test_animal_page(self):
         test_client = Client()
-        response = test_client.get(f'/animals/{self.test_animal.id}')
+        response = test_client.get(reverse('animal', args=[self.test_animal.id]))
+        status_code = response.status_code
+        has_animal_name = self.test_animal.name in response.content.decode('utf-8')
+        self.assertEqual(status_code, 200)
+        self.assertTrue(has_animal_name)
+
+    def test_animal_page_fail(self):  # Unexisting animal
+        test_client = Client()
+        response = test_client.get(reverse('animal', args=[777]))
+        status_code = response.status_code
+        self.assertEqual(status_code, 404)
+
+
+class TestAnimalSchedule(TestCase):
+    fixtures = ['test_data.json']
+
+    def setUp(self):
+        self.test_animal = animals.models.Animal.objects.filter(id=3).first()
+
+    @staticmethod
+    def logged_client():
+        test_client = Client()
+        test_client.login(username='guest', password='vfRarYj37Jfp@V3')
+        return test_client
+
+    def test_schedule_get_1(self):
+        test_client = self.logged_client()
+        response = test_client.get('/schedule')
         status_code = response.status_code
         self.assertEqual(status_code, 200)
 
-    def test_animal_fail(self):
+    def test_schedule_get_2(self):
+        test_client = self.logged_client()
+        response = test_client.get('/schedule', data={'animal_id': self.test_animal.id,
+                                                      "date": "2023-10-14",
+                                                      "duration_hours": 1,
+                                                      "duration_minutes": 0})
+        status_code = response.status_code
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_get_3(self):
         test_client = Client()
-        response = test_client.get(f'/animals/456')
+        response = test_client.get('/schedule')
+        status_code = response.status_code
+        self.assertEqual(status_code, 302)
+
+    def test_schedule_get_4(self):  # Test exception handling
+        test_client = self.logged_client()
+        response = test_client.get('/schedule', data={'animal_id': self.test_animal.id,
+                                                      "date": "2023-10-14",
+                                                      "duration_hours": "some bad data",
+                                                      "duration_minutes": "some bad data"})
+        status_code = response.status_code
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_get_fail(self):  # Unexisting animal
+        test_client = self.logged_client()
+        response = test_client.get('/schedule', data={'animal_id': 777,
+                                                      "date": "2023-10-13",
+                                                      "duration_hours": 1,
+                                                      "duration_minutes": 0})
         status_code = response.status_code
         self.assertEqual(status_code, 404)
+
+    def test_schedule_post(self):
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '10:00',
+                                                       'selected_date': '2023-12-14',
+                                                       'duration_hours': 1,
+                                                       'duration_minutes': 0})
+        status_code = response.status_code
+        test_schedule = animals.models.Schedule.objects.get(start_time=datetime.datetime(2023, 12, 14, 10))
+
+        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 12, 14, 10, 0))
+        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 12, 14, 11, 0))
+        self.assertEqual(test_schedule.user_id, 4)
+        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_2(self):  # At the start of the working day
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '08:00',
+                                                       'selected_date': '2023-12-25',
+                                                       'duration_hours': 3,
+                                                       'duration_minutes': 0})
+        status_code = response.status_code
+        test_schedule = animals.models.Schedule.objects.get(start_time=datetime.datetime(2023, 12, 25, 8))
+
+        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 12, 25, 8, 0))
+        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 12, 25, 11, 0))
+        self.assertEqual(test_schedule.user_id, 4)
+        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_3(self):  # At the end of the working day + after booked interval
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '17:45',
+                                                       'selected_date': '2023-10-14',
+                                                       'duration_hours': 0,
+                                                       'duration_minutes': 15})
+        status_code = response.status_code
+        test_schedule = animals.models.Schedule.objects.get(start_time=datetime.datetime(2023, 10, 14, 17, 45),
+                                                            end_time=datetime.datetime(2023, 10, 14, 18))
+
+        self.assertEqual(test_schedule.start_time, datetime.datetime(2023, 10, 14, 17, 45))
+        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 10, 14, 18, 0))
+        self.assertEqual(test_schedule.user_id, 4)
+        self.assertEqual(test_schedule.animal_id, self.test_animal.id)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_fail(self):  # Conflict with another time
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '10:00',
+                                                       'selected_date': '2023-10-14',
+                                                       'duration_hours': 8,
+                                                       'duration_minutes': 0})
+        status_code = response.status_code
+        is_test_schedule = animals.models.Schedule.objects.filter(start_time=datetime.datetime(2023, 10, 14, 10),
+                                                                  end_time=datetime.datetime(2023, 10, 14, 18)).exists()
+
+        self.assertFalse(is_test_schedule)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_fail_2(self):  # Before opening
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '04:00',
+                                                       'selected_date': '2023-10-25',
+                                                       'duration_hours': 1,
+                                                       'duration_minutes': 0})
+        status_code = response.status_code
+        is_test_schedule = animals.models.Schedule.objects.filter(start_time=datetime.datetime(2023, 10, 25, 4),
+                                                                  end_time=datetime.datetime(2023, 10, 25, 5)).exists()
+
+        self.assertFalse(is_test_schedule)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_fail_3(self):  # After closure
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '20:00',
+                                                       'selected_date': '2023-10-25',
+                                                       'duration_hours': 1,
+                                                       'duration_minutes': 0})
+        status_code = response.status_code
+        is_test_schedule = animals.models.Schedule.objects.filter(start_time=datetime.datetime(2023, 10, 25, 20),
+                                                                  end_time=datetime.datetime(2023, 10, 25, 21)).exists()
+
+        self.assertFalse(is_test_schedule)
+        self.assertEqual(status_code, 200)
+
+    def test_schedule_post_fail_4(self):  # Test exception handling
+        test_client = self.logged_client()
+        response = test_client.post('/schedule', data={'animal_id': self.test_animal.id,
+                                                       'selected_slot': '10:00',
+                                                       'selected_date': '2023-10-25',
+                                                       'duration_hours': "some bad data",
+                                                       'duration_minutes': "some bad data"})
+        status_code = response.status_code
+        is_test_schedule = animals.models.Schedule.objects.filter(start_time=datetime.datetime(2023, 10, 25, 20),
+                                                                  end_time=datetime.datetime(2023, 10, 25, 21)).exists()
+
+        self.assertFalse(is_test_schedule)
+        self.assertEqual(status_code, 200)

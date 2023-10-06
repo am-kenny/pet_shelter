@@ -30,7 +30,7 @@ def user_login(request):
 
 
 def user_logout(request):
-    if request.user.is_authenticated:
+    if not request.user.is_authenticated:
         return redirect('/')
     logout(request)
     return redirect("/login")
