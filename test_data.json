@@ -1,0 +1,1523 @@
+[
+{
+    "model": "admin.logentry",
+    "pk": 1,
+    "fields": {
+        "action_time": "2023-09-21T14:40:24.746",
+        "user": 2,
+        "content_type": 10,
+        "object_id": "3",
+        "object_repr": "Pyshinka is waiting for you",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Tag\"]}}]"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 1,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 1,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 1,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 1,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 2,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 2,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 2,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 2,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 3,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 3,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 3,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 3,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 4,
+        "codename": "add_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 4,
+        "codename": "change_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 4,
+        "codename": "delete_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 4,
+        "codename": "view_user"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 5,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 5,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 5,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 5,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 6,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 6,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 6,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 6,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add user media",
+        "content_type": 7,
+        "codename": "add_usermedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change user media",
+        "content_type": 7,
+        "codename": "change_usermedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete user media",
+        "content_type": 7,
+        "codename": "delete_usermedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view user media",
+        "content_type": 7,
+        "codename": "view_usermedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add tag",
+        "content_type": 8,
+        "codename": "add_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change tag",
+        "content_type": 8,
+        "codename": "change_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete tag",
+        "content_type": 8,
+        "codename": "delete_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view tag",
+        "content_type": 8,
+        "codename": "view_tag"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add feedback",
+        "content_type": 9,
+        "codename": "add_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change feedback",
+        "content_type": 9,
+        "codename": "change_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete feedback",
+        "content_type": 9,
+        "codename": "delete_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view feedback",
+        "content_type": 9,
+        "codename": "view_feedback"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add blog",
+        "content_type": 10,
+        "codename": "add_blog"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change blog",
+        "content_type": 10,
+        "codename": "change_blog"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete blog",
+        "content_type": 10,
+        "codename": "delete_blog"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view blog",
+        "content_type": 10,
+        "codename": "view_blog"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add animal",
+        "content_type": 11,
+        "codename": "add_animal"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change animal",
+        "content_type": 11,
+        "codename": "change_animal"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete animal",
+        "content_type": 11,
+        "codename": "delete_animal"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view animal",
+        "content_type": 11,
+        "codename": "view_animal"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add sex",
+        "content_type": 12,
+        "codename": "add_sex"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change sex",
+        "content_type": 12,
+        "codename": "change_sex"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete sex",
+        "content_type": 12,
+        "codename": "delete_sex"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view sex",
+        "content_type": 12,
+        "codename": "view_sex"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add schedule",
+        "content_type": 13,
+        "codename": "add_schedule"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change schedule",
+        "content_type": 13,
+        "codename": "change_schedule"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete schedule",
+        "content_type": 13,
+        "codename": "delete_schedule"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view schedule",
+        "content_type": 13,
+        "codename": "view_schedule"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+        "name": "Can add animal media",
+        "content_type": 14,
+        "codename": "add_animalmedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+        "name": "Can change animal media",
+        "content_type": 14,
+        "codename": "change_animalmedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+        "name": "Can delete animal media",
+        "content_type": 14,
+        "codename": "delete_animalmedia"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+        "name": "Can view animal media",
+        "content_type": 14,
+        "codename": "view_animalmedia"
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$Huh6sx08TIOptb8vSJlYp4$a6KOKGPb3ad35iUo2wmWteV7WuNvaCXy1680gzUm2PA=",
+        "last_login": "2023-10-02T10:35:21.433",
+        "is_superuser": true,
+        "username": "AmKenny",
+        "first_name": "",
+        "last_name": "",
+        "email": "a.v.prykhodko25@gmail.com",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2023-09-19T13:42:32.999",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$WMkpjl4o85i6C2FC4vU91p$nw7/NPMGrFJ42DsMgtYjKG6S/qX5mfMrcGWaoMa0xrg=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "d",
+        "first_name": "",
+        "last_name": "",
+        "email": "f@3",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-09-21T10:14:16.354",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$IBlhV1cqKwunzgHKQGPLxJ$9eAGey83rjXgkFAy/WvqsOonQdweRnMzAdXl9wDatWI=",
+        "last_login": "2023-09-25T13:10:11.183",
+        "is_superuser": false,
+        "username": "guest",
+        "first_name": "",
+        "last_name": "",
+        "email": "guest@example.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-09-21T12:30:36.235",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$600000$C9eaAQZZzJhoMCxVHvh3Nd$hsHDjxq8wiDpnZEVnEkzTlCkfzcLJZvvBoIYrpYOuE0=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "dsadsadsa",
+        "first_name": "",
+        "last_name": "",
+        "email": "a.v.prykhodko25@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-09-22T11:33:52.292",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "auth",
+        "model": "user"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "user",
+        "model": "usermedia"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "blog",
+        "model": "tag"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "blog",
+        "model": "feedback"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "blog",
+        "model": "blog"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "animals",
+        "model": "animal"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "animals",
+        "model": "sex"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "animals",
+        "model": "schedule"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+        "app_label": "animals",
+        "model": "animalmedia"
+    }
+},
+{
+    "model": "sessions.session",
+    "pk": "6lca04oo6sct4ckbcsz16dls0l9l9arh",
+    "fields": {
+        "session_data": ".eJxVjEEOwiAQAP_C2RBZqGU9eu8byC4sUjU0Ke3J-HdD0oNeZybzVoH2rYS9yRrmpK4K1OmXMcWn1C7Sg-p90XGp2zqz7ok-bNPTkuR1O9q_QaFW-tZ6Y6NDyXBmytbCOPicZIQhGwNEzgAiOgRyaLMXTsKAHC-Oc4ykPl_SUjg1:1qnGGn:1sprQFjeIDWbul6-kvvEouzUnEsCiAstzWLgS1ZoF1E",
+        "expire_date": "2023-10-16T10:35:21.440"
+    }
+},
+{
+    "model": "blog.tag",
+    "pk": 1,
+    "fields": {
+        "name": "news"
+    }
+},
+{
+    "model": "blog.tag",
+    "pk": 2,
+    "fields": {
+        "name": "our_life"
+    }
+},
+{
+    "model": "blog.tag",
+    "pk": 3,
+    "fields": {
+        "name": "newcomer"
+    }
+},
+{
+    "model": "blog.tag",
+    "pk": 4,
+    "fields": {
+        "name": "dog"
+    }
+},
+{
+    "model": "blog.tag",
+    "pk": 5,
+    "fields": {
+        "name": "cat"
+    }
+},
+{
+    "model": "blog.blog",
+    "pk": 1,
+    "fields": {
+        "title": "Opening soon!",
+        "text": "We are making last preparations!",
+        "tag": [
+            1
+        ]
+    }
+},
+{
+    "model": "blog.blog",
+    "pk": 2,
+    "fields": {
+        "title": "New pets!",
+        "text": "Welcome our newcomers!",
+        "tag": [
+            1,
+            3
+        ]
+    }
+},
+{
+    "model": "blog.blog",
+    "pk": 3,
+    "fields": {
+        "title": "Pyshinka is waiting for you",
+        "text": "Our cat Pyshinka would be happy if you spent more time with her :3",
+        "tag": [
+            5
+        ]
+    }
+},
+{
+    "model": "blog.blog",
+    "pk": 4,
+    "fields": {
+        "title": "Test",
+        "text": "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest",
+        "tag": [
+            1,
+            2,
+            3,
+            4,
+            5
+        ]
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 2,
+    "fields": {
+        "title": "Test",
+        "text": "Testttt",
+        "media": "test___",
+        "user": 2,
+        "animal": 1
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 3,
+    "fields": {
+        "title": "Experience with Bobik",
+        "text": "Such an awesome experience. The dog was extremely energetic and I had so much fun. 10/10, would recommend to friends.",
+        "media": "o;eoj ji rti tp#U  0t4 y9pt4j ol[h45uiiorg",
+        "user": 2,
+        "animal": 1
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 4,
+    "fields": {
+        "title": "Walk with Dinar",
+        "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+        "media": "iugn bhvjwnaso/mbin6yu;s/z",
+        "user": 2,
+        "animal": 2
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 5,
+    "fields": {
+        "title": "Walk with Dinar",
+        "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+        "media": "iugn bhvjwnaso/mbin6yu;s/z",
+        "user": 2,
+        "animal": 2
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 6,
+    "fields": {
+        "title": "Walk with Dinar",
+        "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+        "media": "iugn bhvjwnaso/mbin6yu;s/z",
+        "user": 2,
+        "animal": 2
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 7,
+    "fields": {
+        "title": "Walk with Dinar",
+        "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+        "media": "iugn bhvjwnaso/mbin6yu;s/z",
+        "user": 2,
+        "animal": 2
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 8,
+    "fields": {
+        "title": "test2",
+        "text": "test_text",
+        "media": "test_media",
+        "user": 4,
+        "animal": 3
+    }
+},
+{
+    "model": "blog.feedback",
+    "pk": 9,
+    "fields": {
+        "title": "test3",
+        "text": "test text",
+        "media": "testMedia",
+        "user": 4,
+        "animal": 1
+    }
+},
+{
+    "model": "animals.sex",
+    "pk": 1,
+    "fields": {
+        "name": "male"
+    }
+},
+{
+    "model": "animals.sex",
+    "pk": 2,
+    "fields": {
+        "name": "female"
+    }
+},
+{
+    "model": "animals.animal",
+    "pk": 1,
+    "fields": {
+        "name": "Bobik",
+        "type": "dog",
+        "sex": 1,
+        "age": 3,
+        "breed": "regular",
+        "availability": true,
+        "description": "Would become your best friend!",
+        "healthy": true
+    }
+},
+{
+    "model": "animals.animal",
+    "pk": 2,
+    "fields": {
+        "name": "Dinar",
+        "type": "dog",
+        "sex": 1,
+        "age": 6,
+        "breed": "Alabai",
+        "availability": true,
+        "description": "Best dog ever",
+        "healthy": false
+    }
+},
+{
+    "model": "animals.animal",
+    "pk": 3,
+    "fields": {
+        "name": "Pyshinka",
+        "type": "cat",
+        "sex": 2,
+        "age": 4,
+        "breed": "regular",
+        "availability": true,
+        "description": "Furry cat",
+        "healthy": true
+    }
+},
+{
+    "model": "animals.animal",
+    "pk": 4,
+    "fields": {
+        "name": "Arthur",
+        "type": "Dog",
+        "sex": 1,
+        "age": 2,
+        "breed": "Dvornyaga",
+        "availability": true,
+        "description": "Can make you some code",
+        "healthy": false
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 2,
+    "fields": {
+        "start_time": "2023-09-22T10:30:00",
+        "end_time": "2023-09-22T12:00:00",
+        "animal": 1,
+        "user": 3
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 3,
+    "fields": {
+        "start_time": "2023-09-22T14:00:00",
+        "end_time": "2023-09-22T15:00:00",
+        "animal": 3,
+        "user": 4
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 4,
+    "fields": {
+        "start_time": "2023-09-22T12:00:00",
+        "end_time": "2023-09-22T16:00:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 5,
+    "fields": {
+        "start_time": "2023-09-24T13:30:00",
+        "end_time": "2023-09-24T15:00:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 6,
+    "fields": {
+        "start_time": "2023-09-24T12:00:00",
+        "end_time": "2023-09-24T12:30:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 7,
+    "fields": {
+        "start_time": "2023-09-26T10:00:00",
+        "end_time": "2023-09-26T12:00:00",
+        "animal": 1,
+        "user": 3
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 8,
+    "fields": {
+        "start_time": "2023-09-26T12:00:00",
+        "end_time": "2023-09-26T15:00:00",
+        "animal": 1,
+        "user": 4
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 9,
+    "fields": {
+        "start_time": "2023-09-26T12:00:00",
+        "end_time": "2023-09-26T16:00:00",
+        "animal": 3,
+        "user": 5
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 10,
+    "fields": {
+        "start_time": "2023-09-27T15:00:00",
+        "end_time": "2023-09-27T16:00:00",
+        "animal": 3,
+        "user": 5
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 11,
+    "fields": {
+        "start_time": "2023-10-12T13:30:00",
+        "end_time": "2023-10-12T16:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 12,
+    "fields": {
+        "start_time": "2023-10-12T08:00:00",
+        "end_time": "2023-10-12T10:30:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 13,
+    "fields": {
+        "start_time": "2023-10-12T10:45:00",
+        "end_time": "2023-10-12T13:15:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 14,
+    "fields": {
+        "start_time": "2023-10-06T08:00:00",
+        "end_time": "2023-10-06T08:30:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 15,
+    "fields": {
+        "start_time": "2023-10-06T09:30:00",
+        "end_time": "2023-10-06T10:00:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 16,
+    "fields": {
+        "start_time": "2023-10-06T15:15:00",
+        "end_time": "2023-10-06T15:45:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 17,
+    "fields": {
+        "start_time": "2023-10-06T13:30:00",
+        "end_time": "2023-10-06T14:00:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 18,
+    "fields": {
+        "start_time": "2023-10-06T10:30:00",
+        "end_time": "2023-10-06T11:00:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 19,
+    "fields": {
+        "start_time": "2023-10-06T12:15:00",
+        "end_time": "2023-10-06T12:45:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 20,
+    "fields": {
+        "start_time": "2023-10-06T14:15:00",
+        "end_time": "2023-10-06T14:45:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 21,
+    "fields": {
+        "start_time": "2023-10-14T08:00:00",
+        "end_time": "2023-10-14T09:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 22,
+    "fields": {
+        "start_time": "2023-10-14T10:30:00",
+        "end_time": "2023-10-14T11:30:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 23,
+    "fields": {
+        "start_time": "2023-10-14T14:30:00",
+        "end_time": "2023-10-14T15:30:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 24,
+    "fields": {
+        "start_time": "2023-10-14T16:45:00",
+        "end_time": "2023-10-14T17:45:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 25,
+    "fields": {
+        "start_time": "2023-10-14T12:00:00",
+        "end_time": "2023-10-14T13:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 26,
+    "fields": {
+        "start_time": "2023-10-14T09:15:00",
+        "end_time": "2023-10-14T10:15:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 27,
+    "fields": {
+        "start_time": "2023-10-14T15:30:00",
+        "end_time": "2023-10-14T16:30:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 28,
+    "fields": {
+        "start_time": "2023-10-14T13:00:00",
+        "end_time": "2023-10-14T14:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 29,
+    "fields": {
+        "start_time": "2023-10-16T14:45:00",
+        "end_time": "2023-10-16T15:45:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 30,
+    "fields": {
+        "start_time": "2023-10-16T09:45:00",
+        "end_time": "2023-10-16T10:45:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 31,
+    "fields": {
+        "start_time": "2023-10-16T12:00:00",
+        "end_time": "2023-10-16T13:00:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 33,
+    "fields": {
+        "start_time": "2023-10-16T13:45:00",
+        "end_time": "2023-10-16T14:45:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 34,
+    "fields": {
+        "start_time": "2023-10-16T13:45:00",
+        "end_time": "2023-10-16T14:45:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 35,
+    "fields": {
+        "start_time": "2023-10-17T12:30:00",
+        "end_time": "2023-10-17T13:30:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 36,
+    "fields": {
+        "start_time": "2023-10-17T10:15:00",
+        "end_time": "2023-10-17T11:15:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 37,
+    "fields": {
+        "start_time": "2023-10-17T17:00:00",
+        "end_time": "2023-10-17T18:00:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 38,
+    "fields": {
+        "start_time": "2023-10-17T15:30:00",
+        "end_time": "2023-10-17T16:30:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 39,
+    "fields": {
+        "start_time": "2023-10-17T08:30:00",
+        "end_time": "2023-10-17T09:30:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 40,
+    "fields": {
+        "start_time": "2023-10-17T11:15:00",
+        "end_time": "2023-10-17T12:15:00",
+        "animal": 1,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 43,
+    "fields": {
+        "start_time": "2023-10-12T08:15:00",
+        "end_time": "2023-10-12T09:15:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 44,
+    "fields": {
+        "start_time": "2023-10-12T09:45:00",
+        "end_time": "2023-10-12T10:45:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 45,
+    "fields": {
+        "start_time": "2023-10-12T16:15:00",
+        "end_time": "2023-10-12T17:15:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 46,
+    "fields": {
+        "start_time": "2023-10-12T10:45:00",
+        "end_time": "2023-10-12T11:45:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 47,
+    "fields": {
+        "start_time": "2023-10-12T12:00:00",
+        "end_time": "2023-10-12T13:00:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 48,
+    "fields": {
+        "start_time": "2023-10-12T13:15:00",
+        "end_time": "2023-10-12T14:15:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 49,
+    "fields": {
+        "start_time": "2023-10-12T14:15:00",
+        "end_time": "2023-10-12T15:15:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 50,
+    "fields": {
+        "start_time": "2023-10-12T15:15:00",
+        "end_time": "2023-10-12T16:15:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 51,
+    "fields": {
+        "start_time": "2023-10-15T14:45:00",
+        "end_time": "2023-10-15T16:45:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 52,
+    "fields": {
+        "start_time": "2023-10-15T10:00:00",
+        "end_time": "2023-10-15T12:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 53,
+    "fields": {
+        "start_time": "2023-10-15T12:45:00",
+        "end_time": "2023-10-15T14:45:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 54,
+    "fields": {
+        "start_time": "2023-10-15T08:00:00",
+        "end_time": "2023-10-15T10:00:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 55,
+    "fields": {
+        "start_time": "2023-10-16T13:00:00",
+        "end_time": "2023-10-16T14:00:00",
+        "animal": 2,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 56,
+    "fields": {
+        "start_time": "2023-10-09T08:15:00",
+        "end_time": "2023-10-09T09:15:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 57,
+    "fields": {
+        "start_time": "2023-10-09T09:15:00",
+        "end_time": "2023-10-09T11:15:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 58,
+    "fields": {
+        "start_time": "2023-10-09T12:45:00",
+        "end_time": "2023-10-09T13:45:00",
+        "animal": 3,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 59,
+    "fields": {
+        "start_time": "2023-10-08T08:00:00",
+        "end_time": "2023-10-08T09:00:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 60,
+    "fields": {
+        "start_time": "2023-10-08T09:15:00",
+        "end_time": "2023-10-08T10:15:00",
+        "animal": 4,
+        "user": 2
+    }
+},
+{
+    "model": "animals.schedule",
+    "pk": 61,
+    "fields": {
+        "start_time": "2023-10-08T11:30:00",
+        "end_time": "2023-10-08T12:30:00",
+        "animal": 4,
+        "user": 2
+    }
+}
+]
