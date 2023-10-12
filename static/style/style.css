@@ -598,3 +598,24 @@ h1 {
     font-size: 14px;
     margin-top: 5px;
 }
+
+/* Additional CSS for the "All images" button */
+.user-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.all-images-button {
+    position: absolute;
+    top: 90%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    text-align: center;
+    text-decoration: none;
+    background-color: rgba(0, 123, 255, 0.7); /* Semi-transparent blue */
+    color: #fff;
+    padding: 3px 6px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1; /* Ensure it's above the image */
+}

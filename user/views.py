@@ -9,10 +9,10 @@ from user.forms import UpdateUserForm
 def index(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.usermedia_set.filter(user_id=request.user.id).exists():
+    if request.user.usermedia_set.filter(main=True).exists():
         image_url = request.user.usermedia_set.first().media.url
     else:
-        image_url = ""
+        image_url = "/user_images/user.png"
     return render(request, 'user/index.html', {"image_url": image_url})
 
 
@@ -69,12 +69,15 @@ def edit_profile(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.usermedia_set.filter(user_id=request.user.id).exists():
-        image_url = request.user.usermedia_set.first().media.url
+        image_url = request.user.usermedia_set.filter(main=True).media.url
     else:
-        image_url = ""
+        image_url = "/user_images/user.png"
     form = UpdateUserForm(request.POST or None, instance=request.user)
-
     if form.is_valid():
         form.save()
         return redirect('user')
     return render(request, 'user/edit.html', {"image_url": image_url, "form": form})
+
+
+def user_images(request):
+    return render(request, 'user/images.html', {})

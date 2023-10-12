@@ -22,7 +22,7 @@
             <a href="{% url 'animals' %}">Animals</a>
             <a href="{% url 'schedule' %}">Schedule</a>
             {% if user.is_authenticated %}
-                <a href="{% url 'user' %}">User</a>
+                <a href="{% url 'user' %}">Profile</a>
                 <a href="{% url 'user_history' %}">User history</a>
             {% else %}
                 <a class="login" href="{% url 'login' %}">Login</a>
