@@ -3,8 +3,32 @@
     User images
 {% endblock %}
 {% block content %}
-    <div class="page-container">
+    <div class="user-images__container">
         <h1>User images</h1>
-
+        <a class="back-link" href="{% url 'user' %}">Back to profile</a>
+        <div class="user__images">
+            <div class="main-image">
+                <img src="{{ main_image.media.url }}" alt="Main image">
+                <div class="star-overlay"><p>Main</p> ★</div> <!-- Star overlay -->
+            </div>
+            {% for user_image in user_images %}
+                <div class="user-image-container">
+                    <img src="{{ user_image.media.url }}" alt="User image">
+                    <form method="post" action="{% url 'set_main_image' user_image.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="set-main-button">Set as Main</button> <!-- Button on the image -->
+                    </form>
+                    <form method="post" action="{% url 'delete_user_image' user_image.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-image-button">Delete</button> <!-- Button on the image -->
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+        <form class="upload-form" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Upload">
+        </form>
     </div>
 {% endblock %}

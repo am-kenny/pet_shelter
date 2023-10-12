@@ -493,7 +493,7 @@ h1 {
 }
 
 /* Styling for the user profile image container */
-.user-image-container {
+.user-profile-image-container {
     width: 200px; /* Set the desired container width */
     height: 200px; /* Set the desired container height */
     overflow: hidden;
@@ -618,4 +618,126 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     z-index: 1; /* Ensure it's above the image */
+}
+
+/* Styling for the user images container */
+.user-images__container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Styling for the gallery title */
+.user-images__container h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Styling for the user images grid */
+.user__images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
+    gap: 10px; /* Adjust the gap between images */
+    margin: 20px 0;
+}
+
+/* Styling for individual user images */
+.user__images img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px; /* Add rounded corners to the images */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow to the images */
+}
+
+/* Styling for the main image container */
+.main-image {
+    position: relative;
+    display: inline-block;
+}
+
+/* Styling for the star overlay */
+.star-overlay {
+    position: absolute;
+    top: 10px; /* Adjust the top position as needed */
+    right: 10px; /* Adjust the right position as needed */
+    font-size: 24px; /* Adjust the size of the star as needed */
+    color: #ffeb3b; /* Star color (yellow) */
+    z-index: 1; /* Ensure it's displayed above the image */
+}
+
+.star-overlay > p {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 12px;
+}
+
+/* Styling for the "Set as Main" button */
+.set-main-button {
+    position: absolute;
+    top: 95%; /* Center vertically */
+    left: 50%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    background-color: #007BFF;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1; /* Ensure it's displayed above the image */
+}
+
+/* Style the form container */
+.upload-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style labels */
+.upload-form label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+/* Style the file input */
+.upload-form input[type="file"] {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Style the submit button */
+.upload-form input[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Hover effect for the submit button */
+.upload-form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.delete-image-button {
+    position: absolute;
+    top: 95%; /* Center vertically */
+    left: 20%; /* Center horizontally */
+    transform: translate(-50%, -50%);
+    background-color: #d30000;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 1; /* Ensure it's displayed above the image */
 }

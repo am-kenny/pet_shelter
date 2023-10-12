@@ -1,18 +1,22 @@
+import os
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 import animals.models
-from user.forms import UpdateUserForm
+from user.forms import UpdateUserForm, AddUserMedia
+from user.models import UserMedia
 
 
 def index(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     if request.user.usermedia_set.filter(main=True).exists():
-        image_url = request.user.usermedia_set.first().media.url
+        image_url = request.user.usermedia_set.filter(main=True).first().media.url
     else:
         image_url = "/user_images/user.png"
+
     return render(request, 'user/index.html', {"image_url": image_url})
 
 
@@ -31,6 +35,7 @@ def user_login(request):
             return redirect("/")
         else:
             return HttpResponseNotFound("Failed to log in")
+
     return render(request, 'user/user_login.html', {})
 
 
@@ -38,6 +43,7 @@ def user_logout(request):
     if not request.user.is_authenticated:
         return redirect('/')
     logout(request)
+
     return redirect("/login")
 
 
@@ -54,7 +60,9 @@ def user_register(request):
             return redirect('/login')
         except Exception:
             error_message = "Username already exists"
+
             return render(request, 'user/user_register.html', {"error_message": error_message}, status=409)
+
     return render(request, 'user/user_register.html', {})
 
 
@@ -62,22 +70,63 @@ def user_history(request):
     if not request.user.is_authenticated:
         return redirect('/login')
     user_schedule = animals.models.Schedule.objects.filter(user=request.user)
+
     return render(request, 'user/user_history.html', {"schedules": user_schedule})
 
 
 def edit_profile(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    if request.user.usermedia_set.filter(user_id=request.user.id).exists():
-        image_url = request.user.usermedia_set.filter(main=True).media.url
-    else:
-        image_url = "/user_images/user.png"
     form = UpdateUserForm(request.POST or None, instance=request.user)
     if form.is_valid():
         form.save()
         return redirect('user')
-    return render(request, 'user/edit.html', {"image_url": image_url, "form": form})
+
+    return render(request, 'user/edit.html', {"form": form})
 
 
 def user_images(request):
-    return render(request, 'user/images.html', {})
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.method == 'POST':
+        form = AddUserMedia(request.POST, request.FILES)
+        if form.is_valid():
+            new_image = form.save(commit=False)
+            new_image.main = False
+            new_image.user = request.user
+            new_image.save()
+
+            return redirect('user_images')
+
+    form = AddUserMedia()
+    main_image = request.user.usermedia_set.filter(main=True).first()
+    all_images = request.user.usermedia_set.filter(main=False).all()
+
+    return render(request, 'user/images.html', {"form": form,
+                                                "main_image": main_image,
+                                                "user_images": all_images})
+
+
+def set_main_image(request, user_image_id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.method == 'POST':
+        old_main_image = request.user.usermedia_set.filter(main=True).first()
+        old_main_image.main = False
+        old_main_image.save()
+        user_image = UserMedia.objects.get(id=user_image_id)
+        user_image.main = True
+        user_image.save()
+
+    return redirect('user_images')
+
+
+def delete_user_image(request, user_image_id):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.method == 'POST':
+        user_image = UserMedia.objects.get(id=user_image_id)
+        if len(user_image.media) > 0:
+            os.remove(user_image.media.path)
+        user_image.delete()
+    return redirect('user_images')
