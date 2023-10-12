@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 {% block title %}
-	User
+    Edit profile
 {% endblock %}
 {% block content %}
-    <h1>User</h1>
-    <p>{{ user.username }}</p>
-    <p>{{ user.email }}</p>
-    <a href="{% url 'logout' %}">Logout</a>
+    <div class="page-container">
+        <h1>User</h1>
+        <div class="user-image-container">
+            <img class="user-image" src="{{ image_url }}" alt="User photo">
+        </div>
+        <div class="user-info">
+            <p>{{ user.username }}</p>
+            <p>{{ user.email }}</p>
+        </div>
+        <a class="edit-button" href="{% url 'edit' %}">Edit</a>
+        <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+    </div>
 {% endblock %}

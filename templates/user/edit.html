@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}
+    Edit profile
+{% endblock %}
+{% block content %}
+    <div class="page-container">
+        <h1>Edit profile</h1>
+        <form method="post" class="edit__form">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </form>
+        <a class="logout-link" href="{% url 'user' %}">Back</a>
+    </div>
+{% endblock %}

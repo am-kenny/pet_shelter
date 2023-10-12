@@ -3,12 +3,17 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 import animals.models
+from user.forms import UpdateUserForm
 
 
 def index(request):
     if not request.user.is_authenticated:
         return redirect('/login')
-    return render(request, 'user/index.html', {})
+    if request.user.usermedia_set.filter(user_id=request.user.id).exists():
+        image_url = request.user.usermedia_set.first().media.url
+    else:
+        image_url = ""
+    return render(request, 'user/index.html', {"image_url": image_url})
 
 
 def user_login(request):
@@ -58,3 +63,18 @@ def user_history(request):
         return redirect('/login')
     user_schedule = animals.models.Schedule.objects.filter(user=request.user)
     return render(request, 'user/user_history.html', {"schedules": user_schedule})
+
+
+def edit_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('/login')
+    if request.user.usermedia_set.filter(user_id=request.user.id).exists():
+        image_url = request.user.usermedia_set.first().media.url
+    else:
+        image_url = ""
+    form = UpdateUserForm(request.POST or None, instance=request.user)
+
+    if form.is_valid():
+        form.save()
+        return redirect('user')
+    return render(request, 'user/edit.html', {"image_url": image_url, "form": form})

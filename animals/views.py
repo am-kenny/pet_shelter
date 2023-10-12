@@ -10,7 +10,7 @@ def index(request):  # TODO photos
     return render(request, 'animals/index.html', {"animals": all_animals})
 
 
-def animal(request, animal_id):  # TODO photo
+def animal(request, animal_id):  # TODO more photos
     if animals.models.Animal.objects.filter(id=animal_id).exists():
         if request.method == "POST":
             if request.user.is_authenticated:
@@ -24,7 +24,13 @@ def animal(request, animal_id):  # TODO photo
                     feedback_instance.save()
         form = AnimalFeedbackForm()
         one_animal = animals.models.Animal.objects.get(id=animal_id)
-        return render(request, 'animals/animal.html', {"form": form, "animal": one_animal})
+        if one_animal.animalmedia_set.filter(animal_id=animal_id).exists():
+            image_url = one_animal.animalmedia_set.get(animal_id=animal_id).media.url
+        else:
+            image_url = "/animal_images/pet.png"
+        return render(request, 'animals/animal.html', {"form": form,
+                                                       "animal": one_animal,
+                                                       "image_url": image_url})
     return HttpResponseNotFound()
 
 
