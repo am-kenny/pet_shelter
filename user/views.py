@@ -112,8 +112,9 @@ def set_main_image(request, user_image_id):
         return redirect('/login')
     if request.method == 'POST':
         old_main_image = request.user.usermedia_set.filter(main=True).first()
-        old_main_image.main = False
-        old_main_image.save()
+        if old_main_image:
+            old_main_image.main = False
+            old_main_image.save()
         user_image = UserMedia.objects.get(id=user_image_id)
         user_image.main = True
         user_image.save()

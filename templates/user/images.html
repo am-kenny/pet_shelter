@@ -7,10 +7,16 @@
         <h1>User images</h1>
         <a class="back-link" href="{% url 'user' %}">Back to profile</a>
         <div class="user__images">
-            <div class="main-image">
+            
+            {% if main_image %}
+                <div class="main-image">
                 <img src="{{ main_image.media.url }}" alt="Main image">
-                <div class="star-overlay"><p>Main</p> ★</div> <!-- Star overlay -->
-            </div>
+                    <div class="star-overlay"><p>Main</p> ★</div> <!-- Star overlay -->
+                </div>
+            {% endif %}
+                
+            
+            
             {% for user_image in user_images %}
                 <div class="user-image-container">
                     <img src="{{ user_image.media.url }}" alt="User image">
