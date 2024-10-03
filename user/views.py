@@ -1,6 +1,7 @@
 import os
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
@@ -8,10 +9,8 @@ import animals.models
 from user.forms import UpdateUserForm, AddUserMedia
 from user.models import UserMedia
 
-
+@login_required
 def index(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
     if request.user.usermedia_set.filter(main=True).exists():
         image_url = request.user.usermedia_set.filter(main=True).first().media.url
     else:
@@ -32,16 +31,21 @@ def user_login(request):
         )
         if user is not None:
             login(request, user)
+
+            next_url = request.GET.get('next')
+            if next_url:
+                return redirect(next_url)
+
             return redirect("/")
         else:
             return HttpResponseNotFound("Failed to log in")
 
+
     return render(request, 'user/user_login.html', {})
 
 
+@login_required
 def user_logout(request):
-    if not request.user.is_authenticated:
-        return redirect('/')
     logout(request)
 
     return redirect("/login")
@@ -66,6 +70,7 @@ def user_register(request):
     return render(request, 'user/user_register.html', {})
 
 
+@login_required
 def user_history(request):
     if not request.user.is_authenticated:
         return redirect('/login')
@@ -74,9 +79,8 @@ def user_history(request):
     return render(request, 'user/user_history.html', {"schedules": user_schedule})
 
 
+@login_required
 def edit_profile(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
     form = UpdateUserForm(request.POST or None, instance=request.user)
     if form.is_valid():
         form.save()
@@ -85,9 +89,8 @@ def edit_profile(request):
     return render(request, 'user/edit.html', {"form": form})
 
 
+@login_required
 def user_images(request):
-    if not request.user.is_authenticated:
-        return redirect('/login')
     if request.method == 'POST':
         form = AddUserMedia(request.POST, request.FILES)
         if form.is_valid():
@@ -107,9 +110,8 @@ def user_images(request):
                                                 "user_images": all_images})
 
 
+@login_required
 def set_main_image(request, user_image_id):
-    if not request.user.is_authenticated:
-        return redirect('/login')
     if request.method == 'POST':
         old_main_image = request.user.usermedia_set.filter(main=True).first()
         if old_main_image:
@@ -122,9 +124,8 @@ def set_main_image(request, user_image_id):
     return redirect('user_images')
 
 
+@login_required
 def delete_user_image(request, user_image_id):
-    if not request.user.is_authenticated:
-        return redirect('/login')
     if request.method == 'POST':
         user_image = UserMedia.objects.get(id=user_image_id)
         if len(user_image.media) > 0:
