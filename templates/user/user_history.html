@@ -30,9 +30,10 @@
                         {% if schedule.is_past_due %}
                         	-
                         {% else %}
-                            <div class="user_history_schedule_cancel">
-                                Cancel
-                            </div>
+                            <form method="POST" action="{% url "cancel_schedule_slot" schedule.id%}">
+                            {% csrf_token %}    
+                            <input type="submit" class="user_history_schedule_cancel" value="Cancel"> 
+                            </form>
                         {% endif %}
                     </td>
                 </tr>
@@ -40,5 +41,4 @@
             </tbody>
         </table>
     </div>
-
 {% endblock %}
