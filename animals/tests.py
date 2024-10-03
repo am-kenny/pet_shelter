@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.test import TestCase, Client
 import unittest
 import datetime
@@ -10,7 +9,7 @@ from animals.utils import available_booking_times
 
 
 # Schedule testing
-class TestScheduleSortedPeriods(unittest.TestCase):
+class TestScheduleSortedPeriods(TestCase):
     def test_schedule_1(self):
         expected = ['08:00', '08:15', '08:30', '08:45', '09:00', '09:15', '09:30', '12:00', '12:15', '12:30', '16:00',
                     '16:15', '16:30']

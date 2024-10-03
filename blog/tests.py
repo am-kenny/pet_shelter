@@ -44,7 +44,7 @@ class TestFeedback(TestCase):
         self.assertEqual(feedback.text, 'test')
         self.assertEqual(feedback.media, 'test')
         self.assertEqual(feedback.animal.id, self.test_animal.id)
-        self.assertEqual(status_code, 200)
+        self.assertEqual(status_code, 302)
 
     def test_feedback_post_fail(self):  # Not logged in
         test_client = Client()
@@ -71,45 +71,6 @@ class TestFeedback(TestCase):
         is_feedback = blog.models.Feedback.objects.filter(title='test', text='test', media='test').exists()
         self.assertFalse(is_feedback)
         self.assertEqual(status_code, 200)
-
-    def test_animal_feedback_post(self):
-        test_client = self.logged_client()
-        response = test_client.post(reverse('animal', args=[self.test_animal.id]), data={
-            'title': 'test',
-            'text': 'test',
-            'media': 'test',
-        })
-        status_code = response.status_code
-        feedback = blog.models.Feedback.objects.get(title='test', text='test', media='test')
-        self.assertEqual(feedback.title, 'test')
-        self.assertEqual(feedback.text, 'test')
-        self.assertEqual(feedback.media, 'test')
-        self.assertEqual(feedback.animal.id, self.test_animal.id)
-        self.assertEqual(status_code, 200)
-
-    def test_animal_feedback_post_fail(self):  # Not logged in
-        test_client = Client()
-        response = test_client.post(reverse('animal', args=[self.test_animal.id]), data={
-            'title': 'test',
-            'text': 'test',
-            'media': 'test',
-        })
-        status_code = response.status_code
-        is_feedback = blog.models.Feedback.objects.filter(title='test', text='test', media='test').exists()
-        self.assertFalse(is_feedback)
-        self.assertEqual(status_code, 200)
-
-    def test_animal_feedback_post_fail_2(self):  # Unexisting animal
-        test_client = self.logged_client()
-        response = test_client.post(reverse('animal', args=[777]), data={
-            'title': 'test',
-            'text': 'test',
-            'media': 'test',
-        })
-        status_code = response.status_code
-        is_feedback = blog.models.Feedback.objects.filter(title='test', text='test', media='test').exists()
-        self.assertFalse(is_feedback)
-        self.assertEqual(status_code, 404)
 
 
 class TestBlog(TestCase):

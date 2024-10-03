@@ -1,5 +1,5 @@
 from django.http import HttpResponseNotFound
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import animals.models
 import blog.models
 from blog.forms import FeedbackForm
@@ -28,6 +28,7 @@ def feedbacks(request):
                 feedback_instance = form.save(commit=False)
                 feedback_instance.user = user
                 feedback_instance.save()
+                return redirect("feedbacks")
     form = FeedbackForm()
     all_animals = animals.models.Animal.objects.all()
     animal_id = request.GET.get("animal_id")
