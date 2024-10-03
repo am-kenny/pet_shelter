@@ -1,33 +1,37 @@
 {% extends "base.html" %}
 {% block title %}
-    User images
+    Images
 {% endblock %}
 {% block content %}
     <div class="user-images__container">
-        <h1>User images</h1>
+        <h1>Your uploaded images</h1>
         <a class="back-link" href="{% url 'user' %}">Back to profile</a>
         <div class="user__images">
-            
+
             {% if main_image %}
                 <div class="main-image">
-                <img src="{{ main_image.media.url }}" alt="Main image">
-                    <div class="star-overlay"><p>Main</p> ★</div> <!-- Star overlay -->
+                    <img class="user-image" src="{{ main_image.media.url }}" alt="Main image">
+                    <div class="star-overlay"><p>★</p></div> <!-- Star overlay -->
                 </div>
             {% endif %}
-                
-            
-            
+
+
+
             {% for user_image in user_images %}
                 <div class="user-image-container">
-                    <img src="{{ user_image.media.url }}" alt="User image">
-                    <form method="post" action="{% url 'set_main_image' user_image.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="set-main-button">Set as Main</button> <!-- Button on the image -->
-                    </form>
-                    <form method="post" action="{% url 'delete_user_image' user_image.id %}">
-                        {% csrf_token %}
-                        <button type="submit" class="delete-image-button">Delete</button> <!-- Button on the image -->
-                    </form>
+                    <img class="user-image" src="{{ user_image.media.url }}" alt="User image">
+                    <div class="user-image-action-buttons">
+                        <form method="post" action="{% url 'set_main_image' user_image.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="set-main-button">Set as Main</button>
+                            <!-- Button on the image -->
+                        </form>
+                        <form method="post" action="{% url 'delete_user_image' user_image.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-image-button">Delete</button>
+                            <!-- Button on the image -->
+                        </form>
+                    </div>
                 </div>
             {% endfor %}
         </div>
@@ -37,4 +41,50 @@
             <input type="submit" value="Upload">
         </form>
     </div>
+
+    <script>
+        const user_images = document.getElementsByClassName("user-image")
+        
+        if (user_images.length > 0) {
+            for (let i = 0; i < user_images.length; i++) {
+            user_images[i].addEventListener("click", (e) => {
+                console.log(e)
+                openImage(e.target)
+            })
+        }
+        }
+
+        function openImage(image) {
+            const popwindowContainer = document.createElement("div")
+            popwindowContainer.className = "profile_images_pop_window_container"
+
+            const popWindow = document.createElement("div")
+            popWindow.className = "profile_images_pop_window"
+            popwindowContainer.appendChild(popWindow)
+            
+            const imageNode = image.cloneNode()
+            imageNode.className = "profile_images_pop_image"
+            popWindow.appendChild(imageNode)
+            
+            
+            const closeButton = document.createElement("div")
+            closeButton.className = "profile_images_pop_close_button"
+            closeButton.textContent = "Close"
+            popWindow.appendChild(closeButton)
+            
+            document.getElementsByTagName("main")[0].appendChild(popwindowContainer)
+
+
+            popwindowContainer.addEventListener("click", () => {
+                closeWindow(popwindowContainer)
+                }
+            )
+        }
+
+        function closeWindow(window) {
+            window.remove()
+        }
+
+    </script>
+
 {% endblock %}

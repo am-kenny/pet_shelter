@@ -6,7 +6,7 @@
     <div class="page-container">
         <h1>Profile</h1>
         <div class="user-profile-image-container user-image-container">
-            <img class="user-image" src="{{ image_url }}" alt="User photo">
+            <img class="user-profile-image" src="{{ image_url }}" alt="User photo">
             <a class="all-images-button" href="{% url 'user_images' %}">All images</a> <!-- Button inside image -->
         </div>
         <div class="user-info">
@@ -14,6 +14,6 @@
             <p>{{ user.email }}</p>
         </div>
         <a class="edit-button" href="{% url 'edit_profile' %}">Edit</a>
-        <a class="logout-link" href="{% url 'logout' %}">Logout</a>
+        <a class="logout-button" href="{% url 'logout' %}">Logout</a>
     </div>
 {% endblock %}
