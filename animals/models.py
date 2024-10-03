@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -34,3 +36,10 @@ class Schedule(models.Model):
     end_time = models.DateTimeField()
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ["-start_time"]
+
+    @property
+    def is_past_due(self):
+        return datetime.now() > self.start_time

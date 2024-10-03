@@ -50,6 +50,11 @@ h1 {
     margin-bottom: 20px;
 }
 
+.main_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
 /* Style the blog section */
 .blog {
     margin: 60px;
@@ -786,4 +791,30 @@ h1 {
     padding: 6px;
     border-radius: 24px;
     z-index: 1;
+}
+
+.user_history_schedule_container {
+    margin: 0 auto;
+        width: fit-content;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.user_history_schedule_table, .user_history_schedule_table td, .user_history_schedule_table th {
+    border-bottom: 1px solid #b1b1b1;
+    padding: 10px 30px;
+    text-align: center;
+}
+
+.user_history_schedule_table {
+    border-collapse: collapse;
+}
+
+.user_history_schedule_cancel {
+    background-color: #a00000;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
 }

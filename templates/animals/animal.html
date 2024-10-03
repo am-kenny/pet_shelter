@@ -24,9 +24,10 @@
                 </form>
                 {% if user.is_authenticated %}
                     <h1 class="blog__title">Leave feedback</h1>
-                    <form method="post" class="blog__form">
+                    <form method="post" class="blog__form" action="{% url "feedbacks" %}">
                         {% csrf_token %}
                         {{ form }}
+                        <input type="hidden" name="animal" value="{{ animal.id }}">
                         <input type="submit" value="Submit">
                     </form>
                 {% endif %}
