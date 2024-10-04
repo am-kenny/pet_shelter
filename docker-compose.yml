@@ -12,6 +12,8 @@ services:
       - .env.dev
     depends_on:
       - db
+    volumes:
+      - .:/app
   db:
     container_name: pet_shelter_db
     image: postgres:15
