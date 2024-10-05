@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from django.db import models
-from django.contrib.auth.models import User
+
+from pet_shelter import settings
 
 
 class Sex(models.Model):
@@ -35,7 +36,7 @@ class Schedule(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["-start_time"]
