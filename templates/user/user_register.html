@@ -8,25 +8,7 @@
         <h1 class="registration__title">User Registration</h1>
         <form method="post" class="registration__form">
             {% csrf_token %}
-
-            <!-- Username Input -->
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-
-            <!-- Email Input -->
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <!-- Password Input -->
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
+            {{ form }}
             <button type="submit" class="btn btn-primary">Register</button>
         </form>
         <p class="error__message">{{ error_message }}</p>
