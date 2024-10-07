@@ -2,8 +2,8 @@ import os
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
-from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 import animals.models
 from user.forms import UpdateUserForm, AddUserMedia, RegistrationForm
@@ -20,41 +20,39 @@ def index(request):
     return render(request, 'user/index.html', {"image_url": image_url})
 
 
+def user_register(request):
+    if request.user.is_authenticated:
+        return redirect('welcome')
+
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            login(request, form.save())
+            return redirect('welcome')
+    else:
+        form = RegistrationForm()
+    return render(request, 'user/user_register.html', {"form": form})
+
+
 def user_login(request):
     if request.user.is_authenticated:
         return redirect('welcome')
 
     if request.method == 'POST':
-        user = authenticate(
-            username=request.POST.get('username'),
-            password=request.POST.get('password')
-        )
-        if user is not None:
-            login(request, user)
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
             return redirect(request.GET.get('next', 'welcome'))
-        else:
-            return HttpResponseNotFound("Failed to log in")
+    else:
+        form = AuthenticationForm()
 
-    return render(request, 'user/user_login.html', {})
+    return render(request, 'user/user_login.html', {"form": form})
 
 
 @login_required
 def user_logout(request):
     logout(request)
     return redirect("login")
-
-
-def user_register(request):
-    if request.user.is_authenticated:
-        return redirect('welcome')
-
-    if request.method == 'POST':
-            form = RegistrationForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('login')
-
-    return render(request, 'user/user_register.html', {"form": RegistrationForm()})
 
 
 @login_required
@@ -70,8 +68,9 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             return redirect('user')
-
-    return render(request, 'user/edit.html', {"form": UpdateUserForm()})
+    else:
+        form = UpdateUserForm()
+    return render(request, 'user/edit.html', {"form": form})
 
 
 @login_required

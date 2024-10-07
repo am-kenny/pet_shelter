@@ -9,16 +9,8 @@
         <form method="post" class="registration__form">
             {% csrf_token %}
 
-            <!-- Username Input -->
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-
-            <!-- Password Input -->
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                {{ form }}
             </div>
 
             <button type="submit" class="btn btn-primary">Log in</button>
