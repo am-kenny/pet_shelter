@@ -1,5 +1,4 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
 from user.models import UserMedia, CustomUser
