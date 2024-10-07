@@ -1,6 +1,6 @@
 import os
 
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
@@ -31,7 +31,7 @@ def user_register(request):
             return redirect('welcome')
     else:
         form = RegistrationForm()
-    return render(request, 'user/user_register.html', {"form": form})
+    return render(request, 'user/auth/register.html', {"form": form})
 
 
 def user_login(request):
@@ -46,7 +46,7 @@ def user_login(request):
     else:
         form = AuthenticationForm()
 
-    return render(request, 'user/user_login.html', {"form": form})
+    return render(request, 'user/auth/login.html', {"form": form})
 
 
 @login_required

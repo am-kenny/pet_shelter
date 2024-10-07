@@ -11,6 +11,9 @@ class RegistrationForm(UserCreationForm):
         error_messages = {
             'email': {
                 'unique': 'User with that email already exists.'
+            },
+            'username': {
+                'unique': 'User with that username already exists.'
             }
         }
 

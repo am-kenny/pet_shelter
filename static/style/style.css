@@ -2,6 +2,10 @@ body {
     background-color: #f5f5f5;
 }
 
+input {
+    box-sizing: border-box;
+}
+
 body, h1, h2, p {
     font-family: 'Inter', sans-serif;
     margin: 0;
@@ -179,9 +183,9 @@ h1 {
 
 
 /* Style the registration section */
-.registration {
+.centered_form_container {
     padding: 40px;
-    max-width: 400px;
+    max-width: 600px;
     margin: 50px auto;
     background-color: #fff;
     border: 1px solid #ddd;
@@ -189,7 +193,7 @@ h1 {
 }
 
 /* Style the registration title */
-.registration__title {
+.auth__title {
     font-size: 24px;
     color: #333;
     text-align: center;
@@ -198,6 +202,7 @@ h1 {
 
 /* Style form elements */
 .form-group {
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -221,7 +226,7 @@ h1 {
 }
 
 /* Style submit button */
-.registration__form button {
+.btn-primary {
     display: block;
     width: 100%;
     padding: 10px;
@@ -233,21 +238,20 @@ h1 {
     cursor: pointer;
 }
 
-.registration__form button:hover {
-    background-color: #87add0;
+.btn-primary:hover {
+        background-color: #87add0;
 }
 
-.registration__form input {
+.auth__form input {
     width: 100%;
-    padding: 10px 0;
+    padding: 10px;
     font-size: 16px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.registration__form label {
+.auth__form label {
     display: block;
-    margin-top: 10px;
     font-weight: bold;
 }
 
@@ -832,4 +836,12 @@ h1 {
     border-radius: 5px;
     cursor: pointer;
     border: none;
+}
+
+.form__errors {
+    margin-bottom: 20px;
+}
+
+.form__error {
+    color: #c00;
 }

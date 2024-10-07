@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+    Log in
+{% endblock %}
+
+{% block content %}
+    <div class="centered_form_container">
+        <h1 class="auth__title">Log in</h1>
+        <form method="post" class="auth__form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="{{ form.username.id_for_label }}">Username:</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id_for_label }}">Password:</label>
+                {{ form.password }}
+            </div>
+
+            <div class="form__errors">
+                {% for _, error in form.errors.items %}
+                    <p class="form__error">
+                        {{ error | striptags }}
+                    </p>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Log in</button>
+
+        </form>
+        <a href="{% url 'password_reset' %}">Forgot password?</a>
+        <br><br>
+        <p>Username: AmKenny password: 1111 (admin)</p>
+    </div>
+{% endblock %}
