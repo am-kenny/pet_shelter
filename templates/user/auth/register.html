@@ -12,25 +12,31 @@
             <div class="form-group">
                 <label for="{{ form.username.id_for_label }}">Username:</label>
                 {{ form.username }}
-                <p class="form__error">
-                    {{ form.username.errors | striptags  }}
-                </p>
+                {% for error in form.username.errors %}
+                	<p class="form__error">
+                        {{ error | striptags }}
+                    </p>
+                {% endfor %}
             </div>
 
             <div class="form-group">
                 <label for="{{ form.email.id_for_label }}">Email:</label>
                 {{ form.email }}
-                <p class="form__error">
-                    {{ form.email.errors | striptags  }}
-                </p>
+                {% for error in form.email.errors %}
+                	<p class="form__error">
+                        {{ error | striptags }}
+                    </p>
+                {% endfor %}
             </div>
 
             <div class="form-group">
                 <label for="{{ form.password1.id_for_label }}">Password:</label>
                 {{ form.password1 }}
-                <p class="form__error">
-                    {{ form.password2.errors | striptags  }}
-                </p>
+                {% for error in form.password2.errors %}
+                	<p class="form__error">
+                        {{ error | striptags }}
+                    </p>
+                {% endfor %}
             </div>
 
             <div class="form-group">
