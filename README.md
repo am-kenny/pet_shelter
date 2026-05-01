@@ -20,6 +20,10 @@ This project is a Django-based web application developed for managing a pet shel
 
 To run this project locally, follow the steps below:
 
+### Python version
+
+- Use Python 3.12 for local development.
+
 1. **Clone the repository:**
 
     ```bash
@@ -30,7 +34,7 @@ To run this project locally, follow the steps below:
 2. **Build and start the Docker containers:**
 
     ```bash
-    docker-compose up --build
+    docker compose up --build -d
     ```
 Note: [docker-compose.yml](docker-compose.yml)  includes application container, database container, migration and test data loading scripts.
 
@@ -47,4 +51,4 @@ Note: [docker-compose.yml](docker-compose.yml)  includes application container, 
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). See the
+This project is licensed under the [MIT License](LICENSE).

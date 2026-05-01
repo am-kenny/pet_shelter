@@ -10,8 +10,10 @@ services:
       - "8000:8000"
     env_file:
       - .env.dev
+    # restart: always
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - .:/app
   db:
@@ -24,6 +26,12 @@ services:
       - "5432:5432"
     env_file:
       - .env.dev
+    # restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -p 5432 -U postgres -d pet_shelter_db || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 volumes:
   postgres_data:
 
