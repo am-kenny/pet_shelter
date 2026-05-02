@@ -1,5 +1,5 @@
-from typing import List, Tuple  # imported typing to remove type warnings
 import datetime
+from typing import List, Tuple  # imported typing to remove type warnings
 
 shelter_open_time = datetime.time(8, 0)  # Pet shelter open time
 shelter_close_time = datetime.time(18, 0)  # Pet shelter close time
@@ -20,8 +20,9 @@ def sort_times(booked_times: list[tuple]) -> list[tuple]:
     return sorted_times
 
 
-def available_time_periods(booked_times: List[Tuple[datetime.datetime, datetime.datetime]]
-                           ) -> List[List[datetime.datetime]]:
+def available_time_periods(
+    booked_times: List[Tuple[datetime.datetime, datetime.datetime]],
+) -> List[List[datetime.datetime]]:
     """
     Calculate and return a list of free time periods based on the booked times.
 
@@ -42,34 +43,44 @@ def available_time_periods(booked_times: List[Tuple[datetime.datetime, datetime.
         for i in range(0, len(booked_times)):
             free_time[i][1] = booked_times[i][0]
             free_time[i + 1][0] = booked_times[i][1]
-        free_time[0][0] = datetime.datetime.combine(booked_times[0][0].date(), shelter_open_time)
-        free_time[-1][1] = datetime.datetime.combine(booked_times[0][0].date(), shelter_close_time)
+        free_time[0][0] = datetime.datetime.combine(
+            booked_times[0][0].date(), shelter_open_time
+        )
+        free_time[-1][1] = datetime.datetime.combine(
+            booked_times[0][0].date(), shelter_close_time
+        )
     else:
-        free_time = [[datetime.datetime.combine(datetime.date.today(), shelter_open_time),
-                     datetime.datetime.combine(datetime.date.today(), shelter_close_time)]]
+        free_time = [
+            [
+                datetime.datetime.combine(datetime.date.today(), shelter_open_time),
+                datetime.datetime.combine(datetime.date.today(), shelter_close_time),
+            ]
+        ]
 
     return free_time
 
 
-def available_booking_times(booked_times: List[Tuple[datetime.datetime, datetime.datetime]],
-                            duration_hours: int | float,
-                            duration_minutes: int) -> List[str]:
+def available_booking_times(
+    booked_times: List[Tuple[datetime.datetime, datetime.datetime]],
+    duration_hours: int | float,
+    duration_minutes: int,
+) -> List[str]:
     """
-      Calculate and return a list of available booking times based on booked times and desired duration.
+    Calculate and return a list of available booking times based on booked times and desired duration.
 
-      :param booked_times: A list of tuples, where each tuple represents a booked time period.
-                           Each tuple should contain two datetime objects, indicating the start and end times.
-      :type booked_times: List[Tuple[datetime.datetime, datetime.datetime]]
+    :param booked_times: A list of tuples, where each tuple represents a booked time period.
+                         Each tuple should contain two datetime objects, indicating the start and end times.
+    :type booked_times: List[Tuple[datetime.datetime, datetime.datetime]]
 
-      :param duration_hours: The desired duration for available booking times in hours (int or float).
-      :type duration_hours: int | float
+    :param duration_hours: The desired duration for available booking times in hours (int or float).
+    :type duration_hours: int | float
 
-      :param duration_minutes: The desired duration for available booking times in minutes (int).
-      :type duration_minutes: int
+    :param duration_minutes: The desired duration for available booking times in minutes (int).
+    :type duration_minutes: int
 
-      :return: A list of available booking times in "HH:MM" format that meet the requested duration.
-      :rtype: List[str]
-      """
+    :return: A list of available booking times in "HH:MM" format that meet the requested duration.
+    :rtype: List[str]
+    """
 
     # Calculate free time periods based on booked times
     free_time = available_time_periods(booked_times)
@@ -89,10 +100,12 @@ def available_booking_times(booked_times: List[Tuple[datetime.datetime, datetime
     return available_times
 
 
-def create_booked_time(booking_date: str,
-                       time_slot: str,
-                       duration_hours: str | int | float,
-                       duration_minutes: str | int = 0) -> (datetime.datetime, datetime.datetime):
+def create_booked_time(
+    booking_date: str,
+    time_slot: str,
+    duration_hours: str | int | float,
+    duration_minutes: str | int = 0,
+) -> (datetime.datetime, datetime.datetime):
     """
     Create a booked time slot based on a booking date, time slot, and duration.
 

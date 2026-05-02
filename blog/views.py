@@ -1,5 +1,6 @@
 from django.http import HttpResponseNotFound
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect, render
+
 import animals.models
 import blog.models
 from blog.forms import FeedbackForm
@@ -8,13 +9,13 @@ from blog.forms import FeedbackForm
 def index(request):
     blog_posts = blog.models.Blog.objects.all()
 
-    return render(request, 'blog/index.html', {"blog_posts": blog_posts})
+    return render(request, "blog/index.html", {"blog_posts": blog_posts})
 
 
 def blog_post(request, post_id):
     if blog.models.Blog.objects.filter(id=post_id).exists():
         blog_post_obj = blog.models.Blog.objects.get(id=post_id)
-        return render(request, 'blog/blog_post.html', {"blog_post": blog_post_obj})
+        return render(request, "blog/blog_post.html", {"blog_post": blog_post_obj})
 
     return HttpResponseNotFound()
 
@@ -37,5 +38,8 @@ def feedbacks(request):
         all_feedbacks = all_feedbacks.filter(animal_id=animal_id)
     results = all_feedbacks.all()
 
-    return render(request, 'blog/feedbacks.html',
-                  {"form": form, "feedbacks": results, "animals": all_animals})
+    return render(
+        request,
+        "blog/feedbacks.html",
+        {"form": form, "feedbacks": results, "animals": all_animals},
+    )

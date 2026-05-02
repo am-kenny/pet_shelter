@@ -28,7 +28,7 @@ class Animal(models.Model):
 
 class AnimalMedia(models.Model):
     animal = models.ForeignKey(Animal, on_delete=models.CASCADE)
-    media = models.ImageField(blank=False, upload_to='animal_images/', unique=True)
+    media = models.ImageField(blank=False, upload_to="animal_images/", unique=True)
     is_main = models.BooleanField()
 
 
