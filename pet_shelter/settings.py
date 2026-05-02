@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from pathlib import Path
+from django.core.exceptions import ImproperlyConfigured
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,13 +21,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+def get_env(name, default=None, required=False):
+    value = os.environ.get(name, default)
+    if required and (value is None or str(value).strip() == ""):
+        raise ImproperlyConfigured(f"Missing required environment variable: {name}")
+    return value
+
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-wd6b4%h6vgba+t5gi&ms!5f&2jrmgukc9zcsf&uws6is9j$rmv")
+SECRET_KEY = get_env("SECRET_KEY", required=True)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.environ.get("DEBUG", default=1))
+DEBUG = get_env("DEBUG", "0").lower() in ("1", "true", "yes", "on")
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = get_env("DJANGO_ALLOWED_HOSTS", "localhost 127.0.0.1").split()
 
 
 # Application definition
@@ -81,12 +89,12 @@ WSGI_APPLICATION = 'pet_shelter.wsgi.application'
 
 DATABASES = {
     'default': {
-        "ENGINE": os.environ.get("SQL_ENGINE", 'django.db.backends.postgresql_psycopg2'),
-        "NAME": os.environ.get("SQL_DATABASE", "pet_shelter_db"),
-        "USER": os.environ.get("SQL_USER", "postgres"),
-        "PASSWORD": os.environ.get("SQL_PASSWORD", "qwerty1234"),
-        "HOST": os.environ.get("SQL_HOST", "localhost"),
-        "PORT": os.environ.get("SQL_PORT", "5432"),
+        "ENGINE": get_env("SQL_ENGINE", 'django.db.backends.postgresql_psycopg2'),
+        "NAME": get_env("SQL_DATABASE", "pet_shelter_db"),
+        "USER": get_env("SQL_USER", "postgres"),
+        "PASSWORD": get_env("SQL_PASSWORD", ""),
+        "HOST": get_env("SQL_HOST", "localhost"),
+        "PORT": get_env("SQL_PORT", "5432"),
     }
 }
 
