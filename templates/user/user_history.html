@@ -31,8 +31,8 @@
                         	-
                         {% else %}
                             <form method="POST" action="{% url "cancel_schedule_slot" schedule.id%}">
-                            {% csrf_token %}    
-                            <input type="submit" class="user_history_schedule_cancel" value="Cancel"> 
+                            {% csrf_token %}
+                            <input type="submit" class="user_history_schedule_cancel" value="Cancel">
                             </form>
                         {% endif %}
                     </td>

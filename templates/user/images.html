@@ -44,7 +44,7 @@
 
     <script>
         const user_images = document.getElementsByClassName("user-image")
-        
+
         if (user_images.length > 0) {
             for (let i = 0; i < user_images.length; i++) {
             user_images[i].addEventListener("click", (e) => {
@@ -61,17 +61,17 @@
             const popWindow = document.createElement("div")
             popWindow.className = "profile_images_pop_window"
             popwindowContainer.appendChild(popWindow)
-            
+
             const imageNode = image.cloneNode()
             imageNode.className = "profile_images_pop_image"
             popWindow.appendChild(imageNode)
-            
-            
+
+
             const closeButton = document.createElement("div")
             closeButton.className = "profile_images_pop_close_button"
             closeButton.textContent = "Close"
             popWindow.appendChild(closeButton)
-            
+
             document.getElementsByTagName("main")[0].appendChild(popwindowContainer)
 
 
