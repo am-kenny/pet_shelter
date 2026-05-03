@@ -43,7 +43,7 @@ def schedule(request):  # TODO  confirmation
         try:
             desired_hours = int(request.POST.get("duration_hours"))
             desired_minutes = int(request.POST.get("duration_minutes"))
-        except (TypeError, ValueError):
+        except TypeError, ValueError:
             desired_hours = None
             desired_minutes = None
 
@@ -77,7 +77,7 @@ def schedule(request):  # TODO  confirmation
     try:
         desired_hours = int(request.GET.get("duration_hours"))
         desired_minutes = int(request.GET.get("duration_minutes"))
-    except (TypeError, ValueError):
+    except TypeError, ValueError:
         desired_hours = None
         desired_minutes = None
 
