@@ -154,13 +154,11 @@ def schedule_booking_flow_response(
         request,
         all_animals=all_animals,
         show_slot_picker=True,
-        schedules=animal_schedule,
         available_slots=available_times,
         selected_date=selected_date,
         desired_hours=desired_hours,
         desired_minutes=desired_minutes,
         preselected_animal_id=int(animal_id),
-        animal_id=int(animal_id),
     )
 
 

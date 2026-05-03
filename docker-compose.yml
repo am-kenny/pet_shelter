@@ -21,6 +21,7 @@ services:
     volumes:
       - .:/app
       - django_venv:/app/.venv
+      - emails:/app/emails
   db:
     container_name: pet_shelter_db
     image: postgres:18.3
@@ -43,3 +44,4 @@ services:
 volumes:
   postgres_data:
   django_venv:
+  emails:

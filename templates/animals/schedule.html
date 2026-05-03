@@ -7,7 +7,7 @@
         <h1 class="schedule-title">Schedule</h1>
         {% if animals %}
             <p class="schedule-unified-hint">
-                Choose an animal, date, and walk length, then to load available start times below.
+                Choose an animal, date, and walk length, then to load available timeslots below.
             </p>
             <form
                 class="schedule-form schedule-filter-form"
@@ -83,29 +83,6 @@
                 }
             </script>
         {% endif %}
-        {% if schedules %}
-            <h2 class="schedule-subtitle schedule-bookings-heading">Bookings on this date</h2>
-            <table class="schedule-table">
-                <thead>
-                    <tr>
-                        <th>Start Time</th>
-                        <th>End Time</th>
-                        <th>Animal</th>
-                        <th>User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for schedule in schedules %}
-                        <tr>
-                            <td>{{ schedule.start_time }}</td>
-                            <td>{{ schedule.end_time }}</td>
-                            <td>{{ schedule.animal }}</td>
-                            <td>{{ schedule.user }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
         {% if show_slot_picker %}
             <div class="timeslots" id="schedule-available-timeslots">
                 <p class="schedule-subtitle">Available time slots</p>
@@ -131,7 +108,7 @@
                                 const scheduleDate = "{{ selected_date }}"
                                 const desiredHours = {{ desired_hours }}
                                 const desiredMinutes = {{ desired_minutes }}
-                                const animalId = {{ animal_id }}
+                                const animalId = {{ preselected_animal_id }}
 
                                 const form = document.createElement("form")
                                 form.method = "POST"
