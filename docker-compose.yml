@@ -23,9 +23,9 @@ services:
       - django_venv:/app/.venv
   db:
     container_name: pet_shelter_db
-    image: postgres:15.15
+    image: postgres:18.3
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data:/var/lib/postgresql
     ports:
       - "5432:5432"
     env_file:

@@ -90,7 +90,7 @@ WSGI_APPLICATION = "pet_shelter.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": get_env("SQL_ENGINE", "django.db.backends.postgresql_psycopg2"),
+        "ENGINE": get_env("SQL_ENGINE", "django.db.backends.postgresql"),
         "NAME": get_env("SQL_DATABASE", "pet_shelter_db"),
         "USER": get_env("SQL_USER", "postgres"),
         "PASSWORD": get_env("SQL_PASSWORD", ""),

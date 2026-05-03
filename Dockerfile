@@ -1,5 +1,5 @@
 # Stage 1: Build dependencies
-FROM ghcr.io/astral-sh/uv:0.11.8-python3.12-trixie-slim AS deps
+FROM ghcr.io/astral-sh/uv:0.11.8-python3.14-trixie-slim AS deps
 
 WORKDIR /app
 
@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev --no-install-project
 
 # Stage 2: Runtime
-FROM python:3.12-slim-trixie
+FROM python:3.14-slim-trixie
 
 LABEL authors="Andrii Prykhodko"
 

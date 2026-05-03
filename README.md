@@ -23,7 +23,7 @@ To run this project locally, follow the steps below:
 
 ### Python version
 
-- Use Python 3.12 for local development.
+- Use Python 3.14 for local development.
 
 1. **Clone the repository:**
 
@@ -68,6 +68,20 @@ To run this project locally, follow the steps below:
 **4. Access the application:**
 
    Open your browser and go to `http://localhost:8000`.
+
+### Tests
+
+Local test runs use **[`pet_shelter/settings_test.py`](pet_shelter/settings_test.py)** (SQLite in-memory, no Postgres, no `.env` needed):
+
+```bash
+uv run python manage.py test --settings=pet_shelter.settings_test
+```
+
+To run tests with **PostgreSQL**, configure `.env`, start Postgres, then run the default settings:
+
+```bash
+uv run python manage.py test
+```
 
 ## Usage
 
