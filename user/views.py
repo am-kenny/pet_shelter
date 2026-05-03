@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.db import transaction
 from django.shortcuts import redirect, render
+from django.templatetags.static import static
 
 import animals.models
 from user.forms import AddUserMedia, RegistrationForm, UpdateUserForm
@@ -15,7 +16,7 @@ def index(request):
     if request.user.usermedia_set.filter(main=True).exists():
         image_url = request.user.usermedia_set.filter(main=True).first().media.url
     else:
-        image_url = "/user_images/user.png"
+        image_url = static("images/user.png")
 
     return render(request, "user/index.html", {"image_url": image_url})
 

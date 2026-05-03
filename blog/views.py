@@ -1,5 +1,4 @@
-from django.http import HttpResponseNotFound
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 import animals.models
 import blog.models
@@ -13,11 +12,8 @@ def index(request):
 
 
 def blog_post(request, post_id):
-    if blog.models.Blog.objects.filter(id=post_id).exists():
-        blog_post_obj = blog.models.Blog.objects.get(id=post_id)
-        return render(request, "blog/blog_post.html", {"blog_post": blog_post_obj})
-
-    return HttpResponseNotFound()
+    blog_post_obj = get_object_or_404(blog.models.Blog, pk=post_id)
+    return render(request, "blog/blog_post.html", {"blog_post": blog_post_obj})
 
 
 def feedbacks(request):

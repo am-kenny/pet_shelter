@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponseNotFound
-from django.shortcuts import redirect, render
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
+from django.templatetags.static import static
 
 import animals.models
 import animals.utils
@@ -13,23 +14,18 @@ def index(request):  # TODO photos
 
 
 def animal(request, animal_id: int):  # TODO more photos
-    if animals.models.Animal.objects.filter(id=animal_id).exists():
-        form = AnimalFeedbackForm()
-        one_animal = animals.models.Animal.objects.get(id=animal_id)
-        if one_animal.animalmedia_set.filter(
-            animal_id=animal_id, is_main=True
-        ).exists():
-            image_url = one_animal.animalmedia_set.get(
-                animal_id=animal_id, is_main=True
-            ).media.url
-        else:
-            image_url = "/animal_images/pet.png"
-        return render(
-            request,
-            "animals/animal.html",
-            {"form": form, "animal": one_animal, "image_url": image_url},
-        )
-    return HttpResponseNotFound()
+    one_animal = get_object_or_404(animals.models.Animal, pk=animal_id)
+    form = AnimalFeedbackForm()
+    main_media = one_animal.animalmedia_set.filter(is_main=True).first()
+    if main_media:
+        image_url = main_media.media.url
+    else:
+        image_url = static("images/pet.png")
+    return render(
+        request,
+        "animals/animal.html",
+        {"form": form, "animal": one_animal, "image_url": image_url},
+    )
 
 
 @login_required
@@ -62,13 +58,12 @@ def schedule(request):  # TODO  confirmation
                 start_time, end_time = animals.utils.create_booked_time(
                     selected_date, selected_time_slot, desired_hours, desired_minutes
                 )
-                new_booked_time = animals.models.Schedule.objects.create(
+                animals.models.Schedule.objects.create(
                     start_time=start_time,
                     end_time=end_time,
                     animal_id=animal_id,
                     user_id=current_user_id,
                 )
-                new_booked_time.save()
                 return render(request, "animals/success.html", {})
 
     all_animals = animals.models.Animal.objects.all()
@@ -138,4 +133,4 @@ def cancel_schedule_slot(request, schedule_slot_id: int):
             schedule_slot = animals.models.Schedule.objects.get(id=schedule_slot_id)
             if schedule_slot.user_id == request.user.id:
                 schedule_slot.delete()
-    return redirect("/history")
+    return redirect("user_history")
