@@ -1,6 +1,5 @@
-from datetime import datetime
-
 from django.db import models
+from django.utils import timezone
 
 from pet_shelter import settings
 
@@ -49,4 +48,4 @@ class Schedule(models.Model):
 
     @property
     def is_past_due(self):
-        return datetime.now() > self.start_time
+        return timezone.now() > self.start_time

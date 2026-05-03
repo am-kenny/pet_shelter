@@ -9,6 +9,12 @@ import animals.models
 from animals.utils import available_booking_times
 
 
+def _utc(*parts):
+    """UTC-aware datetime for tests (year..hour, optional minute, second)."""
+    y, mo, d, h, *rest = (*parts, 0, 0)
+    return datetime.datetime(y, mo, d, h, rest[0], rest[1], tzinfo=datetime.UTC)
+
+
 # Schedule testing
 class TestScheduleSortedPeriods(TestCase):
     def test_schedule_1(self):
@@ -29,12 +35,12 @@ class TestScheduleSortedPeriods(TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 11, 0),
-                datetime.datetime(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 11, 0),
+                _utc(2023, 9, 12, 12, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 14, 0),
-                datetime.datetime(2023, 9, 12, 16, 0),
+                _utc(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 16, 0),
             ),
         ]
         hours = 1
@@ -65,12 +71,12 @@ class TestScheduleSortedPeriods(TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 11, 0),
-                datetime.datetime(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 11, 0),
+                _utc(2023, 9, 12, 12, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 12, 0),
-                datetime.datetime(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 14, 0),
             ),
         ]
         hours = 1
@@ -101,12 +107,12 @@ class TestScheduleSortedPeriods(TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2024, 1, 15, 11, 0),
-                datetime.datetime(2024, 1, 15, 12, 0),
+                _utc(2024, 1, 15, 11, 0),
+                _utc(2024, 1, 15, 12, 0),
             ),
             (
-                datetime.datetime(2024, 1, 15, 12, 0),
-                datetime.datetime(2024, 1, 15, 14, 0),
+                _utc(2024, 1, 15, 12, 0),
+                _utc(2024, 1, 15, 14, 0),
             ),
         ]
         hours = 1
@@ -137,12 +143,12 @@ class TestScheduleSortedPeriods(TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 8, 0),
-                datetime.datetime(2023, 9, 12, 9, 0),
+                _utc(2023, 9, 12, 8, 0),
+                _utc(2023, 9, 12, 9, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 12, 0),
-                datetime.datetime(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 14, 0),
             ),
         ]
         hours = 1
@@ -154,16 +160,16 @@ class TestScheduleSortedPeriods(TestCase):
         expected = []
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 8, 0),
-                datetime.datetime(2023, 9, 12, 9, 0),
+                _utc(2023, 9, 12, 8, 0),
+                _utc(2023, 9, 12, 9, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 10, 0),
-                datetime.datetime(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 10, 0),
+                _utc(2023, 9, 12, 14, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 15, 0),
-                datetime.datetime(2023, 9, 12, 17, 0),
+                _utc(2023, 9, 12, 15, 0),
+                _utc(2023, 9, 12, 17, 0),
             ),
         ]
         hours = 1
@@ -186,16 +192,16 @@ class TestScheduleSortedPeriods(TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 8, 0),
-                datetime.datetime(2023, 9, 12, 9, 0),
+                _utc(2023, 9, 12, 8, 0),
+                _utc(2023, 9, 12, 9, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 10, 0),
-                datetime.datetime(2023, 9, 12, 14, 30),
+                _utc(2023, 9, 12, 10, 0),
+                _utc(2023, 9, 12, 14, 30),
             ),
             (
-                datetime.datetime(2023, 9, 12, 15, 0),
-                datetime.datetime(2023, 9, 12, 17, 0),
+                _utc(2023, 9, 12, 15, 0),
+                _utc(2023, 9, 12, 17, 0),
             ),
         ]
         hours = 0
@@ -209,20 +215,20 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
         expected = ["15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30"]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 13, 0),
-                datetime.datetime(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 13, 0),
+                _utc(2023, 9, 12, 14, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 11, 0),
-                datetime.datetime(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 11, 0),
+                _utc(2023, 9, 12, 12, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 14, 0),
-                datetime.datetime(2023, 9, 12, 15, 0),
+                _utc(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 15, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 9, 0),
-                datetime.datetime(2023, 9, 12, 10, 0),
+                _utc(2023, 9, 12, 9, 0),
+                _utc(2023, 9, 12, 10, 0),
             ),
         ]
         hours = 1
@@ -246,16 +252,16 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
         ]
         booked = [
             (
-                datetime.datetime(2023, 9, 12, 13, 0),
-                datetime.datetime(2023, 9, 12, 14, 0),
+                _utc(2023, 9, 12, 13, 0),
+                _utc(2023, 9, 12, 14, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 11, 0),
-                datetime.datetime(2023, 9, 12, 12, 0),
+                _utc(2023, 9, 12, 11, 0),
+                _utc(2023, 9, 12, 12, 0),
             ),
             (
-                datetime.datetime(2023, 9, 12, 9, 0),
-                datetime.datetime(2023, 9, 12, 10, 0),
+                _utc(2023, 9, 12, 9, 0),
+                _utc(2023, 9, 12, 10, 0),
             ),
         ]
         hours = 1
@@ -267,20 +273,20 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
         expected = ["15:00", "15:15"]
         booked = [
             (
-                datetime.datetime(2023, 12, 18, 13, 0),
-                datetime.datetime(2023, 12, 18, 14, 0),
+                _utc(2023, 12, 18, 13, 0),
+                _utc(2023, 12, 18, 14, 0),
             ),
             (
-                datetime.datetime(2023, 12, 18, 11, 0),
-                datetime.datetime(2023, 12, 18, 12, 0),
+                _utc(2023, 12, 18, 11, 0),
+                _utc(2023, 12, 18, 12, 0),
             ),
             (
-                datetime.datetime(2023, 12, 18, 14, 0),
-                datetime.datetime(2023, 12, 18, 15, 0),
+                _utc(2023, 12, 18, 14, 0),
+                _utc(2023, 12, 18, 15, 0),
             ),
             (
-                datetime.datetime(2023, 12, 18, 9, 0),
-                datetime.datetime(2023, 12, 18, 10, 0),
+                _utc(2023, 12, 18, 9, 0),
+                _utc(2023, 12, 18, 10, 0),
             ),
         ]
         hours = 2
@@ -565,13 +571,11 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(
-            start_time=datetime.datetime(2023, 12, 14, 10)
+            start_time=_utc(2023, 12, 14, 10)
         )
 
-        self.assertEqual(
-            test_schedule.start_time, datetime.datetime(2023, 12, 14, 10, 0)
-        )
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 12, 14, 11, 0))
+        self.assertEqual(test_schedule.start_time, _utc(2023, 12, 14, 10, 0))
+        self.assertEqual(test_schedule.end_time, _utc(2023, 12, 14, 11, 0))
         self.assertEqual(test_schedule.user_id, 4)
         self.assertEqual(test_schedule.animal_id, self.test_animal.id)
         self.assertEqual(status_code, 200)
@@ -590,13 +594,11 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(
-            start_time=datetime.datetime(2023, 12, 25, 8)
+            start_time=_utc(2023, 12, 25, 8)
         )
 
-        self.assertEqual(
-            test_schedule.start_time, datetime.datetime(2023, 12, 25, 8, 0)
-        )
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 12, 25, 11, 0))
+        self.assertEqual(test_schedule.start_time, _utc(2023, 12, 25, 8, 0))
+        self.assertEqual(test_schedule.end_time, _utc(2023, 12, 25, 11, 0))
         self.assertEqual(test_schedule.user_id, 4)
         self.assertEqual(test_schedule.animal_id, self.test_animal.id)
         self.assertEqual(status_code, 200)
@@ -617,14 +619,12 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(
-            start_time=datetime.datetime(2023, 10, 14, 17, 45),
-            end_time=datetime.datetime(2023, 10, 14, 18),
+            start_time=_utc(2023, 10, 14, 17, 45),
+            end_time=_utc(2023, 10, 14, 18),
         )
 
-        self.assertEqual(
-            test_schedule.start_time, datetime.datetime(2023, 10, 14, 17, 45)
-        )
-        self.assertEqual(test_schedule.end_time, datetime.datetime(2023, 10, 14, 18, 0))
+        self.assertEqual(test_schedule.start_time, _utc(2023, 10, 14, 17, 45))
+        self.assertEqual(test_schedule.end_time, _utc(2023, 10, 14, 18, 0))
         self.assertEqual(test_schedule.user_id, 4)
         self.assertEqual(test_schedule.animal_id, self.test_animal.id)
         self.assertEqual(status_code, 200)
@@ -643,8 +643,8 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         is_test_schedule = animals.models.Schedule.objects.filter(
-            start_time=datetime.datetime(2023, 10, 14, 10),
-            end_time=datetime.datetime(2023, 10, 14, 18),
+            start_time=_utc(2023, 10, 14, 10),
+            end_time=_utc(2023, 10, 14, 18),
         ).exists()
 
         self.assertFalse(is_test_schedule)
@@ -664,8 +664,8 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         is_test_schedule = animals.models.Schedule.objects.filter(
-            start_time=datetime.datetime(2023, 10, 25, 4),
-            end_time=datetime.datetime(2023, 10, 25, 5),
+            start_time=_utc(2023, 10, 25, 4),
+            end_time=_utc(2023, 10, 25, 5),
         ).exists()
 
         self.assertFalse(is_test_schedule)
@@ -685,8 +685,8 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         is_test_schedule = animals.models.Schedule.objects.filter(
-            start_time=datetime.datetime(2023, 10, 25, 20),
-            end_time=datetime.datetime(2023, 10, 25, 21),
+            start_time=_utc(2023, 10, 25, 20),
+            end_time=_utc(2023, 10, 25, 21),
         ).exists()
 
         self.assertFalse(is_test_schedule)
@@ -706,8 +706,8 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         is_test_schedule = animals.models.Schedule.objects.filter(
-            start_time=datetime.datetime(2023, 10, 25, 20),
-            end_time=datetime.datetime(2023, 10, 25, 21),
+            start_time=_utc(2023, 10, 25, 20),
+            end_time=_utc(2023, 10, 25, 21),
         ).exists()
 
         self.assertFalse(is_test_schedule)

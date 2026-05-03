@@ -1,7 +1,15 @@
 import datetime
 
+from django.utils import timezone as dj_timezone
+
 shelter_open_time = datetime.time(8, 0)  # Pet shelter open time
 shelter_close_time = datetime.time(18, 0)  # Pet shelter close time
+
+
+def _ensure_aware(dt: datetime.datetime) -> datetime.datetime:
+    if dj_timezone.is_naive(dt):
+        return dj_timezone.make_aware(dt, dj_timezone.get_current_timezone())
+    return dt
 
 
 def sort_times(booked_times: list[tuple]) -> list[tuple]:
@@ -42,17 +50,24 @@ def available_time_periods(
         for i in range(0, len(booked_times)):
             free_time[i][1] = booked_times[i][0]
             free_time[i + 1][0] = booked_times[i][1]
-        free_time[0][0] = datetime.datetime.combine(
-            booked_times[0][0].date(), shelter_open_time
+        day = booked_times[0][0].date()
+        tz = (
+            booked_times[0][0].tzinfo
+            if dj_timezone.is_aware(booked_times[0][0])
+            else dj_timezone.get_current_timezone()
         )
-        free_time[-1][1] = datetime.datetime.combine(
-            booked_times[0][0].date(), shelter_close_time
+        free_time[0][0] = dj_timezone.make_aware(
+            datetime.datetime.combine(day, shelter_open_time), tz
+        )
+        free_time[-1][1] = dj_timezone.make_aware(
+            datetime.datetime.combine(day, shelter_close_time), tz
         )
     else:
+        today = dj_timezone.now().date()
         free_time = [
             [
-                datetime.datetime.combine(datetime.date.today(), shelter_open_time),
-                datetime.datetime.combine(datetime.date.today(), shelter_close_time),
+                _ensure_aware(datetime.datetime.combine(today, shelter_open_time)),
+                _ensure_aware(datetime.datetime.combine(today, shelter_close_time)),
             ]
         ]
 
@@ -132,7 +147,9 @@ def create_booked_time(
         raise ValueError("Invalid date or time format") from err
 
     # Combine date and time to get the booking start time
-    booking_start = datetime.datetime.combine(booking_date, booking_time)
+    booking_start = _ensure_aware(
+        datetime.datetime.combine(booking_date.date(), booking_time)
+    )
 
     # Convert the duration to numerical types
     if isinstance(duration_hours, str):

@@ -1,1 +1,886 @@
-[{"model":"user.customuser","pk":2,"fields":{"password":"pbkdf2_sha256$600000$Huh6sx08TIOptb8vSJlYp4$a6KOKGPb3ad35iUo2wmWteV7WuNvaCXy1680gzUm2PA=","last_login":"2023-10-02T10:35:21.433","is_superuser":true,"username":"AmKenny","first_name":"","last_name":"","email":"a.v.prykhodko25@gmail.com","is_staff":true,"is_active":true,"date_joined":"2023-09-19T13:42:32.999","groups":[],"user_permissions":[]}},{"model":"user.customuser","pk":3,"fields":{"password":"pbkdf2_sha256$600000$WMkpjl4o85i6C2FC4vU91p$nw7/NPMGrFJ42DsMgtYjKG6S/qX5mfMrcGWaoMa0xrg=","last_login":null,"is_superuser":false,"username":"d","first_name":"","last_name":"","email":"f@3","is_staff":false,"is_active":true,"date_joined":"2023-09-21T10:14:16.354","groups":[],"user_permissions":[]}},{"model":"user.customuser","pk":4,"fields":{"password":"pbkdf2_sha256$600000$IBlhV1cqKwunzgHKQGPLxJ$9eAGey83rjXgkFAy/WvqsOonQdweRnMzAdXl9wDatWI=","last_login":"2023-09-25T13:10:11.183","is_superuser":false,"username":"guest","first_name":"","last_name":"","email":"guest@example.com","is_staff":false,"is_active":true,"date_joined":"2023-09-21T12:30:36.235","groups":[],"user_permissions":[]}},{"model":"user.customuser","pk":5,"fields":{"password":"pbkdf2_sha256$600000$C9eaAQZZzJhoMCxVHvh3Nd$hsHDjxq8wiDpnZEVnEkzTlCkfzcLJZvvBoIYrpYOuE0=","last_login":null,"is_superuser":false,"username":"dsadsadsa","first_name":"","last_name":"","email":"dsadsadsa@example.com","is_staff":false,"is_active":true,"date_joined":"2023-09-22T11:33:52.292","groups":[],"user_permissions":[]}},{"model":"blog.tag","pk":1,"fields":{"name":"news"}},{"model":"blog.tag","pk":2,"fields":{"name":"our_life"}},{"model":"blog.tag","pk":3,"fields":{"name":"newcomer"}},{"model":"blog.tag","pk":4,"fields":{"name":"dog"}},{"model":"blog.tag","pk":5,"fields":{"name":"cat"}},{"model":"blog.blog","pk":1,"fields":{"title":"Opening soon!","text":"We are making last preparations!","tag":[1]}},{"model":"blog.blog","pk":2,"fields":{"title":"New pets!","text":"Welcome our newcomers!","tag":[1,3]}},{"model":"blog.blog","pk":3,"fields":{"title":"Pyshinka is waiting for you","text":"Our cat Pyshinka would be happy if you spent more time with her :3","tag":[5]}},{"model":"blog.blog","pk":4,"fields":{"title":"Test","text":"TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest","tag":[1,2,3,4,5]}},{"model":"blog.feedback","pk":2,"fields":{"title":"Test","text":"Testttt","media":"test___","user":2,"animal":1}},{"model":"blog.feedback","pk":3,"fields":{"title":"Experience with Bobik","text":"Such an awesome experience. The dog was extremely energetic and I had so much fun. 10/10, would recommend to friends.","media":"o;eoj ji rti tp#U  0t4 y9pt4j ol[h45uiiorg","user":2,"animal":1}},{"model":"blog.feedback","pk":4,"fields":{"title":"Walk with Dinar","text":"Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.","media":"iugn bhvjwnaso/mbin6yu;s/z","user":2,"animal":2}},{"model":"blog.feedback","pk":5,"fields":{"title":"Walk with Dinar","text":"Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.","media":"iugn bhvjwnaso/mbin6yu;s/z","user":2,"animal":2}},{"model":"blog.feedback","pk":6,"fields":{"title":"Walk with Dinar","text":"Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.","media":"iugn bhvjwnaso/mbin6yu;s/z","user":2,"animal":2}},{"model":"blog.feedback","pk":7,"fields":{"title":"Walk with Dinar","text":"Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.","media":"iugn bhvjwnaso/mbin6yu;s/z","user":2,"animal":2}},{"model":"blog.feedback","pk":8,"fields":{"title":"test2","text":"test_text","media":"test_media","user":4,"animal":3}},{"model":"blog.feedback","pk":9,"fields":{"title":"test3","text":"test text","media":"testMedia","user":4,"animal":1}},{"model":"animals.sex","pk":1,"fields":{"name":"male"}},{"model":"animals.sex","pk":2,"fields":{"name":"female"}},{"model":"animals.animal","pk":1,"fields":{"name":"Bobik","type":"dog","sex":1,"age":3,"breed":"regular","availability":true,"description":"Would become your best friend!","healthy":true}},{"model":"animals.animal","pk":2,"fields":{"name":"Dinar","type":"dog","sex":1,"age":6,"breed":"Alabai","availability":true,"description":"Best dog ever","healthy":false}},{"model":"animals.animal","pk":3,"fields":{"name":"Pyshinka","type":"cat","sex":2,"age":4,"breed":"regular","availability":true,"description":"Furry cat","healthy":true}},{"model":"animals.animal","pk":4,"fields":{"name":"Arthur","type":"Dog","sex":1,"age":2,"breed":"Dvornyaga","availability":true,"description":"Can make you some code","healthy":false}},{"model":"animals.schedule","pk":2,"fields":{"start_time":"2023-09-22T10:30:00","end_time":"2023-09-22T12:00:00","animal":1,"user":3}},{"model":"animals.schedule","pk":3,"fields":{"start_time":"2023-09-22T14:00:00","end_time":"2023-09-22T15:00:00","animal":3,"user":4}},{"model":"animals.schedule","pk":4,"fields":{"start_time":"2023-09-22T12:00:00","end_time":"2023-09-22T16:00:00","animal":2,"user":2}},{"model":"animals.schedule","pk":5,"fields":{"start_time":"2023-09-24T13:30:00","end_time":"2023-09-24T15:00:00","animal":2,"user":2}},{"model":"animals.schedule","pk":6,"fields":{"start_time":"2023-09-24T12:00:00","end_time":"2023-09-24T12:30:00","animal":2,"user":2}},{"model":"animals.schedule","pk":7,"fields":{"start_time":"2023-09-26T10:00:00","end_time":"2023-09-26T12:00:00","animal":1,"user":3}},{"model":"animals.schedule","pk":8,"fields":{"start_time":"2023-09-26T12:00:00","end_time":"2023-09-26T15:00:00","animal":1,"user":4}},{"model":"animals.schedule","pk":9,"fields":{"start_time":"2023-09-26T12:00:00","end_time":"2023-09-26T16:00:00","animal":3,"user":5}},{"model":"animals.schedule","pk":10,"fields":{"start_time":"2023-09-27T15:00:00","end_time":"2023-09-27T16:00:00","animal":3,"user":5}},{"model":"animals.schedule","pk":11,"fields":{"start_time":"2023-10-12T13:30:00","end_time":"2023-10-12T16:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":12,"fields":{"start_time":"2023-10-12T08:00:00","end_time":"2023-10-12T10:30:00","animal":3,"user":2}},{"model":"animals.schedule","pk":13,"fields":{"start_time":"2023-10-12T10:45:00","end_time":"2023-10-12T13:15:00","animal":3,"user":2}},{"model":"animals.schedule","pk":14,"fields":{"start_time":"2023-10-06T08:00:00","end_time":"2023-10-06T08:30:00","animal":4,"user":2}},{"model":"animals.schedule","pk":15,"fields":{"start_time":"2023-10-06T09:30:00","end_time":"2023-10-06T10:00:00","animal":4,"user":2}},{"model":"animals.schedule","pk":16,"fields":{"start_time":"2023-10-06T15:15:00","end_time":"2023-10-06T15:45:00","animal":4,"user":2}},{"model":"animals.schedule","pk":17,"fields":{"start_time":"2023-10-06T13:30:00","end_time":"2023-10-06T14:00:00","animal":4,"user":2}},{"model":"animals.schedule","pk":18,"fields":{"start_time":"2023-10-06T10:30:00","end_time":"2023-10-06T11:00:00","animal":4,"user":2}},{"model":"animals.schedule","pk":19,"fields":{"start_time":"2023-10-06T12:15:00","end_time":"2023-10-06T12:45:00","animal":4,"user":2}},{"model":"animals.schedule","pk":20,"fields":{"start_time":"2023-10-06T14:15:00","end_time":"2023-10-06T14:45:00","animal":4,"user":2}},{"model":"animals.schedule","pk":21,"fields":{"start_time":"2023-10-14T08:00:00","end_time":"2023-10-14T09:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":22,"fields":{"start_time":"2023-10-14T10:30:00","end_time":"2023-10-14T11:30:00","animal":3,"user":2}},{"model":"animals.schedule","pk":23,"fields":{"start_time":"2023-10-14T14:30:00","end_time":"2023-10-14T15:30:00","animal":3,"user":2}},{"model":"animals.schedule","pk":24,"fields":{"start_time":"2023-10-14T16:45:00","end_time":"2023-10-14T17:45:00","animal":3,"user":2}},{"model":"animals.schedule","pk":25,"fields":{"start_time":"2023-10-14T12:00:00","end_time":"2023-10-14T13:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":26,"fields":{"start_time":"2023-10-14T09:15:00","end_time":"2023-10-14T10:15:00","animal":3,"user":2}},{"model":"animals.schedule","pk":27,"fields":{"start_time":"2023-10-14T15:30:00","end_time":"2023-10-14T16:30:00","animal":3,"user":2}},{"model":"animals.schedule","pk":28,"fields":{"start_time":"2023-10-14T13:00:00","end_time":"2023-10-14T14:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":29,"fields":{"start_time":"2023-10-16T14:45:00","end_time":"2023-10-16T15:45:00","animal":1,"user":2}},{"model":"animals.schedule","pk":30,"fields":{"start_time":"2023-10-16T09:45:00","end_time":"2023-10-16T10:45:00","animal":1,"user":2}},{"model":"animals.schedule","pk":31,"fields":{"start_time":"2023-10-16T12:00:00","end_time":"2023-10-16T13:00:00","animal":1,"user":2}},{"model":"animals.schedule","pk":33,"fields":{"start_time":"2023-10-16T13:45:00","end_time":"2023-10-16T14:45:00","animal":1,"user":2}},{"model":"animals.schedule","pk":34,"fields":{"start_time":"2023-10-16T13:45:00","end_time":"2023-10-16T14:45:00","animal":1,"user":2}},{"model":"animals.schedule","pk":35,"fields":{"start_time":"2023-10-17T12:30:00","end_time":"2023-10-17T13:30:00","animal":1,"user":2}},{"model":"animals.schedule","pk":36,"fields":{"start_time":"2023-10-17T10:15:00","end_time":"2023-10-17T11:15:00","animal":1,"user":2}},{"model":"animals.schedule","pk":37,"fields":{"start_time":"2023-10-17T17:00:00","end_time":"2023-10-17T18:00:00","animal":1,"user":2}},{"model":"animals.schedule","pk":38,"fields":{"start_time":"2023-10-17T15:30:00","end_time":"2023-10-17T16:30:00","animal":1,"user":2}},{"model":"animals.schedule","pk":39,"fields":{"start_time":"2023-10-17T08:30:00","end_time":"2023-10-17T09:30:00","animal":1,"user":2}},{"model":"animals.schedule","pk":40,"fields":{"start_time":"2023-10-17T11:15:00","end_time":"2023-10-17T12:15:00","animal":1,"user":2}},{"model":"animals.schedule","pk":43,"fields":{"start_time":"2023-10-12T08:15:00","end_time":"2023-10-12T09:15:00","animal":2,"user":2}},{"model":"animals.schedule","pk":44,"fields":{"start_time":"2023-10-12T09:45:00","end_time":"2023-10-12T10:45:00","animal":2,"user":2}},{"model":"animals.schedule","pk":45,"fields":{"start_time":"2023-10-12T16:15:00","end_time":"2023-10-12T17:15:00","animal":2,"user":2}},{"model":"animals.schedule","pk":46,"fields":{"start_time":"2023-10-12T10:45:00","end_time":"2023-10-12T11:45:00","animal":2,"user":2}},{"model":"animals.schedule","pk":47,"fields":{"start_time":"2023-10-12T12:00:00","end_time":"2023-10-12T13:00:00","animal":2,"user":2}},{"model":"animals.schedule","pk":48,"fields":{"start_time":"2023-10-12T13:15:00","end_time":"2023-10-12T14:15:00","animal":2,"user":2}},{"model":"animals.schedule","pk":49,"fields":{"start_time":"2023-10-12T14:15:00","end_time":"2023-10-12T15:15:00","animal":2,"user":2}},{"model":"animals.schedule","pk":50,"fields":{"start_time":"2023-10-12T15:15:00","end_time":"2023-10-12T16:15:00","animal":2,"user":2}},{"model":"animals.schedule","pk":51,"fields":{"start_time":"2023-10-15T14:45:00","end_time":"2023-10-15T16:45:00","animal":3,"user":2}},{"model":"animals.schedule","pk":52,"fields":{"start_time":"2023-10-15T10:00:00","end_time":"2023-10-15T12:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":53,"fields":{"start_time":"2023-10-15T12:45:00","end_time":"2023-10-15T14:45:00","animal":3,"user":2}},{"model":"animals.schedule","pk":54,"fields":{"start_time":"2023-10-15T08:00:00","end_time":"2023-10-15T10:00:00","animal":3,"user":2}},{"model":"animals.schedule","pk":55,"fields":{"start_time":"2023-10-16T13:00:00","end_time":"2023-10-16T14:00:00","animal":2,"user":2}},{"model":"animals.schedule","pk":56,"fields":{"start_time":"2023-10-09T08:15:00","end_time":"2023-10-09T09:15:00","animal":3,"user":2}},{"model":"animals.schedule","pk":57,"fields":{"start_time":"2023-10-09T09:15:00","end_time":"2023-10-09T11:15:00","animal":3,"user":2}},{"model":"animals.schedule","pk":58,"fields":{"start_time":"2023-10-09T12:45:00","end_time":"2023-10-09T13:45:00","animal":3,"user":2}},{"model":"animals.schedule","pk":59,"fields":{"start_time":"2023-10-08T08:00:00","end_time":"2023-10-08T09:00:00","animal":4,"user":2}},{"model":"animals.schedule","pk":60,"fields":{"start_time":"2023-10-08T09:15:00","end_time":"2023-10-08T10:15:00","animal":4,"user":2}},{"model":"animals.schedule","pk":61,"fields":{"start_time":"2023-10-08T11:30:00","end_time":"2023-10-08T12:30:00","animal":4,"user":2}}]
+[
+  {
+    "model": "user.customuser",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$Huh6sx08TIOptb8vSJlYp4$a6KOKGPb3ad35iUo2wmWteV7WuNvaCXy1680gzUm2PA=",
+      "last_login": "2023-10-02T10:35:21.433Z",
+      "is_superuser": true,
+      "username": "AmKenny",
+      "first_name": "",
+      "last_name": "",
+      "email": "a.v.prykhodko25@gmail.com",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-09-19T13:42:32.999Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "user.customuser",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$WMkpjl4o85i6C2FC4vU91p$nw7/NPMGrFJ42DsMgtYjKG6S/qX5mfMrcGWaoMa0xrg=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "d",
+      "first_name": "",
+      "last_name": "",
+      "email": "f@3",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-21T10:14:16.354Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "user.customuser",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$IBlhV1cqKwunzgHKQGPLxJ$9eAGey83rjXgkFAy/WvqsOonQdweRnMzAdXl9wDatWI=",
+      "last_login": "2023-09-25T13:10:11.183Z",
+      "is_superuser": false,
+      "username": "guest",
+      "first_name": "",
+      "last_name": "",
+      "email": "guest@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-21T12:30:36.235Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "user.customuser",
+    "pk": 5,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$C9eaAQZZzJhoMCxVHvh3Nd$hsHDjxq8wiDpnZEVnEkzTlCkfzcLJZvvBoIYrpYOuE0=",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "dsadsadsa",
+      "first_name": "",
+      "last_name": "",
+      "email": "dsadsadsa@example.com",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-09-22T11:33:52.292Z",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 1,
+    "fields": {
+      "name": "news"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 2,
+    "fields": {
+      "name": "our_life"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 3,
+    "fields": {
+      "name": "newcomer"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 4,
+    "fields": {
+      "name": "dog"
+    }
+  },
+  {
+    "model": "blog.tag",
+    "pk": 5,
+    "fields": {
+      "name": "cat"
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 1,
+    "fields": {
+      "title": "Opening soon!",
+      "text": "We are making last preparations!",
+      "tag": [
+        1
+      ]
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 2,
+    "fields": {
+      "title": "New pets!",
+      "text": "Welcome our newcomers!",
+      "tag": [
+        1,
+        3
+      ]
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 3,
+    "fields": {
+      "title": "Pyshinka is waiting for you",
+      "text": "Our cat Pyshinka would be happy if you spent more time with her :3",
+      "tag": [
+        5
+      ]
+    }
+  },
+  {
+    "model": "blog.blog",
+    "pk": 4,
+    "fields": {
+      "title": "Test",
+      "text": "TestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTestTest",
+      "tag": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 2,
+    "fields": {
+      "title": "Test",
+      "text": "Testttt",
+      "media": "test___",
+      "user": 2,
+      "animal": 1
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 3,
+    "fields": {
+      "title": "Experience with Bobik",
+      "text": "Such an awesome experience. The dog was extremely energetic and I had so much fun. 10/10, would recommend to friends.",
+      "media": "o;eoj ji rti tp#U  0t4 y9pt4j ol[h45uiiorg",
+      "user": 2,
+      "animal": 1
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 4,
+    "fields": {
+      "title": "Walk with Dinar",
+      "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+      "media": "iugn bhvjwnaso/mbin6yu;s/z",
+      "user": 2,
+      "animal": 2
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 5,
+    "fields": {
+      "title": "Walk with Dinar",
+      "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+      "media": "iugn bhvjwnaso/mbin6yu;s/z",
+      "user": 2,
+      "animal": 2
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 6,
+    "fields": {
+      "title": "Walk with Dinar",
+      "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+      "media": "iugn bhvjwnaso/mbin6yu;s/z",
+      "user": 2,
+      "animal": 2
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 7,
+    "fields": {
+      "title": "Walk with Dinar",
+      "text": "Hands down the best encounter with a dog, I ever had. Dinar is so nice, sweet and cute, so don't be fooled by his size. 100 % doing this again.",
+      "media": "iugn bhvjwnaso/mbin6yu;s/z",
+      "user": 2,
+      "animal": 2
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 8,
+    "fields": {
+      "title": "test2",
+      "text": "test_text",
+      "media": "test_media",
+      "user": 4,
+      "animal": 3
+    }
+  },
+  {
+    "model": "blog.feedback",
+    "pk": 9,
+    "fields": {
+      "title": "test3",
+      "text": "test text",
+      "media": "testMedia",
+      "user": 4,
+      "animal": 1
+    }
+  },
+  {
+    "model": "animals.sex",
+    "pk": 1,
+    "fields": {
+      "name": "male"
+    }
+  },
+  {
+    "model": "animals.sex",
+    "pk": 2,
+    "fields": {
+      "name": "female"
+    }
+  },
+  {
+    "model": "animals.animal",
+    "pk": 1,
+    "fields": {
+      "name": "Bobik",
+      "type": "dog",
+      "sex": 1,
+      "age": 3,
+      "breed": "regular",
+      "availability": true,
+      "description": "Would become your best friend!",
+      "healthy": true
+    }
+  },
+  {
+    "model": "animals.animal",
+    "pk": 2,
+    "fields": {
+      "name": "Dinar",
+      "type": "dog",
+      "sex": 1,
+      "age": 6,
+      "breed": "Alabai",
+      "availability": true,
+      "description": "Best dog ever",
+      "healthy": false
+    }
+  },
+  {
+    "model": "animals.animal",
+    "pk": 3,
+    "fields": {
+      "name": "Pyshinka",
+      "type": "cat",
+      "sex": 2,
+      "age": 4,
+      "breed": "regular",
+      "availability": true,
+      "description": "Furry cat",
+      "healthy": true
+    }
+  },
+  {
+    "model": "animals.animal",
+    "pk": 4,
+    "fields": {
+      "name": "Arthur",
+      "type": "Dog",
+      "sex": 1,
+      "age": 2,
+      "breed": "Dvornyaga",
+      "availability": true,
+      "description": "Can make you some code",
+      "healthy": false
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 2,
+    "fields": {
+      "start_time": "2023-09-22T10:30:00Z",
+      "end_time": "2023-09-22T12:00:00Z",
+      "animal": 1,
+      "user": 3
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 3,
+    "fields": {
+      "start_time": "2023-09-22T14:00:00Z",
+      "end_time": "2023-09-22T15:00:00Z",
+      "animal": 3,
+      "user": 4
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 4,
+    "fields": {
+      "start_time": "2023-09-22T12:00:00Z",
+      "end_time": "2023-09-22T16:00:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 5,
+    "fields": {
+      "start_time": "2023-09-24T13:30:00Z",
+      "end_time": "2023-09-24T15:00:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 6,
+    "fields": {
+      "start_time": "2023-09-24T12:00:00Z",
+      "end_time": "2023-09-24T12:30:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 7,
+    "fields": {
+      "start_time": "2023-09-26T10:00:00Z",
+      "end_time": "2023-09-26T12:00:00Z",
+      "animal": 1,
+      "user": 3
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 8,
+    "fields": {
+      "start_time": "2023-09-26T12:00:00Z",
+      "end_time": "2023-09-26T15:00:00Z",
+      "animal": 1,
+      "user": 4
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 9,
+    "fields": {
+      "start_time": "2023-09-26T12:00:00Z",
+      "end_time": "2023-09-26T16:00:00Z",
+      "animal": 3,
+      "user": 5
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 10,
+    "fields": {
+      "start_time": "2023-09-27T15:00:00Z",
+      "end_time": "2023-09-27T16:00:00Z",
+      "animal": 3,
+      "user": 5
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 11,
+    "fields": {
+      "start_time": "2023-10-12T13:30:00Z",
+      "end_time": "2023-10-12T16:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 12,
+    "fields": {
+      "start_time": "2023-10-12T08:00:00Z",
+      "end_time": "2023-10-12T10:30:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 13,
+    "fields": {
+      "start_time": "2023-10-12T10:45:00Z",
+      "end_time": "2023-10-12T13:15:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 14,
+    "fields": {
+      "start_time": "2023-10-06T08:00:00Z",
+      "end_time": "2023-10-06T08:30:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 15,
+    "fields": {
+      "start_time": "2023-10-06T09:30:00Z",
+      "end_time": "2023-10-06T10:00:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 16,
+    "fields": {
+      "start_time": "2023-10-06T15:15:00Z",
+      "end_time": "2023-10-06T15:45:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 17,
+    "fields": {
+      "start_time": "2023-10-06T13:30:00Z",
+      "end_time": "2023-10-06T14:00:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 18,
+    "fields": {
+      "start_time": "2023-10-06T10:30:00Z",
+      "end_time": "2023-10-06T11:00:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 19,
+    "fields": {
+      "start_time": "2023-10-06T12:15:00Z",
+      "end_time": "2023-10-06T12:45:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 20,
+    "fields": {
+      "start_time": "2023-10-06T14:15:00Z",
+      "end_time": "2023-10-06T14:45:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 21,
+    "fields": {
+      "start_time": "2023-10-14T08:00:00Z",
+      "end_time": "2023-10-14T09:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 22,
+    "fields": {
+      "start_time": "2023-10-14T10:30:00Z",
+      "end_time": "2023-10-14T11:30:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 23,
+    "fields": {
+      "start_time": "2023-10-14T14:30:00Z",
+      "end_time": "2023-10-14T15:30:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 24,
+    "fields": {
+      "start_time": "2023-10-14T16:45:00Z",
+      "end_time": "2023-10-14T17:45:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 25,
+    "fields": {
+      "start_time": "2023-10-14T12:00:00Z",
+      "end_time": "2023-10-14T13:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 26,
+    "fields": {
+      "start_time": "2023-10-14T09:15:00Z",
+      "end_time": "2023-10-14T10:15:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 27,
+    "fields": {
+      "start_time": "2023-10-14T15:30:00Z",
+      "end_time": "2023-10-14T16:30:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 28,
+    "fields": {
+      "start_time": "2023-10-14T13:00:00Z",
+      "end_time": "2023-10-14T14:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 29,
+    "fields": {
+      "start_time": "2023-10-16T14:45:00Z",
+      "end_time": "2023-10-16T15:45:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 30,
+    "fields": {
+      "start_time": "2023-10-16T09:45:00Z",
+      "end_time": "2023-10-16T10:45:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 31,
+    "fields": {
+      "start_time": "2023-10-16T12:00:00Z",
+      "end_time": "2023-10-16T13:00:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 33,
+    "fields": {
+      "start_time": "2023-10-16T13:45:00Z",
+      "end_time": "2023-10-16T14:45:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 34,
+    "fields": {
+      "start_time": "2023-10-16T13:45:00Z",
+      "end_time": "2023-10-16T14:45:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 35,
+    "fields": {
+      "start_time": "2023-10-17T12:30:00Z",
+      "end_time": "2023-10-17T13:30:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 36,
+    "fields": {
+      "start_time": "2023-10-17T10:15:00Z",
+      "end_time": "2023-10-17T11:15:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 37,
+    "fields": {
+      "start_time": "2023-10-17T17:00:00Z",
+      "end_time": "2023-10-17T18:00:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 38,
+    "fields": {
+      "start_time": "2023-10-17T15:30:00Z",
+      "end_time": "2023-10-17T16:30:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 39,
+    "fields": {
+      "start_time": "2023-10-17T08:30:00Z",
+      "end_time": "2023-10-17T09:30:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 40,
+    "fields": {
+      "start_time": "2023-10-17T11:15:00Z",
+      "end_time": "2023-10-17T12:15:00Z",
+      "animal": 1,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 43,
+    "fields": {
+      "start_time": "2023-10-12T08:15:00Z",
+      "end_time": "2023-10-12T09:15:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 44,
+    "fields": {
+      "start_time": "2023-10-12T09:45:00Z",
+      "end_time": "2023-10-12T10:45:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 45,
+    "fields": {
+      "start_time": "2023-10-12T16:15:00Z",
+      "end_time": "2023-10-12T17:15:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 46,
+    "fields": {
+      "start_time": "2023-10-12T10:45:00Z",
+      "end_time": "2023-10-12T11:45:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 47,
+    "fields": {
+      "start_time": "2023-10-12T12:00:00Z",
+      "end_time": "2023-10-12T13:00:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 48,
+    "fields": {
+      "start_time": "2023-10-12T13:15:00Z",
+      "end_time": "2023-10-12T14:15:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 49,
+    "fields": {
+      "start_time": "2023-10-12T14:15:00Z",
+      "end_time": "2023-10-12T15:15:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 50,
+    "fields": {
+      "start_time": "2023-10-12T15:15:00Z",
+      "end_time": "2023-10-12T16:15:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 51,
+    "fields": {
+      "start_time": "2023-10-15T14:45:00Z",
+      "end_time": "2023-10-15T16:45:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 52,
+    "fields": {
+      "start_time": "2023-10-15T10:00:00Z",
+      "end_time": "2023-10-15T12:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 53,
+    "fields": {
+      "start_time": "2023-10-15T12:45:00Z",
+      "end_time": "2023-10-15T14:45:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 54,
+    "fields": {
+      "start_time": "2023-10-15T08:00:00Z",
+      "end_time": "2023-10-15T10:00:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 55,
+    "fields": {
+      "start_time": "2023-10-16T13:00:00Z",
+      "end_time": "2023-10-16T14:00:00Z",
+      "animal": 2,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 56,
+    "fields": {
+      "start_time": "2023-10-09T08:15:00Z",
+      "end_time": "2023-10-09T09:15:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 57,
+    "fields": {
+      "start_time": "2023-10-09T09:15:00Z",
+      "end_time": "2023-10-09T11:15:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 58,
+    "fields": {
+      "start_time": "2023-10-09T12:45:00Z",
+      "end_time": "2023-10-09T13:45:00Z",
+      "animal": 3,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 59,
+    "fields": {
+      "start_time": "2023-10-08T08:00:00Z",
+      "end_time": "2023-10-08T09:00:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 60,
+    "fields": {
+      "start_time": "2023-10-08T09:15:00Z",
+      "end_time": "2023-10-08T10:15:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  },
+  {
+    "model": "animals.schedule",
+    "pk": 61,
+    "fields": {
+      "start_time": "2023-10-08T11:30:00Z",
+      "end_time": "2023-10-08T12:30:00Z",
+      "animal": 4,
+      "user": 2
+    }
+  }
+]
