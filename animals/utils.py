@@ -1,5 +1,4 @@
 import datetime
-from typing import List, Tuple  # imported typing to remove type warnings
 
 shelter_open_time = datetime.time(8, 0)  # Pet shelter open time
 shelter_close_time = datetime.time(18, 0)  # Pet shelter close time
@@ -21,8 +20,8 @@ def sort_times(booked_times: list[tuple]) -> list[tuple]:
 
 
 def available_time_periods(
-    booked_times: List[Tuple[datetime.datetime, datetime.datetime]],
-) -> List[List[datetime.datetime]]:
+    booked_times: list[tuple[datetime.datetime, datetime.datetime]],
+) -> list[list[datetime.datetime]]:
     """
     Calculate and return a list of free time periods based on the booked times.
 
@@ -39,7 +38,7 @@ def available_time_periods(
 
     # Initialize a list to store free time periods
     if booked_times:
-        free_time: List[List] = [[None] * 2 for _ in range(0, len(booked_times) + 1)]
+        free_time: list[list] = [[None] * 2 for _ in range(0, len(booked_times) + 1)]
         for i in range(0, len(booked_times)):
             free_time[i][1] = booked_times[i][0]
             free_time[i + 1][0] = booked_times[i][1]
@@ -61,10 +60,10 @@ def available_time_periods(
 
 
 def available_booking_times(
-    booked_times: List[Tuple[datetime.datetime, datetime.datetime]],
+    booked_times: list[tuple[datetime.datetime, datetime.datetime]],
     duration_hours: int | float,
     duration_minutes: int,
-) -> List[str]:
+) -> list[str]:
     """
     Calculate and return a list of available booking times based on booked times and desired duration.
 
@@ -129,8 +128,8 @@ def create_booked_time(
         # Parse the input date and time
         booking_date = datetime.datetime.strptime(booking_date, "%Y-%m-%d")
         booking_time = datetime.datetime.strptime(time_slot, "%H:%M").time()
-    except ValueError:
-        raise ValueError("Invalid date or time format")
+    except ValueError as err:
+        raise ValueError("Invalid date or time format") from err
 
     # Combine date and time to get the booking start time
     booking_start = datetime.datetime.combine(booking_date, booking_time)
@@ -139,13 +138,13 @@ def create_booked_time(
     if isinstance(duration_hours, str):
         try:
             duration_hours = float(duration_hours)
-        except ValueError:
-            raise ValueError("Invalid hours duration format")
+        except ValueError as err:
+            raise ValueError("Invalid hours duration format") from err
     if isinstance(duration_minutes, str):
         try:
             duration_minutes = int(duration_minutes)
-        except ValueError:
-            raise ValueError("Invalid minutes duration format")
+        except ValueError as err:
+            raise ValueError("Invalid minutes duration format") from err
 
     # Convert the duration to a timedelta
     duration = datetime.timedelta(hours=duration_hours, minutes=duration_minutes)

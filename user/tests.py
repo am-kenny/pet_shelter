@@ -1,4 +1,6 @@
-from django.contrib.auth.models import User
+import secrets
+
+from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 
 
@@ -8,7 +10,8 @@ class TestUser(TestCase):
     @staticmethod
     def logged_client():
         test_client = Client()
-        test_client.login(username="guest", password="vfRarYj37Jfp@V3")
+        user = get_user_model().objects.get(username="guest")
+        test_client.force_login(user)
         return test_client
 
     def test_registration_get(self):
@@ -18,26 +21,35 @@ class TestUser(TestCase):
         self.assertEqual(status_code, 200)
 
     def test_registration_successful(self):
+        plain_password = secrets.token_urlsafe(16)
         test_client = Client()
         response = test_client.post(
             "/register",
-            data={"username": "test", "password": "test", "email": "test@example.com"},
+            data={
+                "username": "newuser_reg_ok",
+                "email": "newuser_reg_ok@example.com",
+                "password1": plain_password,
+                "password2": plain_password,
+            },
         )
         status_code = response.status_code
         self.assertEqual(status_code, 302)
 
     def test_registration_fail(self):  # Already existing username
+        plain_password = secrets.token_urlsafe(16)
         test_client = Client()
         response = test_client.post(
             "/register",
             data={
                 "username": "guest",
-                "password": "failTest",
+                "password1": plain_password,
+                "password2": plain_password,
                 "email": "failTest@example.com",
             },
         )
         status_code = response.status_code
-        self.assertEqual(status_code, 409)
+        self.assertEqual(status_code, 200)
+        self.assertIn("username", response.context["form"].errors)
 
     def test_login_get(self):
         test_client = Client()
@@ -51,12 +63,18 @@ class TestUser(TestCase):
             "/login", data={"username": "wrongTest", "password": "wrongTest"}
         )
         status_code = response.status_code
-        self.assertEqual(status_code, 404)
+        self.assertEqual(status_code, 200)
 
     def test_login_success(self):
+        user = get_user_model().objects.get(username="guest")
+        plain_password = secrets.token_urlsafe(16)
+        user.set_password(plain_password)
+        user.save()
+
         test_client = Client()
         response = test_client.post(
-            "/login", data={"username": "guest", "password": "vfRarYj37Jfp@V3"}
+            "/login",
+            data={"username": "guest", "password": plain_password},
         )
         status_code = response.status_code
         self.assertEqual(status_code, 302)
@@ -104,9 +122,8 @@ class TestUser(TestCase):
         test_client = self.logged_client()
         response = test_client.get("/profile")
         status_code = response.status_code
-        has_user_name = User.objects.get(
-            username="guest"
-        ).username in response.content.decode("utf-8")
+        guest = get_user_model().objects.get(username="guest")
+        has_user_name = guest.username in response.content.decode("utf-8")
 
         self.assertEqual(status_code, 200)
         self.assertTrue(has_user_name)

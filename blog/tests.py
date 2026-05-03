@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -14,7 +15,8 @@ class TestFeedback(TestCase):
     @staticmethod
     def logged_client():
         test_client = Client()
-        test_client.login(username="guest", password="vfRarYj37Jfp@V3")
+        user = get_user_model().objects.get(username="guest")
+        test_client.force_login(user)
         return test_client
 
     def test_feedback_get(self):

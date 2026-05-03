@@ -31,6 +31,9 @@ class AnimalMedia(models.Model):
     media = models.ImageField(blank=False, upload_to="animal_images/", unique=True)
     is_main = models.BooleanField()
 
+    def __str__(self):
+        return f"AnimalMedia({self.animal_id}, main={self.is_main})"
+
 
 class Schedule(models.Model):
     start_time = models.DateTimeField()
@@ -40,6 +43,9 @@ class Schedule(models.Model):
 
     class Meta:
         ordering = ["-start_time"]
+
+    def __str__(self):
+        return f"Schedule({self.start_time} - {self.end_time}, animal={self.animal_id})"
 
     @property
     def is_past_due(self):

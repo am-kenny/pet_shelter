@@ -517,7 +517,7 @@
     }
 },
 {
-    "model": "auth.user",
+    "model": "user.customuser",
     "pk": 2,
     "fields": {
         "password": "pbkdf2_sha256$600000$Huh6sx08TIOptb8vSJlYp4$a6KOKGPb3ad35iUo2wmWteV7WuNvaCXy1680gzUm2PA=",
@@ -535,7 +535,7 @@
     }
 },
 {
-    "model": "auth.user",
+    "model": "user.customuser",
     "pk": 3,
     "fields": {
         "password": "pbkdf2_sha256$600000$WMkpjl4o85i6C2FC4vU91p$nw7/NPMGrFJ42DsMgtYjKG6S/qX5mfMrcGWaoMa0xrg=",
@@ -553,7 +553,7 @@
     }
 },
 {
-    "model": "auth.user",
+    "model": "user.customuser",
     "pk": 4,
     "fields": {
         "password": "pbkdf2_sha256$600000$IBlhV1cqKwunzgHKQGPLxJ$9eAGey83rjXgkFAy/WvqsOonQdweRnMzAdXl9wDatWI=",
@@ -571,7 +571,7 @@
     }
 },
 {
-    "model": "auth.user",
+    "model": "user.customuser",
     "pk": 5,
     "fields": {
         "password": "pbkdf2_sha256$600000$C9eaAQZZzJhoMCxVHvh3Nd$hsHDjxq8wiDpnZEVnEkzTlCkfzcLJZvvBoIYrpYOuE0=",
@@ -580,7 +580,7 @@
         "username": "dsadsadsa",
         "first_name": "",
         "last_name": "",
-        "email": "a.v.prykhodko25@gmail.com",
+        "email": "dsadsadsa@example.com",
         "is_staff": false,
         "is_active": true,
         "date_joined": "2023-09-22T11:33:52.292",

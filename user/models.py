@@ -15,3 +15,6 @@ class UserMedia(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     media = models.ImageField(blank=False, upload_to="user_images/", unique=True)
     main = models.BooleanField()
+
+    def __str__(self):
+        return f"UserMedia({self.user_id}, main={self.main})"
