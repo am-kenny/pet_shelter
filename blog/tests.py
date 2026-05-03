@@ -90,6 +90,22 @@ class TestFeedback(TestCase):
         self.assertFalse(is_feedback)
         self.assertEqual(status_code, 200)
 
+    def test_feedback_post_requires_completed_walk_with_animal(self):
+        """Guest has past walks for animal 1 but not for animal 2."""
+        test_client = self.logged_client()
+        animal_no_walk = animals.models.Animal.objects.get(id=2)
+        response = test_client.post(
+            reverse("feedbacks"),
+            data={
+                "title": "no walk",
+                "text": "no walk",
+                "media": "n/a",
+                "animal": animal_no_walk.id,
+            },
+        )
+        self.assertEqual(response.status_code, 302)
+        self.assertFalse(blog.models.Feedback.objects.filter(title="no walk").exists())
+
 
 class TestBlog(TestCase):
     fixtures = ["test_data.json"]

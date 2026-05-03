@@ -49,3 +49,14 @@ class Schedule(models.Model):
     @property
     def is_past_due(self):
         return timezone.now() > self.start_time
+
+    @classmethod
+    def user_has_completed_walk(cls, user, animal_id: int) -> bool:
+        """True if this user had a booking with the animal whose slot has fully ended."""
+        if not getattr(user, "is_authenticated", False):
+            return False
+        return cls.objects.filter(
+            user=user,
+            animal_id=animal_id,
+            end_time__lt=timezone.now(),
+        ).exists()

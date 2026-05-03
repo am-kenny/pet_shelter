@@ -2,6 +2,7 @@ import datetime
 
 from django.utils import timezone as dj_timezone
 
+# TODO: make configurable from the database
 shelter_open_time = datetime.time(8, 0)  # Pet shelter open time
 shelter_close_time = datetime.time(18, 0)  # Pet shelter close time
 
@@ -119,7 +120,7 @@ def create_booked_time(
     time_slot: str,
     duration_hours: str | int | float,
     duration_minutes: str | int = 0,
-) -> (datetime.datetime, datetime.datetime):
+) -> tuple[datetime.datetime, datetime.datetime]:
     """
     Create a booked time slot based on a booking date, time slot, and duration.
 
@@ -136,7 +137,7 @@ def create_booked_time(
     :type duration_minutes: str | int
 
     :return: A tuple containing the booking start and end times as datetime objects.
-    :rtype: (datetime, datetime)
+    :rtype: tuple[datetime.datetime, datetime.datetime]
     """
 
     try:

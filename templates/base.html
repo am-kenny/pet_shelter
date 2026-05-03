@@ -32,6 +32,13 @@
     </header>
     <main>
         <div class="main_container">
+            {% if messages %}
+                <ul class="django-messages" role="status">
+                    {% for message in messages %}
+                        <li class="django-messages__item django-messages__item--{{ message.tags }}">{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% block content %}{% endblock %}
         </div>
     </main>

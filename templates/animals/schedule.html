@@ -6,51 +6,85 @@
     <div class="schedule__container">
         <h1 class="schedule-title">Schedule</h1>
         {% if animals %}
-            <form class="schedule-form" method="get" onsubmit="return validateForm()">
+            <p class="schedule-unified-hint">
+                Choose an animal, date, and walk length, then to load available start times below.
+            </p>
+            <form
+                class="schedule-form schedule-filter-form"
+                method="post"
+                id="schedule-filter-form"
+                onsubmit="return validateForm()"
+            >
+                {% csrf_token %}
                 <label for="animal_id" class="schedule-label">Choose an animal:</label>
-                <select name="animal_id" id="animal_id" class="schedule-select">
+                <select name="animal_id" id="animal_id" class="schedule-select" required>
                     <option value="">-----</option>
                     {% for animal in animals %}
                         <option value="{{ animal.id }}"{% if preselected_animal_id == animal.id %} selected{% endif %}>{{ animal }}</option>
                     {% endfor %}
                 </select>
-                <label for="date" class="schedule-label">Choose desired date:</label>
-                <input type="date" id="date" name="date" min="" max="" required class="schedule-input">
+                <label for="selected_date" class="schedule-label">Choose desired date:</label>
+                <input
+                    type="date"
+                    id="selected_date"
+                    name="selected_date"
+                    value="{{ selected_date|default:'' }}"
+                    min=""
+                    max=""
+                    required
+                    class="schedule-input"
+                >
                 <label for="duration_hours" class="schedule-label">Desired duration hours:</label>
-                <input type="number" id="duration_hours" name="duration_hours" value="0" min="0" class="schedule-input">
+                <input
+                    type="number"
+                    id="duration_hours"
+                    name="duration_hours"
+                    value="{{ desired_hours|default:0 }}"
+                    min="0"
+                    class="schedule-input"
+                >
                 <label for="duration_minutes" class="schedule-label">Minutes:</label>
-                <input type="number" id="duration_minutes" name="duration_minutes" value="0" min="0" max="59" class="schedule-input">
-                <input type="submit" value="Submit" class="schedule-submit">
+                <input
+                    type="number"
+                    id="duration_minutes"
+                    name="duration_minutes"
+                    value="{{ desired_minutes|default:0 }}"
+                    min="0"
+                    max="59"
+                    class="schedule-input"
+                >
+                <button type="submit" class="schedule-submit">Show available times</button>
             </form>
             <script>
-                let today = new Date().toISOString().split("T")[0]
-                document.getElementById("date").setAttribute("min", today)
-                let latestDate = new Date()
-                latestDate.setDate(latestDate.getDate() + 14)
-                latestDate = latestDate.toISOString().split("T")[0]
-                document.getElementById("date").setAttribute("max", latestDate)
+                (function () {
+                    const dateInput = document.getElementById("selected_date")
+                    if (!dateInput) return
+                    const today = new Date().toISOString().split("T")[0]
+                    dateInput.setAttribute("min", today)
+                    const latestDate = new Date()
+                    latestDate.setDate(latestDate.getDate() + 14)
+                    dateInput.setAttribute("max", latestDate.toISOString().split("T")[0])
+                })()
 
-            function validateForm() {
-                let animalSelect = document.getElementById("animal_id")
-                let hoursField = document.getElementById("duration_hours");
-                let minutesField = document.getElementById("duration_minutes");
+                function validateForm() {
+                    const animalSelect = document.getElementById("animal_id")
+                    const hoursField = document.getElementById("duration_hours")
+                    const minutesField = document.getElementById("duration_minutes")
 
-                // Check if animal is chosen
-                if (animalSelect.value === ""){
-                    alert("Choose an animal first");
+                    if (animalSelect.value === "") {
+                        alert("Choose an animal first")
+                        return false
+                    }
+                    if (parseInt(hoursField.value, 10) > 0 || parseInt(minutesField.value, 10) > 0) {
+                        return true
+                    }
+                    alert("Either the hours or minutes field must have a value greater than zero.")
                     return false
                 }
-                // Check if either hours or minutes field has a value greater than zero
-                if (parseInt(hoursField.value) > 0 || parseInt(minutesField.value) > 0) {
-                    return true; // Form submission proceeds
-                } else {
-                    alert("Either the hours or minutes field must have a value greater than zero.");
-                    return false; // Form submission prevented
-                }
-            }
             </script>
         {% endif %}
         {% if schedules %}
+            <h2 class="schedule-subtitle schedule-bookings-heading">Bookings on this date</h2>
             <table class="schedule-table">
                 <thead>
                     <tr>
@@ -72,78 +106,79 @@
                 </tbody>
             </table>
         {% endif %}
-        {% if available_slots %}
-            <div class="timeslots">
-                <p class="schedule-subtitle">Available Time Slots</p>
-                <ul class="schedule-timeslot-list">
-                    {% for available_slot in available_slots %}
-                        <li class="schedule-timeslot" data-slot="{{ available_slot }}">
-                            {{ available_slot }}
-                        </li>
-                    {% endfor %}
-                </ul>
+        {% if show_slot_picker %}
+            <div class="timeslots" id="schedule-available-timeslots">
+                <p class="schedule-subtitle">Available time slots</p>
+                {% if available_slots %}
+                    <ul class="schedule-timeslot-list">
+                        {% for available_slot in available_slots %}
+                            <li class="schedule-timeslot" data-slot="{{ available_slot }}">
+                                {{ available_slot }}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="schedule-no-slots">No openings for this combination. Try another date or duration.</p>
+                {% endif %}
             </div>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const timeSlots = document.querySelectorAll('.schedule-timeslot');
+            {% if available_slots %}
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const timeSlots = document.querySelectorAll(".schedule-timeslot")
+                        timeSlots.forEach(function (slot) {
+                            slot.addEventListener("click", function () {
+                                const selectedSlot = this.getAttribute("data-slot")
+                                const scheduleDate = "{{ selected_date }}"
+                                const desiredHours = {{ desired_hours }}
+                                const desiredMinutes = {{ desired_minutes }}
+                                const animalId = {{ animal_id }}
 
-                    timeSlots.forEach(function(slot) {
-                        slot.addEventListener('click', function() {
-                            const selectedSlot = this.getAttribute('data-slot');
-                            const scheduleDate = '{{ selected_date }}';
-                            const desiredHours = {{ desired_hours }};
-                            const desiredMinutes = {{ desired_minutes }};
-                            const animalId = {{ animal_id }};
+                                const form = document.createElement("form")
+                                form.method = "POST"
 
-                            // Create a form element
-                            const form = document.createElement('form');
-                            form.method = 'POST';
+                                const csrfInput = document.createElement("input")
+                                csrfInput.type = "hidden"
+                                csrfInput.name = "csrfmiddlewaretoken"
+                                csrfInput.value = "{{ csrf_token }}"
+                                form.appendChild(csrfInput)
 
-                            // Create a CSRF token input field
-                            const csrfInput = document.createElement('input');
-                            csrfInput.type = 'hidden';
-                            csrfInput.name = 'csrfmiddlewaretoken';
-                            csrfInput.value = '{{ csrf_token }}';
-                            form.appendChild(csrfInput);
+                                const slotInput = document.createElement("input")
+                                slotInput.type = "hidden"
+                                slotInput.name = "selected_slot"
+                                slotInput.value = selectedSlot
+                                form.appendChild(slotInput)
 
-                            // Create hidden input fields for the data
-                            const slotInput = document.createElement('input');
-                            slotInput.type = 'hidden';
-                            slotInput.name = 'selected_slot';
-                            slotInput.value = selectedSlot;
-                            form.appendChild(slotInput);
+                                const dateInput = document.createElement("input")
+                                dateInput.type = "hidden"
+                                dateInput.name = "selected_date"
+                                dateInput.value = scheduleDate
+                                form.appendChild(dateInput)
 
-                            const dateInput = document.createElement('input');
-                            dateInput.type = 'hidden';
-                            dateInput.name = 'selected_date';
-                            dateInput.value = scheduleDate;
-                            form.appendChild(dateInput);
+                                const hoursInput = document.createElement("input")
+                                hoursInput.type = "hidden"
+                                hoursInput.name = "duration_hours"
+                                hoursInput.value = desiredHours
+                                form.appendChild(hoursInput)
 
-                            const hoursInput = document.createElement('input');
-                            hoursInput.type = 'hidden';
-                            hoursInput.name = 'duration_hours';
-                            hoursInput.value = desiredHours;
-                            form.appendChild(hoursInput);
+                                const minutesInput = document.createElement("input")
+                                minutesInput.type = "hidden"
+                                minutesInput.name = "duration_minutes"
+                                minutesInput.value = desiredMinutes
+                                form.appendChild(minutesInput)
 
-                            const minutesInput = document.createElement('input');
-                            minutesInput.type = 'hidden';
-                            minutesInput.name = 'duration_minutes';
-                            minutesInput.value = desiredMinutes;
-                            form.appendChild(minutesInput);
+                                const animalIdInput = document.createElement("input")
+                                animalIdInput.type = "hidden"
+                                animalIdInput.name = "animal_id"
+                                animalIdInput.value = animalId
+                                form.appendChild(animalIdInput)
 
-                            const animalIdInput = document.createElement('input');
-                            animalIdInput.type = 'hidden';
-                            animalIdInput.name = 'animal_id';
-                            animalIdInput.value = animalId;
-                            form.appendChild(animalIdInput);
-
-                            // Append the form to the document and submit it
-                            document.body.appendChild(form);
-                            form.submit();
-                        });
-                    });
-                });
-            </script>
+                                document.body.appendChild(form)
+                                form.submit()
+                            })
+                        })
+                    })
+                </script>
+            {% endif %}
         {% endif %}
     </div>
 {% endblock %}

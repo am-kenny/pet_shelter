@@ -6,7 +6,7 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 import animals.models
-from animals.utils import available_booking_times
+from animals.booking_time import available_booking_times
 
 
 def _utc(*parts):
@@ -489,6 +489,25 @@ class TestAnimals(TestCase):
         status_code = response.status_code
         self.assertEqual(status_code, 404)
 
+    def test_animal_page_feedback_after_completed_walk(self):
+        test_client = Client()
+        user = get_user_model().objects.get(username="guest")
+        test_client.force_login(user)
+        response = test_client.get(reverse("animal", args=[1]))
+        self.assertEqual(response.status_code, 200)
+        body = response.content.decode("utf-8")
+        self.assertIn("Leave feedback", body)
+
+    def test_animal_page_feedback_hint_without_completed_walk(self):
+        test_client = Client()
+        user = get_user_model().objects.get(username="guest")
+        test_client.force_login(user)
+        response = test_client.get(reverse("animal", args=[2]))
+        self.assertEqual(response.status_code, 200)
+        body = response.content.decode("utf-8")
+        self.assertNotIn("Leave feedback", body)
+        self.assertIn("Feedback opens here after", body)
+
 
 class TestAnimalSchedule(TestCase):
     fixtures = ["test_data.json"]
@@ -522,6 +541,24 @@ class TestAnimalSchedule(TestCase):
         )
         status_code = response.status_code
         self.assertEqual(status_code, 200)
+        body = response.content.decode("utf-8")
+        self.assertNotIn("schedule-available-timeslots", body)
+
+    def test_schedule_post_filter_renders_slots(self):
+        test_client = self.logged_client()
+        response = test_client.post(
+            "/schedule",
+            data={
+                "animal_id": self.test_animal.id,
+                "selected_date": "2023-10-14",
+                "duration_hours": 1,
+                "duration_minutes": 0,
+            },
+        )
+        self.assertEqual(response.status_code, 200)
+        body = response.content.decode("utf-8")
+        self.assertIn("schedule-available-timeslots", body)
+        self.assertIn("Available time slots", body)
 
     def test_schedule_get_3(self):
         test_client = Client()
@@ -559,15 +596,25 @@ class TestAnimalSchedule(TestCase):
 
     def test_schedule_post(self):
         test_client = self.logged_client()
+        slot_payload = {
+            "animal_id": self.test_animal.id,
+            "selected_slot": "10:00",
+            "selected_date": "2023-12-14",
+            "duration_hours": 1,
+            "duration_minutes": 0,
+        }
+        preview = test_client.post("/schedule", data=slot_payload)
+        self.assertEqual(preview.status_code, 200)
+        self.assertTemplateUsed(preview, "animals/schedule_confirm.html")
+        self.assertFalse(
+            animals.models.Schedule.objects.filter(
+                start_time=_utc(2023, 12, 14, 10)
+            ).exists()
+        )
+
         response = test_client.post(
             "/schedule",
-            data={
-                "animal_id": self.test_animal.id,
-                "selected_slot": "10:00",
-                "selected_date": "2023-12-14",
-                "duration_hours": 1,
-                "duration_minutes": 0,
-            },
+            data={**slot_payload, "confirm_schedule": "1"},
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(
@@ -579,18 +626,21 @@ class TestAnimalSchedule(TestCase):
         self.assertEqual(test_schedule.user_id, 4)
         self.assertEqual(test_schedule.animal_id, self.test_animal.id)
         self.assertEqual(status_code, 200)
+        self.assertTemplateUsed(response, "animals/success.html")
 
     def test_schedule_post_2(self):  # At the start of the working day
         test_client = self.logged_client()
+        slot_payload = {
+            "animal_id": self.test_animal.id,
+            "selected_slot": "08:00",
+            "selected_date": "2023-12-25",
+            "duration_hours": 3,
+            "duration_minutes": 0,
+        }
+        test_client.post("/schedule", data=slot_payload)
         response = test_client.post(
             "/schedule",
-            data={
-                "animal_id": self.test_animal.id,
-                "selected_slot": "08:00",
-                "selected_date": "2023-12-25",
-                "duration_hours": 3,
-                "duration_minutes": 0,
-            },
+            data={**slot_payload, "confirm_schedule": "1"},
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(
@@ -607,15 +657,17 @@ class TestAnimalSchedule(TestCase):
         self,
     ):  # At the end of the working day + after booked interval
         test_client = self.logged_client()
+        slot_payload = {
+            "animal_id": self.test_animal.id,
+            "selected_slot": "17:45",
+            "selected_date": "2023-10-14",
+            "duration_hours": 0,
+            "duration_minutes": 15,
+        }
+        test_client.post("/schedule", data=slot_payload)
         response = test_client.post(
             "/schedule",
-            data={
-                "animal_id": self.test_animal.id,
-                "selected_slot": "17:45",
-                "selected_date": "2023-10-14",
-                "duration_hours": 0,
-                "duration_minutes": 15,
-            },
+            data={**slot_payload, "confirm_schedule": "1"},
         )
         status_code = response.status_code
         test_schedule = animals.models.Schedule.objects.get(

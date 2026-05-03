@@ -7,8 +7,41 @@
         <a href="{% url 'animals' %}" class="back-link">Back to Animals</a>
         <h1 class="animal-detail-title">{{ animal.name }}</h1>
         <div class="animal-detail">
-            <div class="animal-image">
-                <img src="{{ image_url }}" alt="{{ animal.name }}">
+            <div
+                class="animal-image animal-gallery"
+                {% if photo_urls|length > 1 %}tabindex="0" role="region" aria-label="Photos of {{ animal.name }}"{% endif %}
+            >
+                <div class="animal-gallery__frame">
+                    {% if photo_urls|length > 1 %}
+                        <button type="button" class="animal-gallery__btn animal-gallery__btn--prev" aria-label="Previous photo">&#8249;</button>
+                    {% endif %}
+                    <img
+                        id="animal-gallery-main"
+                        class="animal-gallery__main"
+                        src="{{ photo_urls.0 }}"
+                        alt="{{ animal.name }}"
+                    >
+                    {% if photo_urls|length > 1 %}
+                        <button type="button" class="animal-gallery__btn animal-gallery__btn--next" aria-label="Next photo">&#8250;</button>
+                    {% endif %}
+                </div>
+                {% if photo_urls|length > 1 %}
+                    <p class="animal-gallery__counter" aria-live="polite">
+                        <span id="animal-gallery-index">1</span> / {{ photo_urls|length }}
+                    </p>
+                    <div class="animal-gallery__thumbs" role="group" aria-label="Photo thumbnails">
+                        {% for url in photo_urls %}
+                            <button
+                                type="button"
+                                class="animal-gallery__thumb{% if forloop.first %} is-active{% endif %}"
+                                aria-label="Show photo {{ forloop.counter }} of {{ photo_urls|length }}"
+                                aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+                            >
+                                <img src="{{ url }}" alt="" loading="lazy" width="72" height="72">
+                            </button>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             </div>
             <div class="animal-info">
                 <p><strong>Type:</strong> {{ animal.type }}</p>
@@ -22,16 +55,67 @@
                     <input type="hidden" name="animal_id" value="{{ animal.id }}">
                     <input type="submit" value="Book your walk">
                 </form>
-                {% if user.is_authenticated %}
-                    <h1 class="blog__title">Leave feedback</h1>
-                    <form method="post" class="blog__form" action="{% url "feedbacks" %}">
-                        {% csrf_token %}
-                        {{ form }}
-                        <input type="hidden" name="animal" value="{{ animal.id }}">
-                        <input type="submit" value="Submit">
-                    </form>
-                {% endif %}
             </div>
         </div>
+        {% if show_feedback_form %}
+            <section class="animal-feedback-section" aria-labelledby="animal-feedback-heading">
+                <h2 id="animal-feedback-heading" class="animal-feedback-heading blog__title">Leave feedback</h2>
+                <form method="post" class="blog__form animal-feedback-form" action="{% url 'feedbacks' %}">
+                    {% csrf_token %}
+                    {{ feedback_form }}
+                    <input type="hidden" name="animal" value="{{ animal.id }}">
+                    <input type="submit" value="Submit">
+                </form>
+            </section>
+        {% elif user.is_authenticated %}
+            <p class="animal-feedback-hint">
+                Feedback opens here after you have had a scheduled walk with {{ animal.name }} that has ended.
+            </p>
+        {% endif %}
     </section>
+    {% if photo_urls|length > 1 %}
+        {{ photo_urls|json_script:"animal-gallery-urls" }}
+        <script>
+            (function () {
+                var dataEl = document.getElementById("animal-gallery-urls");
+                if (!dataEl) return;
+                var urls = JSON.parse(dataEl.textContent);
+                if (urls.length <= 1) return;
+                var gallery = document.querySelector(".animal-gallery");
+                var main = document.getElementById("animal-gallery-main");
+                var prev = document.querySelector(".animal-gallery__btn--prev");
+                var next = document.querySelector(".animal-gallery__btn--next");
+                var thumbs = document.querySelectorAll(".animal-gallery__thumb");
+                var counter = document.getElementById("animal-gallery-index");
+                var i = 0;
+                function show(at) {
+                    i = ((at % urls.length) + urls.length) % urls.length;
+                    main.src = urls[i];
+                    if (counter) counter.textContent = String(i + 1);
+                    for (var j = 0; j < thumbs.length; j++) {
+                        thumbs[j].classList.toggle("is-active", j === i);
+                        thumbs[j].setAttribute("aria-selected", j === i ? "true" : "false");
+                    }
+                }
+                prev.addEventListener("click", function () { show(i - 1); });
+                next.addEventListener("click", function () { show(i + 1); });
+                for (var j = 0; j < thumbs.length; j++) {
+                    (function (idx) {
+                        thumbs[idx].addEventListener("click", function () { show(idx); });
+                    })(j);
+                }
+                if (gallery) {
+                    gallery.addEventListener("keydown", function (e) {
+                        if (e.key === "ArrowLeft") {
+                            e.preventDefault();
+                            show(i - 1);
+                        } else if (e.key === "ArrowRight") {
+                            e.preventDefault();
+                            show(i + 1);
+                        }
+                    });
+                }
+            })();
+        </script>
+    {% endif %}
 {% endblock %}

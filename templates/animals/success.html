@@ -1,9 +1,18 @@
 {% extends "base.html" %}
 {% block title %}
-    Schedule
+    Booking confirmed
 {% endblock %}
 {% block content %}
-    <div>
-    Success
+    <div class="schedule__container schedule-success">
+        <h1 class="schedule-title">Booking confirmed</h1>
+        <p class="schedule-success-message">
+            Your walk has been saved. A confirmation email with your schedule details has been sent to
+            <strong>{{ user.email }}</strong>.
+        </p>
+        <p class="schedule-success-hint">If you do not see the message, check your spam folder.</p>
+        <p class="schedule-success-actions">
+            <a href="{% url 'schedule' %}" class="schedule-submit schedule-success-link">Schedule another walk</a>
+            <a href="{% url 'user_history' %}" class="schedule-confirm-link schedule-confirm-btn-secondary">View my bookings</a>
+        </p>
     </div>
 {% endblock %}

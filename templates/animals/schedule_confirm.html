@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}
+    Confirm schedule
+{% endblock %}
+{% block content %}
+    <div class="schedule__container schedule-confirm">
+        <h1 class="schedule-title">Confirm your walk</h1>
+        <p class="schedule-confirm-intro">Please review your booking before confirming.</p>
+        <dl class="schedule-confirm-summary">
+            <dt>Animal</dt>
+            <dd>{{ animal }}</dd>
+            <dt>Date</dt>
+            <dd>{{ selected_date }}</dd>
+            <dt>Start time</dt>
+            <dd>{{ start_time }}</dd>
+            <dt>End time</dt>
+            <dd>{{ end_time }}</dd>
+            <dt>Duration</dt>
+            <dd>
+                {% if desired_hours %}{{ desired_hours }} h{% endif %}
+                {% if desired_minutes %} {{ desired_minutes }} min{% endif %}
+            </dd>
+        </dl>
+        <div class="schedule-confirm-actions">
+            <form method="post" class="schedule-confirm-form-inline">
+                {% csrf_token %}
+                <input type="hidden" name="animal_id" value="{{ animal_id }}">
+                <input type="hidden" name="selected_date" value="{{ selected_date }}">
+                <input type="hidden" name="duration_hours" value="{{ desired_hours }}">
+                <input type="hidden" name="duration_minutes" value="{{ desired_minutes }}">
+                <input type="hidden" name="selected_slot" value="{{ selected_slot }}">
+                <input type="hidden" name="confirm_schedule" value="1">
+                <button type="submit" class="schedule-submit schedule-confirm-btn">Confirm</button>
+            </form>
+            <a class="schedule-confirm-link schedule-confirm-btn-secondary"
+               href="{% url 'schedule' %}?animal_id={{ animal_id }}&amp;date={{ selected_date }}&amp;duration_hours={{ desired_hours }}&amp;duration_minutes={{ desired_minutes }}">Edit</a>
+            <a class="schedule-confirm-link schedule-confirm-btn-secondary" href="{% url 'schedule' %}">Cancel</a>
+        </div>
+    </div>
+{% endblock %}

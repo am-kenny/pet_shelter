@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Our Animals{% endblock %}
 
@@ -9,18 +10,25 @@
         <ul class="animal-items">
             {% for animal in animals %}
                 <li class="animal-item" onclick="location.href='{% url 'animal' animal_id=animal.id %}'">
-                    <div class="animal-header">
-                        <h2 class="animal-name">{{ animal.name }}</h2>
-                        <p class="animal-type">{{ animal.type }}</p>
+                    <div class="animal-item-preview">
+                        {% with animal.animalmedia_set.first as main_photo %}
+                            <img src="{% if main_photo %}{{ main_photo.media.url }}{% else %}{% static 'images/pet.png' %}{% endif %}" alt="{{ animal.name }}">
+                        {% endwith %}
                     </div>
-                    <div class="animal-details">
-                        <p><strong>Sex:</strong> {{ animal.sex }}</p>
-                        <p><strong>Age:</strong> {{ animal.age }}</p>
-                        <p><strong>Breed:</strong> {{ animal.breed }}</p>
-                        <p><strong>Availability:</strong> {% if animal.availability %}Available{% else %}Not Available{% endif %}</p>
-                        <p><strong>Health:</strong> {% if animal.healthy %}Healthy{% else %}Not Healthy{% endif %}</p>
+                    <div class="animal-item-content">
+                        <div class="animal-header">
+                            <h2 class="animal-name">{{ animal.name }}</h2>
+                            <p class="animal-type">{{ animal.type }}</p>
+                        </div>
+                        <div class="animal-details">
+                            <p><strong>Sex:</strong> {{ animal.sex }}</p>
+                            <p><strong>Age:</strong> {{ animal.age }}</p>
+                            <p><strong>Breed:</strong> {{ animal.breed }}</p>
+                            <p><strong>Availability:</strong> {% if animal.availability %}Available{% else %}Not Available{% endif %}</p>
+                            <p><strong>Health:</strong> {% if animal.healthy %}Healthy{% else %}Not Healthy{% endif %}</p>
+                        </div>
+                        <p class="animal-description">{{ animal.description }}</p>
                     </div>
-                    <p class="animal-description">{{ animal.description }}</p>
                 </li>
             {% empty %}
                 <li class="no-animals">No animals available.</li>

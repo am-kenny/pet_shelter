@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect, render
 
 import animals.models
@@ -21,9 +22,21 @@ def feedbacks(request):
         if request.user.is_authenticated:
             form = FeedbackForm(request.POST)
             if form.is_valid():
-                user = request.user
                 feedback_instance = form.save(commit=False)
-                feedback_instance.user = user
+                feedback_instance.user = request.user
+                animal = feedback_instance.animal
+                if (
+                    animal is not None
+                    and not animals.models.Schedule.user_has_completed_walk(
+                        request.user, animal.pk
+                    )
+                ):
+                    messages.error(
+                        request,
+                        "You can leave feedback for an animal only after a scheduled walk "
+                        "with them has ended.",
+                    )
+                    return redirect("animal", animal_id=animal.pk)
                 feedback_instance.save()
                 return redirect("feedbacks")
     form = FeedbackForm()

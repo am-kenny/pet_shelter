@@ -148,5 +148,10 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 AUTH_USER_MODEL = "user.CustomUser"
 
-EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_BACKEND = get_env(
+    "EMAIL_BACKEND", "django.core.mail.backends.filebased.EmailBackend"
+)
 EMAIL_FILE_PATH = BASE_DIR / "emails"
+Path(EMAIL_FILE_PATH).mkdir(parents=True, exist_ok=True)
+DEFAULT_FROM_EMAIL = get_env("DEFAULT_FROM_EMAIL", "Pet Shelter <noreply@localhost>")
+SERVER_EMAIL = DEFAULT_FROM_EMAIL
