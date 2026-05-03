@@ -8,7 +8,6 @@ from django.shortcuts import redirect, render
 
 import animals.models
 from user.forms import AddUserMedia, RegistrationForm, UpdateUserForm
-from user.models import UserMedia
 
 
 @login_required
@@ -65,12 +64,12 @@ def user_history(request):
 @login_required
 def edit_profile(request):
     if request.method == "POST":
-        form = UpdateUserForm(request.POST)
+        form = UpdateUserForm(request.POST, instance=request.user)
         if form.is_valid():
             form.save()
             return redirect("user")
     else:
-        form = UpdateUserForm()
+        form = UpdateUserForm(instance=request.user)
     return render(request, "user/edit.html", {"form": form})
 
 
@@ -99,11 +98,10 @@ def user_images(request):
 @login_required
 def set_main_image(request, user_image_id):
     if request.method == "POST":
-        previous_main_image = request.user.usermedia_set.filter(main=True).first()
-        if previous_main_image:
-            previous_main_image.main = False
-            previous_main_image.save()
-        user_image = UserMedia.objects.get(id=user_image_id)
+        user_image = request.user.usermedia_set.filter(id=user_image_id).first()
+        if not user_image:
+            return redirect("user_images")
+        request.user.usermedia_set.filter(main=True).update(main=False)
         user_image.main = True
         user_image.save()
 
@@ -114,9 +112,9 @@ def set_main_image(request, user_image_id):
 @login_required
 def delete_user_image(request, user_image_id):
     if request.method == "POST":
-        if not request.user.usermedia_set.filter(id=user_image_id).exists():
-            return redirect("user_images")
         user_image = request.user.usermedia_set.filter(id=user_image_id).first()
+        if not user_image:
+            return redirect("user_images")
 
         if user_image.media:
             os.remove(user_image.media.path)

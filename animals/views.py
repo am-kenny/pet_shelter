@@ -106,15 +106,16 @@ def schedule(request):  # TODO  confirmation
             },
         )
 
-    return render(request, "animals/schedule.html", {"animals": all_animals})
+    context = {"animals": all_animals}
+    if animal_id and animals.models.Animal.objects.filter(id=animal_id).exists():
+        context["preselected_animal_id"] = int(animal_id)
+
+    return render(request, "animals/schedule.html", context)
 
 
 def transform_schedule(animal_schedule):
     return [
-        (
-            booked_slot.start_time.replace(tzinfo=None),
-            booked_slot.end_time.replace(tzinfo=None),
-        )
+        (booked_slot.start_time, booked_slot.end_time)
         for booked_slot in animal_schedule
     ]
 

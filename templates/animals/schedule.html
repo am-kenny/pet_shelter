@@ -11,7 +11,7 @@
                 <select name="animal_id" id="animal_id" class="schedule-select">
                     <option value="">-----</option>
                     {% for animal in animals %}
-                        <option value="{{ animal.id }}">{{ animal }}</option>
+                        <option value="{{ animal.id }}"{% if preselected_animal_id == animal.id %} selected{% endif %}>{{ animal }}</option>
                     {% endfor %}
                 </select>
                 <label for="date" class="schedule-label">Choose desired date:</label>
