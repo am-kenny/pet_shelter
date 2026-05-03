@@ -12,6 +12,7 @@ This project is a Django-based web application developed for managing a pet shel
 ## Technologies Used
 
 - **Backend**: Django (Python)
+- **Package manager**: [uv](https://docs.astral.sh/uv/) (lockfile: `uv.lock`)
 - **Frontend**: Django templates, HTML, CSS, JS
 - **Database**: PostgreSQL
 - **Containerization**: Docker
@@ -31,12 +32,38 @@ To run this project locally, follow the steps below:
     cd pet_shelter
     ```
 
-2. **Build and start the Docker containers:**
+2. **Install dependencies with uv** (install [uv](https://docs.astral.sh/uv/getting-started/installation/) if needed):
+
+    ```bash
+    uv sync
+    ```
+
+    Run Django commands through uv so they use the project environment, for example:
+
+    ```bash
+    uv run python manage.py migrate
+    uv run python manage.py runserver
+    ```
+
+3. **Run the stack with Docker Compose (development only)** — [`docker-compose.yml`](docker-compose.yml) bind-mounts your working tree for live code, stores dependencies in a **`django_venv`** volume at **`/app/.venv`** (so the mount does not replace the image’s virtualenv), then runs **`migrate`** and **`runserver`**. Do **not** treat this compose file as a production deployment.
 
     ```bash
     docker compose up --build -d
     ```
-Note: [docker-compose.yml](docker-compose.yml)  includes application container, database container, migration and test data loading scripts.
+
+    After changing **`pyproject.toml`** or **`uv.lock`**, rebuild the web image and recreate the venv volume so the container picks up new packages:
+
+    ```bash
+    docker compose build web_app
+    docker volume rm pet_shelter_django_venv
+    docker compose up -d
+    ```
+
+    **Fixture data (one-time):** [`seed_data.json`](seed_data.json). After the stack is up and migrations have applied, load it once if you need seed data:
+
+    ```bash
+    docker compose exec web_app python manage.py loaddata seed_data.json
+    ```
 
 **4. Access the application:**
 

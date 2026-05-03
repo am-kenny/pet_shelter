@@ -1,24 +1,37 @@
-FROM python:3.12-slim
+# Stage 1: Build dependencies
+FROM ghcr.io/astral-sh/uv:0.11.8-python3.12-trixie-slim AS deps
+
+WORKDIR /app
+
+ENV UV_COMPILE_BYTECODE=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON_DOWNLOADS=never
+
+COPY pyproject.toml uv.lock ./
+
+RUN --mount=type=cache,target=/root/.cache/uv \
+    uv sync --frozen --no-dev --no-install-project
+
+# Stage 2: Runtime
+FROM python:3.12-slim-trixie
+
+LABEL authors="Andrii Prykhodko"
+
+WORKDIR /app
+
+RUN groupadd --gid 1000 app \
+    && useradd --uid 1000 --gid app --no-create-home --shell /usr/sbin/nologin app
+
+COPY --from=deps --chown=1000:1000 /app/.venv /app/.venv
+
+ENV PATH="/app/.venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1 \
+    GUNICORN_WORKERS=2
+
+COPY --chown=1000:1000 . .
+
+USER app
 
 EXPOSE 8000
 
-WORKDIR /app
-COPY requirements.txt ./
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-COPY . .
-
-LABEL authors="Andrii"
-
-# Run the app
-#CMD python manage.py runserver 0.0.0.0:8000
-
-# to create image use:
-# docker build -t dish_ordering-app .
-
-# to create container use:
-# docker run -it --rm --name dish_ordering-running-app dish_ordering-app
+CMD ["sh", "-c", "exec gunicorn --bind 0.0.0.0:8000 --workers ${GUNICORN_WORKERS:-2} pet_shelter.wsgi:application"]
