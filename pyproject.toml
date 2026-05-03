@@ -1,3 +1,19 @@
+[project]
+name = "pet-shelter"
+version = "0.1.0"
+description = "Pet shelter management system (Django)"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "django>=4.2.16,<4.3",
+    "gunicorn>=23.0,<24",
+    "psycopg2-binary==2.9.9",
+    "pillow==10.4.0",
+]
+
+[tool.uv]
+package = false
+
 [tool.ruff]
 target-version = "py312"
 extend-exclude = ["**/migrations"]
