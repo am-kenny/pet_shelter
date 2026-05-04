@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 
@@ -60,3 +61,86 @@ class Schedule(models.Model):
             animal_id=animal_id,
             end_time__lt=timezone.now(),
         ).exists()
+
+
+class ShelterWeekdayHours(models.Model):
+    """Opening hours for one weekday; aligns with ``datetime.date.weekday()`` (Monday=0)."""
+
+    class Weekday(models.IntegerChoices):
+        MONDAY = 0, "Monday"
+        TUESDAY = 1, "Tuesday"
+        WEDNESDAY = 2, "Wednesday"
+        THURSDAY = 3, "Thursday"
+        FRIDAY = 4, "Friday"
+        SATURDAY = 5, "Saturday"
+        SUNDAY = 6, "Sunday"
+
+    weekday = models.PositiveSmallIntegerField(choices=Weekday.choices, unique=True)
+    is_closed = models.BooleanField(
+        default=False,
+        help_text="When checked, no visits are offered on this day.",
+    )
+    opens_at = models.TimeField(null=True, blank=True)
+    closes_at = models.TimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["weekday"]
+        verbose_name = "shelter weekday hours"
+        verbose_name_plural = "shelter weekday hours"
+
+    def __str__(self):
+        if self.is_closed:
+            return f"{self.get_weekday_display()}: closed"
+        return f"{self.get_weekday_display()}: {self.opens_at}–{self.closes_at}"
+
+    def clean(self):
+        super().clean()
+        if self.is_closed:
+            return
+        if self.opens_at is None or self.closes_at is None:
+            raise ValidationError(
+                "Open days must have both opening and closing times set."
+            )
+        if self.opens_at >= self.closes_at:
+            raise ValidationError("Closing time must be after opening time.")
+
+
+class ShelterDateOverride(models.Model):
+    """Hours for a single calendar day; overrides ``ShelterWeekdayHours`` when present."""
+
+    calendar_date = models.DateField(unique=True, db_index=True)
+    is_closed = models.BooleanField(
+        default=False,
+        help_text="When checked, no visits on this date (e.g. holiday).",
+    )
+    opens_at = models.TimeField(null=True, blank=True)
+    closes_at = models.TimeField(null=True, blank=True)
+    reason = models.CharField(
+        max_length=255,
+        blank=True,
+        help_text="Optional note (e.g. holiday name).",
+    )
+
+    class Meta:
+        ordering = ["calendar_date"]
+        verbose_name = "shelter date override"
+        verbose_name_plural = "shelter date overrides"
+
+    def __str__(self):
+        label = self.calendar_date.isoformat()
+        if self.reason:
+            label = f"{label} ({self.reason})"
+        if self.is_closed:
+            return f"{label}: closed"
+        return f"{label}: {self.opens_at}–{self.closes_at}"
+
+    def clean(self):
+        super().clean()
+        if self.is_closed:
+            return
+        if self.opens_at is None or self.closes_at is None:
+            raise ValidationError(
+                "Open days must have both opening and closing times set."
+            )
+        if self.opens_at >= self.closes_at:
+            raise ValidationError("Closing time must be after opening time.")
