@@ -6,13 +6,27 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 import animals.models
-from animals.booking_time import available_booking_times
+from animals.booking_time import (
+    Timeslot,
+    available_booking_times,
+    available_time_periods,
+    create_booked_time,
+    sort_times,
+)
 
 
 def _utc(*parts):
     """UTC-aware datetime for tests (year..hour, optional minute, second)."""
     y, mo, d, h, *rest = (*parts, 0, 0)
     return datetime.datetime(y, mo, d, h, rest[0], rest[1], tzinfo=datetime.UTC)
+
+
+def _d(year, month, day):
+    return datetime.date(year, month, day)
+
+
+def _slot(start, end):
+    return Timeslot(start, end)
 
 
 # Schedule testing
@@ -34,18 +48,20 @@ class TestScheduleSortedPeriods(TestCase):
             "16:30",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 11, 0),
                 _utc(2023, 9, 12, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 14, 0),
                 _utc(2023, 9, 12, 16, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_2(self):
@@ -70,18 +86,20 @@ class TestScheduleSortedPeriods(TestCase):
             "16:30",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 11, 0),
                 _utc(2023, 9, 12, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 12, 0),
                 _utc(2023, 9, 12, 14, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_3(self):
@@ -106,18 +124,20 @@ class TestScheduleSortedPeriods(TestCase):
             "16:30",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2024, 1, 15, 11, 0),
                 _utc(2024, 1, 15, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2024, 1, 15, 12, 0),
                 _utc(2024, 1, 15, 14, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2024, 1, 15)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_4(self):
@@ -142,39 +162,43 @@ class TestScheduleSortedPeriods(TestCase):
             "16:30",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 8, 0),
                 _utc(2023, 9, 12, 9, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 12, 0),
                 _utc(2023, 9, 12, 14, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_5(self):
         expected = []
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 8, 0),
                 _utc(2023, 9, 12, 9, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 10, 0),
                 _utc(2023, 9, 12, 14, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 15, 0),
                 _utc(2023, 9, 12, 17, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_6(self):
@@ -191,22 +215,24 @@ class TestScheduleSortedPeriods(TestCase):
             "17:45",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 8, 0),
                 _utc(2023, 9, 12, 9, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 10, 0),
                 _utc(2023, 9, 12, 14, 30),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 15, 0),
                 _utc(2023, 9, 12, 17, 0),
             ),
         ]
         hours = 0
         minutes = 15
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
 
@@ -214,26 +240,28 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
     def test_schedule_1(self):
         expected = ["15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30"]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 13, 0),
                 _utc(2023, 9, 12, 14, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 11, 0),
                 _utc(2023, 9, 12, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 14, 0),
                 _utc(2023, 9, 12, 15, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 9, 0),
                 _utc(2023, 9, 12, 10, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_2(self):
@@ -251,47 +279,51 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
             "16:30",
         ]
         booked = [
-            (
+            _slot(
                 _utc(2023, 9, 12, 13, 0),
                 _utc(2023, 9, 12, 14, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 11, 0),
                 _utc(2023, 9, 12, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 9, 12, 9, 0),
                 _utc(2023, 9, 12, 10, 0),
             ),
         ]
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_3(self):
         expected = ["15:00", "15:15"]
         booked = [
-            (
+            _slot(
                 _utc(2023, 12, 18, 13, 0),
                 _utc(2023, 12, 18, 14, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 12, 18, 11, 0),
                 _utc(2023, 12, 18, 12, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 12, 18, 14, 0),
                 _utc(2023, 12, 18, 15, 0),
             ),
-            (
+            _slot(
                 _utc(2023, 12, 18, 9, 0),
                 _utc(2023, 12, 18, 10, 0),
             ),
         ]
         hours = 2
         minutes = 45
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 12, 18)
+        )
         self.assertEqual(result, expected)
 
 
@@ -337,7 +369,9 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 1
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_2(self):
@@ -385,7 +419,9 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 0
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_4(self):
@@ -393,7 +429,9 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 9
         minutes = 30
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_5(self):
@@ -442,7 +480,9 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 0
         minutes = 15
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_one_available(self):
@@ -450,7 +490,9 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 10
         minutes = 0
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
 
     def test_schedule_no_available(self):
@@ -458,8 +500,75 @@ class TestScheduleEmpty(unittest.TestCase):
         booked = []
         hours = 10
         minutes = 15
-        result = available_booking_times(booked, hours, minutes)
+        result = available_booking_times(
+            booked, hours, minutes, for_date=_d(2023, 9, 12)
+        )
         self.assertEqual(result, expected)
+
+
+class TestBookingTime(unittest.TestCase):
+    def test_sort_times_orders_by_start(self):
+        slots = [
+            _slot(_utc(2023, 9, 12, 14, 0), _utc(2023, 9, 12, 15, 0)),
+            _slot(_utc(2023, 9, 12, 9, 0), _utc(2023, 9, 12, 10, 0)),
+            _slot(_utc(2023, 9, 12, 11, 0), _utc(2023, 9, 12, 12, 0)),
+        ]
+        sorted_slots = sort_times(slots)
+        self.assertEqual(
+            [s.start.hour for s in sorted_slots],
+            [9, 11, 14],
+        )
+
+    def test_available_time_periods_empty_uses_for_date(self):
+        day = _d(2030, 1, 5)
+        free = available_time_periods([], for_date=day)
+        self.assertEqual(free[0].start.date(), day)
+        self.assertEqual(free[0].end.date(), day)
+
+    def test_available_time_periods_between_bookings(self):
+        booked = [
+            _slot(_utc(2023, 9, 12, 11, 0), _utc(2023, 9, 12, 12, 0)),
+            _slot(_utc(2023, 9, 12, 14, 0), _utc(2023, 9, 12, 16, 0)),
+        ]
+        free = available_time_periods(booked, for_date=_d(2023, 9, 12))
+        self.assertEqual(len(free), 3)
+        self.assertEqual(free[0].start.strftime("%H:%M"), "08:00")
+        self.assertEqual(free[0].end.strftime("%H:%M"), "11:00")
+        self.assertEqual(free[1].start.strftime("%H:%M"), "12:00")
+        self.assertEqual(free[1].end.strftime("%H:%M"), "14:00")
+        self.assertEqual(free[2].start.strftime("%H:%M"), "16:00")
+        self.assertEqual(free[2].end.strftime("%H:%M"), "18:00")
+
+    def test_available_time_periods_skips_zero_length_gaps(self):
+        booked = [
+            _slot(_utc(2023, 9, 12, 10, 0), _utc(2023, 9, 12, 12, 0)),
+            _slot(_utc(2023, 9, 12, 12, 0), _utc(2023, 9, 12, 14, 0)),
+        ]
+        free = available_time_periods(booked, for_date=_d(2023, 9, 12))
+        self.assertEqual(len(free), 2)
+        self.assertEqual(free[0].end.strftime("%H:%M"), "10:00")
+        self.assertEqual(free[1].start.strftime("%H:%M"), "14:00")
+
+    def test_timeslot_rejects_invalid_range(self):
+        with self.assertRaises(ValueError):
+            _slot(_utc(2023, 9, 12, 12, 0), _utc(2023, 9, 12, 11, 0))
+
+    def test_create_booked_time(self):
+        slot = create_booked_time("2023-09-12", "10:30", 1, 30)
+        self.assertEqual(slot.start.strftime("%Y-%m-%d %H:%M"), "2023-09-12 10:30")
+        self.assertEqual(slot.end.strftime("%Y-%m-%d %H:%M"), "2023-09-12 12:00")
+
+    def test_create_booked_time_parses_string_duration(self):
+        slot = create_booked_time("2023-09-12", "10:30", "1", "30")
+        self.assertEqual(slot.end - slot.start, datetime.timedelta(hours=1, minutes=30))
+
+    def test_create_booked_time_invalid_date(self):
+        with self.assertRaises(ValueError):
+            create_booked_time("not-a-date", "10:30", 1, 0)
+
+    def test_create_booked_time_invalid_duration(self):
+        with self.assertRaises(ValueError):
+            create_booked_time("2023-09-12", "10:30", "x", 0)
 
 
 # Endpoints testing

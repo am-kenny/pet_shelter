@@ -1,3 +1,5 @@
+import datetime
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.http import Http404
@@ -30,17 +32,28 @@ def send_schedule_confirmation_email(
     )
 
 
-def _booked_slot_tuples(animal_schedule):
+def _booked_slots(
+    animal_schedule: list[animals.models.Schedule],
+) -> list[animals.booking_time.Timeslot]:
     return [
-        (booked_slot.start_time, booked_slot.end_time)
+        animals.booking_time.Timeslot(booked_slot.start_time, booked_slot.end_time)
         for booked_slot in animal_schedule
     ]
 
 
-def get_available_times(animal_schedule, desired_hours, desired_minutes):
-    booked_slots = _booked_slot_tuples(animal_schedule)
+def get_available_times(
+    animal_schedule: list[animals.models.Schedule],
+    booking_date: str,
+    desired_hours,
+    desired_minutes,
+):
+    booked_slots = _booked_slots(animal_schedule)
+    for_date = datetime.date.fromisoformat(booking_date)
     return animals.booking_time.available_booking_times(
-        booked_slots, desired_hours, desired_minutes
+        booked_slots,
+        desired_hours,
+        desired_minutes,
+        for_date=for_date,
     )
 
 
@@ -113,13 +126,14 @@ def schedule_booking_flow_response(
         animal_id=animal_id, start_time__date=selected_date
     ).all()
     available_times = get_available_times(
-        animal_schedule, desired_hours, desired_minutes
+        animal_schedule, selected_date, desired_hours, desired_minutes
     )
 
     if selected_time_slot and selected_time_slot in available_times:
-        start_time, end_time = animals.booking_time.create_booked_time(
+        booked = animals.booking_time.create_booked_time(
             selected_date, selected_time_slot, desired_hours, desired_minutes
         )
+        start_time, end_time = booked.start, booked.end
         animal = get_object_or_404(animals.models.Animal, pk=animal_id)
         if confirming:
             animals.models.Schedule.objects.create(
