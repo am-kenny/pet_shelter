@@ -1,7 +1,9 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils import timezone
 
+from animals.scheduling.defaults import DEFAULT_SLOT_STEP_MINUTES
 from pet_shelter import settings
 
 
@@ -144,3 +146,32 @@ class ShelterDateOverride(models.Model):
             )
         if self.opens_at >= self.closes_at:
             raise ValidationError("Closing time must be after opening time.")
+
+
+class ShelterBookingSettings(models.Model):
+    """Singleton settings for visit scheduling (one row, pk=1)."""
+
+    slot_step_minutes = models.PositiveSmallIntegerField(
+        default=DEFAULT_SLOT_STEP_MINUTES,
+        validators=[MinValueValidator(1)],
+        help_text="Minutes between offered start times in the slot picker.",
+    )
+
+    class Meta:
+        verbose_name = "shelter booking settings"
+        verbose_name_plural = "shelter booking settings"
+
+    def __str__(self):
+        return f"Booking settings (slot step: {self.slot_step_minutes} min)"
+
+    def save(self, *args, **kwargs):
+        self.pk = 1
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        pass
+
+    @classmethod
+    def load(cls) -> ShelterBookingSettings:
+        obj, _ = cls.objects.get_or_create(pk=1)
+        return obj

@@ -6,11 +6,23 @@ from django.test import Client, TestCase
 from django.urls import reverse
 
 import animals.models
-from animals.booking_time import (
+from animals.models import (
+    ShelterBookingSettings,
+    ShelterDateOverride,
+    ShelterWeekdayHours,
+)
+from animals.schedule_booking import get_available_times
+from animals.scheduling import (
+    DEFAULT_SHELTER_CLOSE,
+    DEFAULT_SHELTER_OPEN,
+    DEFAULT_SLOT_STEP_MINUTES,
     Timeslot,
     available_booking_times,
     available_time_periods,
     create_booked_time,
+    get_slot_step,
+    load_schedule_context,
+    resolve_shelter_hours,
     sort_times,
 )
 
@@ -29,8 +41,26 @@ def _slot(start, end):
     return Timeslot(start, end)
 
 
-# Schedule testing
-class TestScheduleSortedPeriods(TestCase):
+class DefaultShelterHoursMixin:
+    """Default shelter hours and booking settings for schedule tests."""
+
+    def setUp(self):
+        super().setUp()
+        for weekday in range(7):
+            ShelterWeekdayHours.objects.update_or_create(
+                weekday=weekday,
+                defaults={
+                    "is_closed": False,
+                    "opens_at": DEFAULT_SHELTER_OPEN,
+                    "closes_at": DEFAULT_SHELTER_CLOSE,
+                },
+            )
+        ShelterBookingSettings.objects.update_or_create(
+            pk=1, defaults={"slot_step_minutes": DEFAULT_SLOT_STEP_MINUTES}
+        )
+
+
+class TestScheduleSortedPeriods(DefaultShelterHoursMixin, TestCase):
     def test_schedule_1(self):
         expected = [
             "08:00",
@@ -236,7 +266,7 @@ class TestScheduleSortedPeriods(TestCase):
         self.assertEqual(result, expected)
 
 
-class TestScheduleUnsortedPeriods(unittest.TestCase):
+class TestScheduleUnsortedPeriods(DefaultShelterHoursMixin, TestCase):
     def test_schedule_1(self):
         expected = ["15:00", "15:15", "15:30", "15:45", "16:00", "16:15", "16:30"]
         booked = [
@@ -327,7 +357,7 @@ class TestScheduleUnsortedPeriods(unittest.TestCase):
         self.assertEqual(result, expected)
 
 
-class TestScheduleEmpty(unittest.TestCase):
+class TestScheduleEmpty(DefaultShelterHoursMixin, TestCase):
     def test_schedule_1(self):
         expected = [
             "08:00",
@@ -519,6 +549,29 @@ class TestBookingTime(unittest.TestCase):
             [9, 11, 14],
         )
 
+    def test_timeslot_rejects_invalid_range(self):
+        with self.assertRaises(ValueError):
+            _slot(_utc(2023, 9, 12, 12, 0), _utc(2023, 9, 12, 11, 0))
+
+    def test_create_booked_time(self):
+        slot = create_booked_time("2023-09-12", "10:30", 1, 30)
+        self.assertEqual(slot.start.strftime("%Y-%m-%d %H:%M"), "2023-09-12 10:30")
+        self.assertEqual(slot.end.strftime("%Y-%m-%d %H:%M"), "2023-09-12 12:00")
+
+    def test_create_booked_time_parses_string_duration(self):
+        slot = create_booked_time("2023-09-12", "10:30", "1", "30")
+        self.assertEqual(slot.end - slot.start, datetime.timedelta(hours=1, minutes=30))
+
+    def test_create_booked_time_invalid_date(self):
+        with self.assertRaises(ValueError):
+            create_booked_time("not-a-date", "10:30", 1, 0)
+
+    def test_create_booked_time_invalid_duration(self):
+        with self.assertRaises(ValueError):
+            create_booked_time("2023-09-12", "10:30", "x", 0)
+
+
+class TestShelterHoursFromDatabase(DefaultShelterHoursMixin, TestCase):
     def test_available_time_periods_empty_uses_for_date(self):
         day = _d(2030, 1, 5)
         free = available_time_periods([], for_date=day)
@@ -549,29 +602,132 @@ class TestBookingTime(unittest.TestCase):
         self.assertEqual(free[0].end.strftime("%H:%M"), "10:00")
         self.assertEqual(free[1].start.strftime("%H:%M"), "14:00")
 
-    def test_timeslot_rejects_invalid_range(self):
-        with self.assertRaises(ValueError):
-            _slot(_utc(2023, 9, 12, 12, 0), _utc(2023, 9, 12, 11, 0))
+    def test_date_override_closed_returns_no_slots(self):
+        day = _d(2031, 6, 1)
+        ShelterDateOverride.objects.create(
+            calendar_date=day,
+            is_closed=True,
+        )
+        result = available_booking_times([], 1, 0, for_date=day)
+        self.assertEqual(result, [])
 
-    def test_create_booked_time(self):
-        slot = create_booked_time("2023-09-12", "10:30", 1, 30)
-        self.assertEqual(slot.start.strftime("%Y-%m-%d %H:%M"), "2023-09-12 10:30")
-        self.assertEqual(slot.end.strftime("%Y-%m-%d %H:%M"), "2023-09-12 12:00")
+    def test_closed_day_with_schedule_does_not_requery_hours(self):
+        day = _d(2031, 6, 7)
+        ShelterDateOverride.objects.create(calendar_date=day, is_closed=True)
+        schedule = load_schedule_context(day)
+        self.assertIsNone(schedule.hours)
+        with self.assertNumQueries(0):
+            result = available_booking_times([], 1, 0, for_date=day, schedule=schedule)
+        self.assertEqual(result, [])
 
-    def test_create_booked_time_parses_string_duration(self):
-        slot = create_booked_time("2023-09-12", "10:30", "1", "30")
-        self.assertEqual(slot.end - slot.start, datetime.timedelta(hours=1, minutes=30))
+    def test_load_schedule_context_skips_slot_step_when_closed(self):
+        day = _d(2031, 6, 8)
+        ShelterDateOverride.objects.create(calendar_date=day, is_closed=True)
+        with self.assertNumQueries(1):
+            ctx = load_schedule_context(day)
+        self.assertIsNone(ctx.hours)
 
-    def test_create_booked_time_invalid_date(self):
-        with self.assertRaises(ValueError):
-            create_booked_time("not-a-date", "10:30", 1, 0)
+    def test_get_available_times_uses_schedule_context(self):
+        day = _d(2031, 8, 15)
+        ShelterDateOverride.objects.create(
+            calendar_date=day,
+            is_closed=False,
+            opens_at=datetime.time(10, 0),
+            closes_at=datetime.time(11, 0),
+        )
+        result = get_available_times([], day.isoformat(), 0, 30)
+        self.assertEqual(result, ["10:00", "10:15", "10:30"])
 
-    def test_create_booked_time_invalid_duration(self):
-        with self.assertRaises(ValueError):
-            create_booked_time("2023-09-12", "10:30", "x", 0)
+    def test_get_available_times_closed_day(self):
+        day = _d(2031, 8, 1)
+        ShelterDateOverride.objects.create(calendar_date=day, is_closed=True)
+        with self.assertNumQueries(1):
+            result = get_available_times([], day.isoformat(), 1, 0)
+        self.assertEqual(result, [])
+
+    def test_weekday_closed_returns_no_slots(self):
+        day = _d(2031, 6, 2)
+        ShelterWeekdayHours.objects.filter(weekday=day.weekday()).update(
+            is_closed=True,
+        )
+        result = available_booking_times([], 1, 0, for_date=day)
+        self.assertEqual(result, [])
+
+    def test_weekday_hours_change_available_starts(self):
+        day = _d(2031, 6, 3)
+        ShelterWeekdayHours.objects.filter(weekday=day.weekday()).update(
+            opens_at=datetime.time(10, 0),
+            closes_at=datetime.time(12, 0),
+            is_closed=False,
+        )
+        result = available_booking_times([], 0, 30, for_date=day)
+        self.assertEqual(
+            result, ["10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30"]
+        )
+
+    def test_slot_step_load_recreates_row_with_defaults(self):
+        ShelterBookingSettings.objects.filter(pk=1).delete()
+        self.assertEqual(
+            get_slot_step(), datetime.timedelta(minutes=DEFAULT_SLOT_STEP_MINUTES)
+        )
+        self.assertTrue(ShelterBookingSettings.objects.filter(pk=1).exists())
+
+    def test_slot_step_never_zero_from_database(self):
+        ShelterBookingSettings.load()
+        ShelterBookingSettings.objects.filter(pk=1).update(slot_step_minutes=0)
+        self.assertEqual(get_slot_step(), datetime.timedelta(minutes=1))
+
+    def test_custom_slot_step(self):
+        day = _d(2031, 6, 4)
+        ShelterBookingSettings.objects.filter(pk=1).update(slot_step_minutes=30)
+        result = available_booking_times([], 0, 30, for_date=day)
+        self.assertIn("08:00", result)
+        self.assertIn("08:30", result)
+        self.assertNotIn("08:15", result)
+
+    def test_resolve_shelter_hours_prefers_date_override(self):
+        day = _d(2031, 7, 4)
+        ShelterDateOverride.objects.create(
+            calendar_date=day,
+            is_closed=False,
+            opens_at=datetime.time(9, 0),
+            closes_at=datetime.time(17, 0),
+        )
+        hours = resolve_shelter_hours(day)
+        self.assertEqual(hours.opens_at, datetime.time(9, 0))
+        self.assertEqual(hours.closes_at, datetime.time(17, 0))
+
+    def test_date_override_custom_hours_available_slots(self):
+        day = _d(2031, 7, 5)
+        ShelterDateOverride.objects.create(
+            calendar_date=day,
+            is_closed=False,
+            opens_at=datetime.time(9, 0),
+            closes_at=datetime.time(11, 0),
+        )
+        result = available_booking_times([], 0, 30, for_date=day)
+        self.assertEqual(
+            result, ["09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30"]
+        )
+
+    def test_partial_date_override_falls_back_to_weekday_hours(self):
+        day = _d(2031, 6, 5)
+        ShelterWeekdayHours.objects.filter(weekday=day.weekday()).update(
+            opens_at=datetime.time(10, 0),
+            closes_at=datetime.time(11, 0),
+            is_closed=False,
+        )
+        ShelterDateOverride.objects.create(
+            calendar_date=day,
+            is_closed=False,
+            opens_at=datetime.time(9, 0),
+            closes_at=None,
+        )
+        hours = resolve_shelter_hours(day)
+        self.assertEqual(hours.opens_at, datetime.time(10, 0))
+        self.assertEqual(hours.closes_at, datetime.time(11, 0))
 
 
-# Endpoints testing
 class TestAnimals(TestCase):
     fixtures = ["test_data.json"]
 
